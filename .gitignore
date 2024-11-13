@@ -1,7 +1,6 @@
-**/*.log*
+*.log*
 
-*lock*
-!demo/*lock* 
+pnpm-lock.json
 
 .vscode
 node_modules
@@ -13,3 +12,5 @@ dist
 !flake.lock
 .direnv
 .devenv
+.nuxt
+.output

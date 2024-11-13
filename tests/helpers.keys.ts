@@ -1,9 +1,9 @@
 import { walk } from "@alanscodelog/utils/walk.js"
 
-import { createCommands } from "../src/createCommands.js"
-import { createKey } from "../src/createKey.js"
-import { createKeys } from "../src/createKeys.js"
-import { createManager } from "../src/createManager.js"
+import { createCommands } from "../src/core/createCommands.js"
+import { createKey } from "../src/core/createKey.js"
+import { createKeys } from "../src/core/createKeys.js"
+import { createManager } from "../src/core/createManager.js"
 import { keyOrder } from "../src/internal/keyOrder.js"
 import type { Key } from "../src/types/index.js"
 

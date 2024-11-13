@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest"
 
 import { manager } from "./helpers.keys.js"
 
-import { createCommand } from "../src/createCommand.js"
-import { createCondition } from "../src/createCondition.js"
+import { createCommand } from "../src/core/createCommand.js"
+import { createCondition } from "../src/core/createCondition.js"
 import { equalsCommand } from "../src/helpers/equalsCommand.js"
 import type { Command } from "../src/types/index.js"
 

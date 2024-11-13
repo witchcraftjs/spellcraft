@@ -3,15 +3,15 @@ import { describe, expect, it } from "vitest"
 
 import { k, manager } from "./helpers.keys.js"
 
-import { createCommand } from "../src/createCommand.js"
-import { createCommands } from "../src/createCommands.js"
-import { createCondition } from "../src/createCondition.js"
-import { createShortcut } from "../src/createShortcut.js"
-import { createShortcuts } from "../src/createShortcuts.js"
+import { createCommand } from "../src/core/createCommand.js"
+import { createCommands } from "../src/core/createCommands.js"
+import { createCondition } from "../src/core/createCondition.js"
+import { createShortcut } from "../src/core/createShortcut.js"
+import { createShortcuts } from "../src/core/createShortcuts.js"
+import { removeCommand } from "../src/core/removeCommand.js"
+import { removeKey } from "../src/core/removeKey.js"
+import { setShortcutProp } from "../src/core/setShortcutProp.js"
 import { shortcutSwapChords } from "../src/helpers/shortcutSwapChords.js"
-import { removeCommand } from "../src/removeCommand.js"
-import { removeKey } from "../src/removeKey.js"
-import { setShortcutProp } from "../src/setShortcutProp.js"
 import { ERROR } from "../src/types/index.js"
 
 

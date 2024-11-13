@@ -2,12 +2,12 @@ import { pushIfNotIn } from "@alanscodelog/utils"
 import { last } from "@alanscodelog/utils/last.js"
 import { Result } from "@alanscodelog/utils/Result.js"
 
+import { setManagerProp } from "../core/setManagerProp.js"
 import { checkTrigger } from "../internal/checkTrigger.js"
 import { checkUntrigger } from "../internal/checkUntrigger.js"
 import { getPressedModifierKeys } from "../internal/getPressedModifierKeys.js"
 import { getPressedNonModifierKeys } from "../internal/getPressedNonModifierKeys.js"
 import { inChain } from "../internal/inChain.js"
-import { setManagerProp } from "../setManagerProp.js"
 import type { Manager, ManagerSetEntries, MultipleErrors } from "../types/index.js"
 import { cloneChain } from "../utils/cloneChain.js"
 

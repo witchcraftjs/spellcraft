@@ -3,9 +3,9 @@ import { describe, expect, it, vi } from "vitest"
 
 import { manager } from "./helpers.keys.js"
 
-import { addKey } from "../src/addKey.js"
-import { createKey } from "../src/createKey.js"
-import { createKeys } from "../src/createKeys.js"
+import { addKey } from "../src/core/addKey.js"
+import { createKey } from "../src/core/createKey.js"
+import { createKeys } from "../src/core/createKeys.js"
 import { ERROR, type Key } from "../src/types/index.js"
 
 

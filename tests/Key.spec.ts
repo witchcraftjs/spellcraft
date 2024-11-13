@@ -3,8 +3,9 @@ import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { manager } from "./helpers.keys.js"
 
-import { createKey } from "../src/createKey.js"
-import { createKeys } from "../src/createKeys.js"
+import { createKey } from "../src/core/createKey.js"
+import { createKeys } from "../src/core/createKeys.js"
+import { setKeyProp } from "../src/core/setKeyProp.js"
 import { defaultStringifier, Stringifier } from "../src/defaults/Stringifier.js"
 import { getLabel } from "../src/helpers/getLabel.js"
 import { virtualPress } from "../src/helpers/virtualPress.js"

@@ -2,8 +2,8 @@ import { Result } from "@alanscodelog/utils/Result.js"
 
 import { safeSetEmulatedToggleState } from "./safeSetEmulatedToggleState.js"
 
+import { setKeyProp } from "../core/setKeyProp.js"
 import { KnownError } from "../helpers/KnownError.js"
-import { setKeyProp } from "../setKeyProp.js"
 import type { CanHookErrors, KeySetEntries, Manager, MultipleErrors } from "../types/index.js"
 import { ERROR } from "../types/index.js"
 

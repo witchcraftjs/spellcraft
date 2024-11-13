@@ -1,4 +1,4 @@
-import { setKeyProp } from "../setKeyProp.js"
+import { setKeyProp } from "../core/setKeyProp.js"
 import type { KeySetEntries, LabelOptions, Manager } from "../types/index.js"
 
 /**

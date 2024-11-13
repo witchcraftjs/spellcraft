@@ -35,10 +35,10 @@ jobs:
     - run: pnpm doc
       if: "env.ENABLE_DOCS == 'true'"
 
-    - run: pnpm install --frozen-lockfile
-      working-directory: demo
-
-    - run: pnpm demo:build
+    - run: pnpm i --frozen-lockfile
+      working-directory: playground 
+      
+    - run: cp -r playground/.output/public docs/demo
 
     - name: Documentation
       uses: crazy-max/ghaction-github-pages@v4

@@ -5,7 +5,7 @@ import { checkUntrigger } from "./checkUntrigger.js"
 import { cloneLastChord } from "./cloneLastChord.js"
 import { getPressedNonModifierKeys } from "./getPressedNonModifierKeys.js"
 
-import { setManagerProp } from "../setManagerProp.js"
+import { setManagerProp } from "../core/setManagerProp.js"
 import type { AnyInputEvent, Manager, ManagerSetEntries, MultipleErrors } from "../types/index.js"
 import { cloneChain } from "../utils/cloneChain.js"
 

@@ -1,7 +1,7 @@
 // import { check_extends } from "./helpers.condition"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
-import { createCondition } from "../src/createCondition.js"
+import { createCondition } from "../src/core/createCondition.js"
 import { defaultConditionEquals } from "../src/defaults/defaultConditionEquals.js"
 import { equalsContext } from "../src/helpers/equalsContext.js"
 

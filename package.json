@@ -1,13 +1,18 @@
 {
 	"name": "@witchcraft/shortcuts-manager",
 	"description": "A shortcut manager library for handling ALL the shortcut needs of an application.",
-	"version": "0.0.0-semantically-released",
-	"types": "./dist/index.d.ts",
+	"version": "0.0.0",
 	"type": "module",
+	"main": "./dist/core/index.js",
+	"types": "./dist/core/index.d.ts",
+	"sideEffects": false,
+	"build": {
+		"failOnWarn": false
+	},
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js"
+			"types": "./dist/core/index.d.ts",
+			"import": "./dist/core/index.js"
 		},
 		"./*": {
 			"types": "./dist/*",
@@ -29,10 +34,6 @@
 			"types": "./dist/helpers/*",
 			"import": "./dist/helpers/*"
 		},
-		"./layouts": {
-			"types": "./dist/layouts/index.d.ts",
-			"import": "./dist/layouts/index.js"
-		},
 		"./layouts/*": {
 			"types": "./dist/layouts/*",
 			"import": "./dist/layouts/*"
@@ -46,53 +47,87 @@
 			"import": "./dist/types/*"
 		},
 		"./internal/*": {
-			"types": "./dist/internal/internal/*",
-			"import": "./dist/internal/internal/*"
+			"types": "./dist/internal/*",
+			"import": "./dist/internal/*"
+		},
+		"./core": {
+			"types": "./dist/core/index.d.ts",
+			"import": "./dist/core/index.js"
+		},
+		"./core/*": {
+			"types": "./dist/core/*",
+			"import": "./dist/core/*"
+		},
+		"./nuxt": {
+			"import": "./dist/module.mjs",
+			"require": "./dist/module.cjs"
 		}
 	},
 	"scripts": {
-		"debug": "ts-node -r tsconfig-paths/register -T --esm",
-		"build": "vite build && pnpm build:types",
-		"build:dev": "vite build --mode development",
-		"build:watch": "vite build --watch --mode production",
-		"build:types": "tsc -p tsconfig.types.json --emitDeclarationOnly && pnpm build:types:fix",
-		"build:types:fix": "tsc-alias -p tsconfig.types.json --debug",
-		"lint:eslint": "eslint \"src/**/*.{cjs,js,ts,vue}\" \"*.{cjs,js,ts}\" --report-unused-disable-directives",
-		"lint:types": "tsc --noEmit --pretty -p tsconfig.types.json",
-		"lint:commits": "commitlint --from $(git rev-list --max-parents=0 HEAD) --to HEAD --verbose",
-		"lint:imports": "madge --circular --extensions ts ./src",
-		"lint": "pnpm lint:types && pnpm lint:eslint",
+		"prepare": "husky && pnpm build",
+		"build": "nuxt-module-build prepare && nuxt-module-build build && nuxi generate playground",
+		"dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+		"dev:playground": "nuxi dev playground",
+		"dev": "nuxi dev playground",
+		"test": "pnpm test:types && vitest run --exclude '.direnv/**/*'",
+		"test:watch": "vitest --watch --exclude '.direnv/**/*'",
+		"test:inspect-errors": "cross-env INSPECT_ERRORS=true npm run test",
+		"test:types": "vue-tsc --noEmit && echo 'todo cd playground && vue-tsc --noEmit'",
 		"coverage": "vitest --exclude '.direnv/**/*' --coverage",
 		"coverage:dev": "vitest --exclude '.direnv/**/*'  --watch --coverage",
-		"test": "pnpm lint:types && vitest run --exclude '.direnv/**/*'",
-		"test:watch": "vitest --watch --exclude '.direnv/**/*'",
-		"test:inspect-errors": "cross-env INSPECT_ERRORS=true pnpm test",
 		"doc": "typedoc --options typedoc.config.cjs",
 		"doc:watch": "onchange -i \"src/**/*.ts\" \"typedoc.config.cjs\" -- pnpm doc",
 		"doc:serve": "http-server docs --port=5001",
 		"doc:dev": "concurrently \"pnpm doc:watch\" \"pnpm doc:serve\"",
 		"doc:check-invalid": "typedoc --options typedoc.config.cjs --listInvalidSymbolLinks",
-		"actions:debug": "act -r -v -j release",
-		"gen:exports": "indexit update -o '${path}.js'",
-		"demo:dev": "cd demo && concurrently \"vite\" \"pnpm build:watch\"",
-		"demo:build": "cd demo && pnpm build",
-		"prepare": "husky && pnpm build"
+		"lint:eslint": "eslint \"{src,test,playground/app}/**/*.{js,ts,vue,cjs}\" \"*.{js,ts}\" --max-warnings=0 --report-unused-disable-directives",
+		"lint:commits": "commitlint --from $(git rev-list --max-parents=0 HEAD) --to HEAD --verbose",
+		"lint:imports": "madge --circular --extensions ts ./src",
+		"lint": "pnpm test:types && pnpm lint:eslint && pnpm lint:imports",
+		"actions:debug": "act -r -v -j build",
+		"gen:exports": "indexit update -o '${path}.js'"
 	},
 	"dependencies": {
 		"@alanscodelog/utils": "^4.0.0"
+	},
+	"peerDependencies": {
+		"@witchcraft/nuxt-utils": "^0.0.0",
+		"@witchcraft/ui": "^0.0.0",
+		"vue": "^3.5.12",
+		"defu": "^6.1.4"
+	},
+	"peerDependenciesMeta": {
+		"@witchcraft/ui": {
+			"optional": true
+		},
+		"@witchcraft/nuxt-utils": {
+			"optional": true
+		},
+		"vue": {
+			"optional": true
+		},
+		"defu": {
+			"optional": true
+		}
 	},
 	"devDependencies": {
 		"@alanscodelog/commitlint-config": "^3.0.1",
 		"@alanscodelog/eslint-config": "^5.0.0",
 		"@alanscodelog/semantic-release-config": "^4.1.2",
 		"@alanscodelog/tsconfigs": "^4.0.1",
+		"@alanscodelog/vite-config": "^0.0.5",
 		"@commitlint/cli": "^19.3.0",
+		"@nuxt/kit": "^3.11.2",
+		"@nuxt/schema": "^3.11.2",
+		"@nuxt/types": "^2.17.3",
 		"@types/node": "^20.12.12",
+		"@vitejs/plugin-vue": "^5.0.4",
 		"@vitest/coverage-c8": "^0.33.0",
-		"@vue/typescript-plugin": "^2.0.19",
-		"autoprefixer": "^10.4.19",
+		"@witchcraft/ui": "^0.0.0",
+		"@witchcraft/nuxt-utils": "^0.0.0",
 		"concurrently": "^8.2.2",
 		"cross-env": "^7.0.3",
+		"defu": "^6.1.4",
 		"fast-glob": "^3.3.2",
 		"http-server": "^14.1.1",
 		"husky": "^9.0.11",
@@ -101,22 +136,14 @@
 		"onchange": "^7.1.0",
 		"postcss": "^8.4.38",
 		"semantic-release": "^23.1.1",
-		"tailwindcss": "^3.4.3",
-		"ts-node": "^10.9.2",
-		"tsc-alias": "^1.8.10",
 		"typedoc": "0.26.0-beta.1",
 		"typescript": "^5.4.5",
-		"typescript-language-server": "^4.3.3",
+		"unbuild": "^2.0.0",
 		"vite": "^5.2.12",
 		"vite-plugin-externalize-deps": "^0.8.0",
+		"vite-tsconfig-paths": "^5.0.1",
 		"vitest": "^1.6.0",
 		"vue-tsc": "^2.0.19"
-	},
-	"pnpm": {
-		"overrides": {
-			"vue": "^3.4.26",
-			"eslint":"=9.12.0"
-		}
 	},
 	"author": "Alan <alanscodelog@gmail.com>",
 	"repository": "https://github.com/alanscodelog/shortcuts-manager",
@@ -150,16 +177,6 @@
 	"browserslist": "> 0.5%, last 2 versions, not dead, not < 0.25%, not IE > 0, maintained node versions",
 	"engines": {
 		"node": ">=20.0.0"
-	},
-	"@comments": {
-		"devDependencies": {},
-		"scripts": {
-			"test": "Runs `lint:types` before (so that flags can be passed to the test command) so that we can test type assertions. See expect_type function in @alanscodelog/utils.",
-			"lint:commits": "Lints all unpushed commits in the active branch.",
-			"test:inspect_errors": "For use with my inspect_error utility function from @alanscodelog/utils",
-			"prepare": "Needed so that if we pull the package from git it will get built and installed properly.",
-			"actions:debug": "For debugging github build action locally with nektos/act. Requires act and docker. Note: Cache will never work locally because of https://github.com/nektos/act/issues/285"
-		}
 	},
 	"private": true
 }

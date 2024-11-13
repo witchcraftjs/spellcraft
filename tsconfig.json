@@ -2,31 +2,24 @@
 {
 	// ./node_modules/@alanscodelog/tsconfigs/tsconfig.json
 	// https://github.com/AlansCodeLog/tsconfigs
-	"extends": "@alanscodelog/tsconfigs",
+	"extends": [
+		"./.nuxt/tsconfig.json",
+		"@alanscodelog/tsconfigs"
+	],
 	"compilerOptions": {
-		"outDir": "dist",
-		"paths": {
-			// for ide for demo
-			"shortcuts-manager/*": [
-				"./src/*"
-			]
-		},
 		"types": [
-			"node"
+			"node",
+			"unplugin-icons/types/vue3",
+			"vite/client"
 		],
-		// the libs are explicitly specified because otherwise typescript includes the dom by default
-		"lib": [
-			"dom",
-			"esnext"
-		]
 	},
 	"include": [
 		"src/**/*.ts",
-		"src/**/*.js",
 		"src/**/*.vue",
+		"src/**/*.js",
+		"*.ts",
 	],
-	"exclude": [],
-	"tsc-alias": {
-		"resolveFullPaths": true // for esm compatibility
+	"vueCompilerOptions": {
+		"strictTemplates": true,
 	}
 }

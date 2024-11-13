@@ -37,7 +37,7 @@ import type {
 	TriggerableShortcut,
 } from "./index.js"
 
-import type { EmulatedEvent } from "../EmulatedEvent.js"
+import type { EmulatedEvent } from "../core/EmulatedEvent.js"
 import type { KnownError } from "../helpers/index.js"
 
 

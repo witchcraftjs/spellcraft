@@ -1,5 +1,5 @@
-import { setKeyProp } from "../setKeyProp.js"
-import { setManagerProp } from "../setManagerProp.js"
+import { setKeyProp } from "../core/setKeyProp.js"
+import { setManagerProp } from "../core/setManagerProp.js"
 import type { Manager } from "../types/index.js"
 
 /**

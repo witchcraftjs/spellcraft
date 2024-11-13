@@ -3,8 +3,8 @@ import { Result } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "./KnownError.js"
 
+import { setShortcutProp } from "../core/setShortcutProp.js"
 import { defaultStringifier } from "../defaults/Stringifier.js"
-import { setShortcutProp } from "../setShortcutProp.js"
 import type { IStringifier, Keys, Manager, PickManager, Shortcut, Shortcuts } from "../types/index.js"
 import { ERROR } from "../types/index.js"
 import { equalsKeys } from "../utils/equalsKeys.js"

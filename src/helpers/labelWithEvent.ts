@@ -1,4 +1,4 @@
-import { setKeyProp } from "../setKeyProp.js"
+import { setKeyProp } from "../core/setKeyProp.js"
 import type { AnyInputEvent, KeySetEntries, LabelOptions, Manager, MinimalInputEvent, PickManager } from "../types/index.js"
 /**
  * Labels keys using events.

@@ -1,0 +1,9 @@
+{
+	"extends": [
+		"@alanscodelog/tsconfigs",
+		"./.nuxt/tsconfig.json"
+	], 
+	"compilerOptions": {
+		"noUncheckedIndexedAccess": false,
+	},
+}

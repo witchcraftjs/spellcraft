@@ -2,9 +2,9 @@ import { checkUntrigger } from "./checkUntrigger.js"
 import { cloneLastChord } from "./cloneLastChord.js"
 import { inChain } from "./inChain.js"
 
+import { setManagerProp } from "../core/setManagerProp.js"
 import { getTriggerableShortcut } from "../helpers/getTriggerableShortcut.js"
 import { KnownError } from "../helpers/KnownError.js"
-import { setManagerProp } from "../setManagerProp.js"
 import { type AnyInputEvent, ERROR,type Manager } from "../types/index.js"
 import { isTriggerKey } from "../utils/isTriggerKey.js"
 
@@ -24,7 +24,7 @@ export function checkTrigger(
 		setManagerProp(manager, "state.untrigger", res.value)
 		setManagerProp(manager, "state.nextIsChord", false)
 		const command = manager.commands.entries[res.value.command]
-		command.execute?.({ isKeydown: true, command, shortcut: res.value, event: e, manager })
+		command?.execute?.({ isKeydown: true, command, shortcut: res.value, event: e, manager })
 	}
 	const triggerKey = cloneLastChord(manager.state.chain)?.find(id => isTriggerKey(manager.keys.entries[id]))
 	const nonTriggerKey = cloneLastChord(manager.state.chain)?.find(id => !isTriggerKey(manager.keys.entries[id]))

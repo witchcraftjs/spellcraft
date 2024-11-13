@@ -36,20 +36,20 @@ This is a shortcut manager library for handling ALL the shortcut needs of an app
 This is a simple example of how you can quickly setup a manager. 
 
 ```ts
-// While a barrel "shortcuts-manager" import is available
+// While a barrel "@witchcraft/shortcuts-manager" import is available
 // for the root and all the parts of the library. It's
 // recommended to import the individual functions instead, 
 // especially if using a bundler like vite which does not tree-shake
 // in dev mode. It will be faster.
 
-import { createManager } from "shortcuts-manager/createManager.js"
-import { createKeys } from "shortcuts-manager/createKeys.js"
-import { createContext } from "shortcuts-manager/createContext.js"
-import {type Context, ERROR} from "shortcuts-manager/types"
-import { createCommand } from "shortcuts-manager/createCommand.js"
-import { createShortcut } from "shortcuts-manager/createShortcut.js"
-import { addCommand } from "shortcuts-manager/addCommand.js"
-import { addShortcut } from "shortcuts-manager/addShortcut.js"
+import { createManager } from "@witchcraft/shortcuts-manager/createManager.js"
+import { createKeys } from "@witchcraft/shortcuts-manager/createKeys.js"
+import { createContext } from "@witchcraft/shortcuts-manager/createContext.js"
+import {type Context, ERROR} from "@witchcraft/shortcuts-manager/types"
+import { createCommand } from "@witchcraft/shortcuts-manager/createCommand.js"
+import { createShortcut } from "@witchcraft/shortcuts-manager/createShortcut.js"
+import { addCommand } from "@witchcraft/shortcuts-manager/addCommand.js"
+import { addShortcut } from "@witchcraft/shortcuts-manager/addShortcut.js"
 
 const manager = createManager({
 	name: "default",
@@ -175,7 +175,7 @@ const options = createManagerOptions({
 
 Then we need to create a layout. This is a list of keys in their raw form (they can be missing some properties), that describes the position of the keys and their width/height. `createLayout` is provided to help generate variations of the common ansi/iso layouts. We can then create real keys from these.
 ```ts
-import { createLayout } from "shortcuts-manager/layouts/createLayout.js"
+import { createLayout } from "@witchcraft/shortcuts-manager/layouts/createLayout.js"
 
 const layout = createLayout("ansi", {
 	numpad: false // don't add numbpad keys
@@ -192,7 +192,7 @@ You can also build completely custom layouts, the `calculateAndSetPositionAndSiz
 **Note: Key ids must be valid KeyboardEvent.code values, unless they are toggles, or have a list of variants. See `Key` docs for more info.**
 
  ```ts
-import { calculateAndSetPositionAndSize } from "shortcuts-manager/helpers/calculateAndSetPositionAndWidth.js"
+import { calculateAndSetPositionAndSize } from "@witchcraft/shortcuts-manager/helpers/calculateAndSetPositionAndWidth.js"
  
 const firstRow = calculateAndSetPositionAndSize([
 	{ id: "Escape" as const, label: "Esc" }, // {x: 0, width: 1, height: 1}
@@ -217,7 +217,7 @@ Rotation is not currently supported, but it's easy to add. You can extend the `B
 
 ```ts
 // global.d.ts
-declare module "shortcuts-manager/types/index.js" {
+declare module "@witchcraft/shortcuts-manager/types/index.js" {
 	export interface BaseKey {
 		yourProperty:string
 	}
@@ -228,7 +228,7 @@ export { }
 Next you need to create a `Keys` object which describes a group of `Key`s. When keys are added/removed with `add/removeKey`, they will take care of adding/removing keys properly from the `Keys` since keys also need to be added to additional properties of `Keys` such as `toggles`, `variants`, etc. properties. These are used to speed up lookups and can be useful for searching for keys and or applying styles (e.g. `if (toggles[id]) // id is toggle`).
 
 ```ts
-import { createKeys } from "shortcuts-manager/createKeys.js"
+import { createKeys } from "@witchcraft/shortcuts-manager/createKeys.js"
 
 // using the keysList and options we created above
 const keys = createKeys(keysList, options).unwrap()
@@ -241,7 +241,7 @@ Command creation cannot error, so there is no unwrap.
 `command.execute` is of type `CommandExecute` if you need to type your command execute function separately.
 
 ```ts
-import { createCommand } from "shortcuts-manager/createCommand.js"
+import { createCommand } from "@witchcraft/shortcuts-manager/createCommand.js"
 
 const command = createCommand(
 	"test",
@@ -272,7 +272,7 @@ To extend `Condition` and add properties to it, you can extend the `Condition` i
 ```ts
 // global.d.ts
 import type { ConditionNode, ExpressionNode, GroupNode } from "@witchcraft/expressit/types"
-declare module "shortcuts-manager/types/index.js" {
+declare module "@witchcraft/shortcuts-manager/types/index.js" {
 	export interface Condition {
 		ast?: ExpressionNode | ConditionNode | GroupNode
 	}

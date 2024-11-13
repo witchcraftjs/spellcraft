@@ -3,10 +3,10 @@ import { describe, expect, it, type Mock, vi } from "vitest"
 
 import { manager } from "./helpers.keys.js"
 
-import { addCommand } from "../src/addCommand.js"
-import { createCommand } from "../src/createCommand.js"
-import { createCommands } from "../src/createCommands.js"
-import { setCommandProp } from "../src/setCommandProp.js"
+import { addCommand } from "../src/core/addCommand.js"
+import { createCommand } from "../src/core/createCommand.js"
+import { createCommands } from "../src/core/createCommands.js"
+import { setCommandProp } from "../src/core/setCommandProp.js"
 
 
 it("adds commands", () => {

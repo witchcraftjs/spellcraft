@@ -2,7 +2,7 @@ import { Result } from "@alanscodelog/utils/Result.js"
 
 import { checkTrigger } from "./checkTrigger.js"
 
-import { setManagerProp } from "../setManagerProp.js"
+import { setManagerProp } from "../core/setManagerProp.js"
 import type { AnyInputEvent, Manager, ManagerSetEntries, MultipleErrors } from "../types/index.js"
 import { cloneChain } from "../utils/cloneChain.js"
 

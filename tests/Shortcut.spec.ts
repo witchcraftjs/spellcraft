@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest"
 
 import { commands, k, keys, manager, properOrder, properOrderExtraKeys } from "./helpers.keys.js"
 
-import { createShortcut } from "../src/createShortcut.js"
+import { createShortcut } from "../src/core/createShortcut.js"
 import { defaultSorter } from "../src/defaults/KeysSorter.js"
 import { equalsShortcut } from "../src/helpers/equalsShortcut.js"
 import { ERROR, type Key } from "../src/types/index.js"

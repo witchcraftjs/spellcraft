@@ -1,4 +1,4 @@
-import { setManagerProp } from "../setManagerProp.js"
+import { setManagerProp } from "../core/setManagerProp.js"
 import type { Manager } from "../types/index.js"
 
 

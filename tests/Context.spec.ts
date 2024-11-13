@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest"
 
-import { createCondition } from "../src/createCondition.js"
-import { createContext } from "../src/createContext.js"
+import { createCondition } from "../src/core/createCondition.js"
+import { createContext } from "../src/core/createContext.js"
 import { equalsContext } from "../src/helpers/equalsContext.js"
 
 

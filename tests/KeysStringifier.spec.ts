@@ -3,10 +3,10 @@ import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { manager } from "./helpers.keys.js"
 
-import { createKey } from "../src/createKey.js"
-import { createKeys } from "../src/createKeys.js"
-import { createShortcut } from "../src/createShortcut.js"
-import { createShortcuts } from "../src/createShortcuts.js"
+import { createKey } from "../src/core/createKey.js"
+import { createKeys } from "../src/core/createKeys.js"
+import { createShortcut } from "../src/core/createShortcut.js"
+import { createShortcuts } from "../src/core/createShortcuts.js"
 import { defaultStringifier, Stringifier } from "../src/defaults/Stringifier.js"
 import type { Key } from "../src/types/index.js"
 
