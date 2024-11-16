@@ -1,11 +1,12 @@
-// note the lack of extension
-// this is so it works in dev when the module is only stubbed (the file is a ts file, not js yet)
 import {
+	addImportsDir,
 	addTypeTemplate,
 	createResolver,
 	defineNuxtModule,
 	installModule } from "@nuxt/kit"
 // import { addTailwindContents, globFiles } from "@witchcraft/nuxt-utils/utils"
+// note the lack of extension
+// this is so it works in dev when the module is only stubbed (the file is a ts file, not js yet)
 // import { unpluginIconViteOptions } from "@witchcraft/ui/build/unpluginIconViteOptions"
 import { defu } from "defu"
 // import fastGlob from "fast-glob"
@@ -73,7 +74,8 @@ export default defineNuxtModule<ModuleOptions>({
 		// installs tailwind
 		await installModule("@witchcraft/ui/nuxt", (nuxt.options as any).witchcraftUi)
 
-		// addImportsDir(resolve("runtime/composables"))
+		addImportsDir(resolve("runtime/composables"))
+		addImportsDir(resolve("runtime/utils"))
 				
 		nuxt.options.alias["#witchcraft-shortcuts-manager"] = resolve("runtime")
 	},
