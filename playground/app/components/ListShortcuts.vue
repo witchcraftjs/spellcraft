@@ -186,7 +186,6 @@ import { computed, ref, toRaw, toRef, watch, watchEffect } from "vue"
 import { notifyIfError } from "../common/notifyIfError.js"
 import { overlayHoldListeners } from "../common/overlayAccessibilityListeners.js"
 import { parseShortcutCondition } from "../common/parseShortcutCondition.js"
-import { shortcutToId } from "../common/shortcutToId.js"
 import { type Filters, useFilterableShortcutsList } from "../composables/useFilterableShortcutsList.js"
 
 

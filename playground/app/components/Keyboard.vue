@@ -347,8 +347,6 @@ import { clearVirtuallyPressed } from "../common/clearVirtuallyPressed.js"
 import { createDropChain } from "../common/createDropChain.js"
 import { transformShortcutAllowsChainRes } from "../common/transformShortcutAllowsChainRes.js"
 import { type Filters, useFilterableShortcutsList } from "../composables/useFilterableShortcutsList.js"
-import { useKeysLayout } from "../composables/useKeysLayout.js"
-import * as usePointerCoordsJs from "../composables/usePointerCoords.js"
 import { notificationHandlerSymbol } from "../injectionSymbols.js"
 
 
@@ -386,7 +384,7 @@ const displayedKeys = computed(() => keysList.value.filter(key => key.render))
 const keyboardEl = ref<HTMLElement | null>(null)
 const containerEl = ref<HTMLElement | null>(null)
 
-const { height, keyWidth: keyW } = useKeysLayout(props.manager.keys, keyboardEl)
+const { height, keyWidth: keyW } = useShortcutManagerKeysLayout(props.manager.keys, keyboardEl)
 
 const openedKey = shallowRef<string | undefined>()
 const grabbedKey = shallowRef<{ key: Key, id: string } | undefined>()
@@ -519,7 +517,7 @@ const {
 	coords,
 	setPointerCoords,
 	setInitialPointerOffset,
-} = usePointerCoordsJs.usePointerCoords()
+} = usePointerCoords()
 
 const scrollMargin = 20
 const outerScrollMargin = 15

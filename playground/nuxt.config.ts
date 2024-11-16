@@ -6,7 +6,7 @@ export default defineNuxtConfig({
 		compatibilityVersion: 4 as const
 	},
 	app: {
-		baseURL: "/demo",
+		baseURL: process.env.NODE_ENV === "production" ? "./demo" : "",
 	},
 	modules: [
 		"@witchcraft/ui",

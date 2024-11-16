@@ -1,6 +1,6 @@
 import { castType } from "@alanscodelog/utils/castType.js"
-import { Result } from "@alanscodelog/utils/Result.js"
-import { type Context,
+import {
+	type Context,
 	createContext,
 	createKey,
 	createKeys,
@@ -9,23 +9,22 @@ import { type Context,
 	type Hooks,
 	type Manager,
 	type PickManager,
-	setKeyProp } from "@witchcraft/shortcuts-manager"
+	setKeyProp,
+} from "@witchcraft/shortcuts-manager"
 import { labelWithEvent } from "@witchcraft/shortcuts-manager/helpers/index.js"
 import { createLayout } from "@witchcraft/shortcuts-manager/layouts/createLayout.js"
 
 import { conditionParser } from "./conditionParser.js"
 import { parseShortcutCondition } from "./parseShortcutCondition.js"
 
-import { useLabeledByKeyboardLayoutMap } from "../composables/useLabeledByKeyboardLayoutMap.js"
-import type { ContextInfo } from "../types/index.js"
-
+import type { ContextInfo } from "#witchcraft-shortcuts-manager/types.js"
 
 export function createDefaultManager(
 	raw: Partial<Omit<Manager, "options" | "hooks" | "listener" | "state">> & {
 		options: PickManager<"options", "enableShortcuts" | "enableListeners" | "updateStateOnAllEvents" >
 	} = {} as any,
 	extraProps: any = {}
-) {
+): Manager | Error {
 	const layout = createLayout("ansi")
 	// type LayoutKeys = Key<(typeof layout)[number]["id"]>
 	const keys = createKeys(layout.map(key => {
@@ -39,7 +38,7 @@ export function createDefaultManager(
 	if (raw.shortcuts?.entries) {
 		for (const shortcut of raw.shortcuts.entries) {
 			const res = parseShortcutCondition(shortcut)
-			if (res.isError) return res
+			if (res.isError) return res.error
 			shortcut.condition.ast = res.value
 		}
 	}
@@ -119,7 +118,7 @@ export function createDefaultManager(
 		} satisfies Partial<Hooks>,
 	})
 	if (manager.isError) {
-		return manager
+		return manager.error
 	}
 
 	if (extraProps) {
@@ -127,5 +126,5 @@ export function createDefaultManager(
 	}
 	
 	const labeledByKeyboardLayoutMap = useLabeledByKeyboardLayoutMap(manager.value)
-	return Result.Ok(manager.value)
+	return manager.value
 }
