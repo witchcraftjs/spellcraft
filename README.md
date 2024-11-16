@@ -378,6 +378,68 @@ if (res.isError) {
 
 Note that while the built in errors are property specific, custom errors are not.
 
+## Managing Multiple Managers
+
+A helper class `ShortcutManagerManager` is provided to help manage multiple managers.
+
+```ts
+import { ShortcutManagerManager } from "@witchcraft/shortcuts-manager"
+
+const managerManager = new ShortcutManagerManager(
+	raw => {
+		return yourCreateDefaultManager(raw)
+	},
+	{
+		onError: (e) => notifyUserHere(e),
+		onParse: (parsed: any) => {
+			const isValid = yourValidationFunction(parsed)
+			if (!isValid) return Error()
+			// connect the commands to the real command functions
+			// you should NEVER save/parse the command functions, that's a security risk
+
+			for (const commandName of objectKeys(parsed.commands.entries)) {
+				const command: Command = parsed.commands.entries[commandName]
+				const commandExec = getYourCommandFunction(commandName)
+				// @ts-expect-error execute is typically considered readonly
+				command.execute = commandExec
+			}
+			//	it's recommended you use some sort of versioning system
+			(parsed as any).__version = VERSION
+		},
+		onSave: (clone: any) => {
+			// do any further cleanup here
+			for (const shortcut of clone.shortcuts.entries) {
+				delete shortcut.condition.ast
+			}
+			(clone as any).__version = VERSION
+		},
+		onExport(res: object) {
+			// prompt browser to save file
+		},
+		// update your state when the class does
+		onSetActiveManager: (managerName: string) => {
+		},
+		onSetManagerNames: (names: string[]) => {
+		},
+		onSetManager: (name: string, manager: Manager) => {
+		}
+	},
+	{
+		storageKeys // change the keys used
+		storage // change the storage used (localStorage by default), it just needs to be able to setItem/getItem/removeItem
+	}
+)
+// actually attempt to load the saved managers
+managerManager.init()
+// change/create a manager, force means it wont error if the manager doesn't exist
+// and instead creates it
+managerManager.changeManager("myManagerName", { force: true })
+managerManager.duplicateManager("myManagerName", "myDuplicateManagerName")
+managerManager.deleteManager("myManagerName")
+managerManager.renameManager("myManagerName", "myNewManagerName")
+```
+You can then use the active manager's `onSet*Prop` hooks to call debouncedSave. You can wrap only the active manager to intercept all it's `onSet*Prop` calls. See the `useMultipleManagers` composable in the demo.
+
 ## Other Helpers and Utilities
 
 There are many helpers provided to simplify common use cases under `/helpers`. Some notable ones are:
