@@ -1,3 +1,4 @@
+import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import type { Keys } from "../types/index.js"
 
 /**
@@ -17,8 +18,8 @@ export function equalsKey(
 ): boolean {
 	const idsEqual = keyIdA === keyIdB
 	
-	const keyA = keys.entries[keyIdA] ?? keys.toggles[keyIdA]
-	const keyB = keys.entries[keyIdB] ?? keys.toggles[keyIdB]
+	const keyA = getKeyFromIdOrVariant(keyIdA, keys).unwrap()[0]
+	const keyB = getKeyFromIdOrVariant(keyIdB, keys).unwrap()[0]
 
 	if (!idsEqual && allowVariants && keyA.variants && keyB.variants) {
 		for (const variant of keyA.variants) {
