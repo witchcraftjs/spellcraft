@@ -9,12 +9,15 @@ import type { EventListenerTypes, EventTypes, Manager } from "../types/index.js"
 export function createManagerEventListeners<T extends EventTypes, TTypes extends T[]>(
 	manager: Manager,
 	types: TTypes = ["keydown", "keyup", "keypress", "wheel", "mousedown", "mouseup", "mouseenter"] as TTypes,
+	{ debug }: { debug?: true | ((type: EventTypes, e: KeyboardEvent | MouseEvent) => void) } = {},
 ): EventListenerTypes<TTypes[number]> {
+	const debugFn = debug === true ? console.log : debug
 	const listeners: Partial<EventListenerTypes<EventTypes>> = {}
 	for (const type of types) {
 		switch (type) {
 			case "keydown": {
 				listeners.keydown = (e: KeyboardEvent): void => {
+					debugFn?.("keydown", e)
 					if (!manager.options.enableListeners) return
 					const keyIds = getKeyFromEventCode(e.code, e, manager.keys.entries)
 					if (keyIds.isError) {
@@ -33,6 +36,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 			}
 			case "keyup": {
 				listeners.keyup = (e: KeyboardEvent): void => {
+					debugFn?.("keyup", e)
 					if (!manager.options.enableListeners) return
 					const keyIds = getKeyFromEventCode(e.code, e, manager.keys.entries)
 
@@ -52,6 +56,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 			}
 			case "wheel": {
 				listeners.wheel = (e: WheelEvent): void => {
+					debugFn?.("wheel", e)
 					if (!manager.options.enableListeners) return
 					const dir = e.deltaY < 0 ? "Up" : "Down"
 					const code = `Wheel${dir}`
@@ -75,6 +80,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 			}
 			case "mousedown": {
 				listeners.mousedown = (e: MouseEvent): void => {
+					debugFn?.("mousedown", e)
 					if (!manager.options.enableListeners) return
 					const button = e.button.toString()
 
@@ -96,6 +102,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 			}
 			case "mouseup": {
 				listeners.mouseup = (e: MouseEvent): void => {
+					debugFn?.("mouseup", e)
 					if (!manager.options.enableListeners) return
 					const button = e.button.toString()
 					const keyIds = getKeyFromEventCode(button, e, manager.keys.entries, { pressedState: true })
@@ -116,6 +123,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 			}
 			case "mouseenter": {
 				listeners.mouseenter = (e: MouseEvent): void => {
+					debugFn?.("mouseenter", e)
 					if (!manager.options.enableListeners) return
 					manager.listener?.({ event: e, isKeydown: true, keys: [], manager })
 					updateNativeKeysState(manager, e, [])
