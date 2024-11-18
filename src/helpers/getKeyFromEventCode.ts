@@ -56,8 +56,7 @@ export function getKeyFromEventCode(
 		return Result.Err(new KnownError(
 			ERROR.UNKNOWN_KEY_EVENT,
 			`An unknown key (${info}) was pressed.`,
-			// todo
-			{ e: e as any }
+			{ e: e as any, button: withButton, code: withCode, key: withKey, deltaY: withDeltaY }
 		))
 	}
 	return Result.Ok(keyIds)
