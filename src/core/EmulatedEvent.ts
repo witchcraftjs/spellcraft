@@ -22,4 +22,8 @@ export class EmulatedEvent<
 	getModifierState(code: string): boolean {
 		return this.modifiers.includes(code)
 	}
+
+	preventDefault(): void {
+		// so we don't get annoying type errors
+	}
 }

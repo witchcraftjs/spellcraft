@@ -26,7 +26,7 @@ export function createShortcut(
 		sorter.sort(stringChord, manager.keys)
 		finalChain.push(stringChord)
 	}
-	const command = typeof rawShortcut.command === "object" ? rawShortcut.command.name : rawShortcut.command
+	const command = typeof rawShortcut.command === "string" ? rawShortcut.command : rawShortcut.command?.name
 
 	const shortcut: Shortcut = {
 		type: "shortcut",
@@ -40,5 +40,5 @@ export function createShortcut(
 	if (res.isError) return res
 	
 
-	return Result.Ok(shortcut)
+	return Result.Ok(shortcut satisfies Shortcut as any)
 }
