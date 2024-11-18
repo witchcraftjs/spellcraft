@@ -34,6 +34,7 @@ TRawCommand extends Command["name"] | Command = Command["name"] | Command,
 	const command = typeof rawShortcut.command === "string" ? rawShortcut.command : rawShortcut.command?.name
 
 	const shortcut: Shortcut = {
+		...rawShortcut as any,
 		type: "shortcut",
 		enabled: rawShortcut.enabled ?? true,
 		command,

@@ -10,6 +10,7 @@ export function createCondition<TTextCondition extends string, TReturn extends C
 	parse?: (raw: TTextCondition, condition: Condition) => TReturn
 ): TReturn {
 	let condition: Condition = {
+		...rawCondition as any,
 		type: "condition",
 		text: rawCondition ?? "",
 	}

@@ -13,6 +13,7 @@ export function createCommand<
 // since typescript will complain the command returned does not satisfy the base command (due to execute)
 ): Command {
 	const command: Command = {
+		...rawCommand as any,
 		type: "command",
 		name,
 		execute: rawCommand.execute as any,
