@@ -47,9 +47,11 @@ export type AnyInputEvent =
 	| WheelEvent
 	| EmulatedEvent
 export type MinimalInputEvent =
+	(
 	| { button: number }
 	| { code?: string, key: string }
-	| { deltaY: number }
+	| { deltaY: number })
+	& Record<string, any>
 
 
 export type ManagerReplaceValue = Partial<Pick<Manager, "shortcuts" | "keys" | "commands">>
