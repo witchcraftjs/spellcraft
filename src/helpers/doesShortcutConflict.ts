@@ -1,4 +1,5 @@
 import { equalsShortcut } from "./equalsShortcut.js"
+import { getKeyFromIdOrVariant } from "./index.js"
 
 import type { Manager, PickManager, Shortcut } from "../types/index.js"
 import { equalsKey } from "../utils/equalsKey.js"
@@ -55,11 +56,10 @@ export function doesShortcutConflict<TShortcut extends Shortcut>(
 	}
 		
 	const lastSharedIndex = Math.max(0, Math.min(shortcutA.chain.length - 1, shortcutB.chain.length - 1))
-	const lastIsModOnly = shortcutA.chain[lastSharedIndex].find(id => !keys.entries[id].isModifier) === undefined
-	const otherLastIsModOnly = shortcutB.chain[lastSharedIndex].find(id => !keys.entries[id].isModifier) === undefined
-	const sharedModifiers = shortcutA.chain[lastSharedIndex].filter(id => keys.entries[id].isModifier &&
-				shortcutB.chain[lastSharedIndex]
-					.some(otherId => equalsKey(otherId, id, keys, { allowVariants: true }))
+	const lastIsModOnly = shortcutA.chain[lastSharedIndex].find(id => !getKeyFromIdOrVariant(id, keys).unwrap()[0].isModifier) === undefined
+	const otherLastIsModOnly = shortcutB.chain[lastSharedIndex].find(id => !getKeyFromIdOrVariant(id, keys).unwrap()[0].isModifier) === undefined
+	const sharedModifiers = shortcutA.chain[lastSharedIndex].filter(id => getKeyFromIdOrVariant(id, keys).unwrap()[0].isModifier
+		&& shortcutB.chain[lastSharedIndex].some(otherId => equalsKey(otherId, id, keys, { allowVariants: true }))
 	)
 
 

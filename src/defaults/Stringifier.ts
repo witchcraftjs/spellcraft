@@ -6,6 +6,7 @@ import { isObject } from "@alanscodelog/utils/isObject.js"
 import { pretty } from "@alanscodelog/utils/pretty.js"
 import { unreachable } from "@alanscodelog/utils/unreachable.js"
 
+import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { getLabel } from "../helpers/getLabel.js"
 import type { Command, Condition, DefaultStringifierOptions, IStringifier, Key, Manager, Shortcut } from "../types/index.js"
 
@@ -161,7 +162,8 @@ export class Stringifier implements IStringifier {
  
 	protected stringifyKey(keyOrId: Key | string, manager?: Pick<Manager, "keys">): string {
 		if (typeof keyOrId === "string") {
-			const key = manager?.keys.entries[keyOrId] ?? manager?.keys.toggles[keyOrId]
+			const res = getKeyFromIdOrVariant(keyOrId, manager!.keys)
+			const key = res.isOk ? res.value[0] : undefined
 			if (key) {
 				if (this.opts.key) return this.opts.key(keyOrId, key)
 				return getLabel(keyOrId, key)
