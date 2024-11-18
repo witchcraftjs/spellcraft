@@ -13,7 +13,14 @@ export function checkUntrigger(
 		setManagerProp(manager, "state.nextIsChord", false)
 		if (!manager.options.enableShortcuts) return
 		const command = manager.commands.entries[untrigger.command]
-		command.execute?.({ isKeydown: false, command, shortcut: untrigger, event: e, manager })
+		command.execute?.({
+			isKeydown: false,
+			command,
+			shortcut: untrigger,
+			event: e,
+			manager,
+			context: manager.context
+		})
 	}
 }
 

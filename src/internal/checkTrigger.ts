@@ -24,7 +24,14 @@ export function checkTrigger(
 		setManagerProp(manager, "state.untrigger", res.value)
 		setManagerProp(manager, "state.nextIsChord", false)
 		const command = manager.commands.entries[res.value.command]
-		command?.execute?.({ isKeydown: true, command, shortcut: res.value, event: e, manager })
+		command?.execute?.({
+			isKeydown: true,
+			command,
+			shortcut: res.value,
+			event: e,
+			manager,
+			context: manager.context
+		})
 	}
 	const triggerKey = cloneLastChord(manager.state.chain)?.find(id => isTriggerKey(manager.keys.entries[id]))
 	const nonTriggerKey = cloneLastChord(manager.state.chain)?.find(id => !isTriggerKey(manager.keys.entries[id]))
