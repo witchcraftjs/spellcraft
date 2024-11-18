@@ -113,6 +113,7 @@ const listeners = createManagerEventListeners(manager)
 attach(el, listeners, { wheel: { passive: true } })
 // to later detach
 detach(el, listeners, { wheel: { passive: true } })
+// or listeners.abort()
 ```
 \* The emulator is for testing purposes and is not needed for virtual key presses (see `virtualPress/Toggle/Release`) which can be used to allow the user to "press" a key via some other mechanism (e.g. clicking a virtual keyboard).
 

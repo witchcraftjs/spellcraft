@@ -5,6 +5,8 @@ import type { AttachTarget, EventTypes } from "../types/index.js"
 
 /**
  * Detach the listeners from an element.
+ *
+ * Or you can just use the abort controller returned by {@link attach}.
  */
 export function detach(
 	el: AttachTarget,
