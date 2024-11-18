@@ -9,26 +9,37 @@ import type { Manager } from "./manager.js"
 /**
  * Same as {@link Shortcut} except you're allowed to exclude all properties except the chain.
  */
-export type RawShortcut = {
+// see below for why so many generics
+export interface RawShortcut<
+	TRawCommand extends Command["name"] | Command = Command["name"] | Command,
+	TCommand extends TRawCommand extends string ? Command<TRawCommand> : TRawCommand = TRawCommand extends string ? Command<TRawCommand> : TRawCommand,
+	TCondition extends Condition = Condition,
+> extends Omit<Partial<Shortcut<TCommand["name"], TCondition>>, "chain" | "command"> {
 	chain: (string | Key)[][]
-	command?: (string | Command)
-} & Omit<Partial<Shortcut>, "chain" | "command">
+	command?: TRawCommand
+}
 
 
-export interface Shortcut {
+// this has generics only so that if extending the interface,
+// we can add additional properties depending on the name of the command
+// and also possibly the condition, don't think others are needed
+export interface Shortcut<
+	TCommand extends Command["name"] = Command["name"],
+	TCondition extends Condition = Condition,
+> {
 	type: "shortcut"
 	/**
 	 * The {@link Command} to associate with the shortcut.
 	 *
 	 * @RequiresSet @OnHookable @CanHookable
 	 */
-	readonly command?: Command["name"]
+	readonly command?: TCommand
 	/**
 	 * The {@link Condition} a shortcut is allowed to be triggered on. If both the command and the shortcut have a condition, both must be met.
 	 *
 	 * @RequiresSet @OnHookable @CanHookable
 	 */
-	readonly condition: Condition
+	readonly condition: TCondition
 	/**
 	 * Whether the shortcut is enabled. Defaults to true.
 	 *

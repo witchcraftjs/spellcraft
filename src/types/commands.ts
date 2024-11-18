@@ -1,15 +1,18 @@
 import type { Condition } from "./condition.js"
-import type { ERROR, PickManager } from "./index.js"
+import type { Context, ERROR, PickManager } from "./index.js"
 import type { AnyInputEvent, Manager, MinimalInputEvent } from "./manager.js"
 import type { Shortcut } from "./shortcuts.js"
 
 
-export type RawCommand = Pick<Command, "name"> & Partial<Command>
+export type RawCommand<TName extends string = string> = Pick<Command<TName>, "name"> & Partial<Command<TName>>
 
-export type CommandExecute = <T extends AnyInputEvent | MinimalInputEvent = AnyInputEvent | MinimalInputEvent>(args: {
+export type CommandExecute<TName extends string = string> = <
+	
+	T extends AnyInputEvent | MinimalInputEvent = AnyInputEvent | MinimalInputEvent,
+>(args: {
 	isKeydown: boolean
-	command: Command
-	shortcut?: Shortcut | undefined
+	command: Command<TName>
+	shortcut?: Shortcut<TName> | undefined
 	/**
 	 * The event that triggered the command. It might be undefined if a virtual event triggered the key. It's typed as {@link AnyInputEvent} because you might also receive Emulated events from the {@link Emulator} if you use it. If you don't you can safely ignore the {@link EmulatedEvent} type or type the execute function as `CommandExecute<AnyInputEvent>`
 	 */
@@ -18,13 +21,14 @@ export type CommandExecute = <T extends AnyInputEvent | MinimalInputEvent = AnyI
 	 * The manager might be undefined. This is to allow calling the command manually without it.
 	 */
 	manager?: Manager
+	context: Context
 }) => void
 
 export interface Command <
 	TName extends
 		string =
 		string,
-	TExec extends CommandExecute = CommandExecute,
+	TExec extends CommandExecute<string> = CommandExecute<string>,
 	TCondition extends
 		Condition =
 		Condition,
@@ -39,7 +43,7 @@ export interface Command <
 	 */
 	readonly name: TName
 	/**
-	 * The function to execute when a shortcut triggers it's command. It is executed both on keydown and keyup (of the first released key) so be sure to check the isCommanddown parameter so you don't trigger commands twice.
+	 * The function to execute when a shortcut triggers it's command. It is executed both on keydown and keyup (of the first released key) so be sure to check the isKeydown parameter so you don't trigger commands twice.
 	 *
 	 * The command itself is passed to it, and if it is managed by a manager it is also passed the shortcut, the manager itself, and the event of the last key that triggered it. Note the event might not exist when the manager needs to emulate a key release. See {@link Manager.autoReleaseDelay}.
 	 *

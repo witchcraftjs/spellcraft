@@ -1,7 +1,8 @@
 import { Result } from "@alanscodelog/utils/Result.js"
 
+import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { isValidShortcut } from "../helpers/isValidShortcut.js"
-import type { ChainErrors, ERROR, Manager, MultipleErrors, PickManager, RawShortcut, Shortcut } from "../types/index.js"
+import type { ChainErrors, Command, Condition, ERROR, Manager, MultipleErrors, PickManager, RawShortcut, Shortcut } from "../types/index.js"
 
 
 /**
@@ -9,12 +10,16 @@ import type { ChainErrors, ERROR, Manager, MultipleErrors, PickManager, RawShort
  *
  * If the raw shortcut has no condition, a new blank empty condition is created. If you will be following the suggestion of not having any conditions equal eachother (see {@link ConditionComparer}), you can fallback to passing the same instance of an empty condition without issues.
  */
-export function createShortcut(
-	// chain: RawShortcut["chain"],
-	rawShortcut: RawShortcut,
+export function createShortcut <
+TRawCommand extends Command["name"] | Command = Command["name"] | Command,
+	TCommand extends TRawCommand extends string ? Command<TRawCommand> : TRawCommand = TRawCommand extends string ? Command<TRawCommand> : TRawCommand,
+	TCondition extends Condition = Condition,
+
+>(
+	rawShortcut: RawShortcut<TRawCommand, TCommand, TCondition>,
 	manager: Pick<Manager, "keys" | "commands">
 	& PickManager<"options", "stringifier" | "sorter">,
-): Result< Shortcut, MultipleErrors<
+): Result< Shortcut<TCommand["name"], TCondition>, MultipleErrors<
 | ChainErrors
 | ERROR.UNKNOWN_COMMAND
 	>> {
