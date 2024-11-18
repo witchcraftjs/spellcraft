@@ -53,8 +53,8 @@ export function setShortcutsProp<
 						ERROR.DUPLICATE_SHORTCUT,
 						errorTextAdd(
 							"Shortcut",
+							s.stringify(existing.chain, manager),
 							s.stringify(existing, manager),
-							s.stringifyList("shortcuts", shortcuts.entries, manager),
 							s.stringify(shortcut, manager)
 						),
 						{ existing: (existing as any), self: shortcuts }
