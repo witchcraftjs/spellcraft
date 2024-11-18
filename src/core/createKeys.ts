@@ -13,11 +13,14 @@ export function createKeys<
 		Key =
 		Key,
 	TKeys extends
-		(Key)[] =
-		(Key)[],
+		(TKey)[] =
+		(TKey)[],
 	TEntries extends
-		RecordFromArray<TKeys, "id", TKey> =
-		RecordFromArray<TKeys, "id", TKey>,
+		Record<TKeys[number]["id"], Key> =
+		Record<TKeys[number]["id"], Key>,
+	// causing issues
+	// RecordFromArray<TKeys, "id", Key> =
+	// RecordFromArray<TKeys, "id", Key>,
 TCheck extends boolean | "only" = true,
 >(
 	entries: TKeys,

@@ -27,17 +27,72 @@ const setY = <T extends Record<"id", string>>(yVal: number) => (val: T):(T & { y
  * This also adds the following classes to some keys: `center-label` for media and arrow keys, and `iso-enter` for the iso enter which requires a different approach to styling (see the demo, it's painful).
  */
  
-export function createLayout(
+export function createLayout
+<
+	TNumpad extends boolean = true,
+	TMediaKeys extends boolean = true,
+	TFn extends boolean = true,
+	TNavigation extends boolean = true,
+	TArrowKeys extends boolean = true,
+	TNames extends string =
+"Escape"
+| (
+	TFn extends true
+	? "F1" | "F2" | "F3" | "F4" | "F5" | "F6" | "F7" | "F8" | "F9" | "F10" | "F11" | "F12"
+	: never
+)
+| "Backquote" | "Digit1" | "Digit2" | "Digit3" | "Digit4" | "Digit5" | "Digit6" | "Digit7" | "Digit8" | "Digit9" | "Digit0" | "Minus" | "Equal" | "Backspace"
+| "Tab" | "KeyQ" | "KeyW" | "KeyE" | "KeyR" | "KeyT" | "KeyY" | "KeyU" | "KeyI" | "KeyO" | "KeyP" | "BracketLeft" | "BracketRight" | "Backslash"
+| "CapsLock" | "KeyA" | "KeyS" | "KeyD" | "KeyF" | "KeyG" | "KeyH" | "KeyJ" | "KeyK" | "KeyL" | "Semicolon" | "Quote" | "Enter"
+| "VirtualShiftLeft" | "IntlBackslash" | "KeyZ" | "KeyX" | "KeyC" | "KeyV" | "KeyB" | "KeyN" | "KeyM" | "Comma" | "Period" | "Slash" | "VirtualShiftRight"
+| "VirtualControlLeft" | "VirtualMetaLeft" | "VirtualAltLeft" | "Space" | "VirtualAltRight" | "VirtualMetaRight" | "ContextMenu" | "VirtualControlRight"
+
+| "PrintScreen"
+| "ScrollLock"
+| "Pause"
+
+| (
+	TNavigation extends true
+	? "Insert" | "Home" | "PageUp"
+	: never
+)
+| (
+	TArrowKeys extends true
+	? "ArrowUp" | "ArrowLeft" | "ArrowDown" | "ArrowRight"
+	: never
+)
+
+| (
+	TMediaKeys extends true
+	? "AudioVolumeMute" | "AudioVolumeDown" | "AudioVolumeUp" | "MediaTrackPrevious" | "MediaTrackPause" | "MediaTrackNext"
+	: never
+)
+| (
+	TNumpad extends true
+	? "NumLock" | "NumpadDivide" | "NumpadMultiply" | "NumpadSubtract"
+	| "Numpad7" | "Numpad8" | "Numpad9" | "NumpadAdd"
+	| "Numpad4" | "Numpad5" | "Numpad6"
+	| "Numpad1" | "Numpad2" | "Numpad3" | "NumpadEnter"
+	| "Numpad0" | "NumpadDecimal"
+	: never
+)
+>(
 	type: "ansi" | "iso" | "" = "ansi",
 	{
-		numpad = true,
-		mediaKeys = true,
-		fn = true,
-		navigation = true,
-		arrowKeys = true,
+		numpad = true as any,
+		mediaKeys = true as any,
+		fn = true as any,
+		navigation = true as any,
+		arrowKeys = true as any,
 	}:
-	Partial<Record<"numpad" | "mediaKeys" | "fn" | "navigation" | "arrowKeys", boolean>> = {}
-): RawKey[] {
+	Partial<{
+		numpad: TNumpad
+		mediaKeys: TMediaKeys
+		fn: TFn
+		navigation: TNavigation
+		arrowKeys: TArrowKeys
+	}> = {}
+): RawKey< TNames >[] {
 	const keys = [
 		...calculateAndSetPositionAndSize([
 			{ id: "Escape" as const, label: "Esc" },
@@ -148,7 +203,7 @@ export function createLayout(
 				id: "VirtualControlLeft" as const,
 				isModifier: "native" as const,
 				label: "Ctrl",
-				variants: ["ControlLeft", "ControlRight", "Control"],
+				variants: ["ControlLeft", "ControlRight", "Control", "Ctrl"],
 				width: 1.25,
 			},
 			{
@@ -185,7 +240,7 @@ export function createLayout(
 				id: "VirtualControlRight" as const,
 				isModifier: "native" as const,
 				label: "Ctrl",
-				variants: ["ControlLeft", "ControlRight", "Control"],
+				variants: ["ControlLeft", "ControlRight", "Control", "Ctrl"],
 				width: 1.25,
 			},
 		] as const).map(setY(start + 6)),
@@ -270,6 +325,6 @@ export function createLayout(
 			]
 			: []
 		),
-	]
+	] satisfies RawKey[]
 	return keys
 }

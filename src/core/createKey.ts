@@ -13,12 +13,13 @@ import { ERROR, type Key, type MultipleErrors, type RawKey } from "../types/inde
  */
 
 export function createKey<
-	TKey extends RawKey,
+TId extends string = string,
+TKey extends RawKey<TId> = RawKey<TId>,
 >(
-	id: TKey["id"],
+	id: TId,
 	rawKey: Omit<TKey, "id"> = {} as any,
 ): Result<
-		Key<TKey["id"]>,
+		Key<TId>,
 		MultipleErrors<
 		| ERROR.INVALID_VARIANT
 		>
