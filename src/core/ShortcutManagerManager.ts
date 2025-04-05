@@ -1,8 +1,8 @@
 import { debounce } from "@alanscodelog/utils/debounce.js"
+import { isArray } from "@alanscodelog/utils/isArray.js"
+import { keys } from "@alanscodelog/utils/keys.js"
 import { Result } from "@alanscodelog/utils/Result.js"
-import {isArray} from "@alanscodelog/utils/isArray.js"
-import {keys} from "@alanscodelog/utils/keys.js"
-import {setReadOnly} from "@alanscodelog/utils/setReadOnly.js"
+import { setReadOnly } from "@alanscodelog/utils/setReadOnly.js"
 
 import { managerToStorableClone } from "../helpers/managerToStorableClone.js"
 import type { Manager, PickManager } from "../types/index.js"
@@ -357,5 +357,17 @@ export class ShortcutManagerManager {
 			this.load(instance)
 		}
 		return Result.Ok()
+	}
+	
+	/** Clears all managers and resets the state. `init` must be called again if you want to use the class instance again. */
+	clearAll(): void {
+		// todo, check we can init again after this
+		this.storage.removeItem(this.storageKeys.managerNames)
+		this.storage.removeItem(this.storageKeys.activeManager)
+		for (const name of this.managerNames) {
+			this.storageRemoveManager(name)
+		}
+		this.setManagerNames([])
+		this.setActiveManager("default")
 	}
 }
