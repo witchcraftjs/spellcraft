@@ -1,21 +1,10 @@
 <template>
-<div
-	id="shortcuts-manager-app"
-	:class="twMerge(`
-		p-4
-		dark:bg-neutral-900
-		dark:text-white
-		min-h-screen
-		min-h-100dvh
-		flex
-		flex-col
-		gap-2
-	`,
-		outline ? 'group outlined outlined-visible' : '[&_*]:outline-none',
-		darkMode && `dark`
-	)"
-	ref="el"
->
+	<WRoot
+		id="shortcuts-manager-app"
+		class="dark:bg-neutral-900 dark:text-white gap-2 p-4"
+		:is-client-side="isClientSide"
+	>
+	
 	<div class="
 		grid grid-cols-3 grid-rows-1 gap-4
 	"
@@ -31,13 +20,17 @@
 			</a>
 			<KHelp/>
 		</div>
-			
+		<div class="flex flex-wrap gap-2 items-center justify-end">
 		<KManagerImportExport
 			:managers="managerNames"
-			class="pr-8"
 			@export-all="exportManagers($event)"
 			@import="importManagers($event)"
 		/>
+		<WDarkModeSwitcher
+			class="mr-8"
+			:auto-label="false"
+		/>
+		</div>
 	</div>
 	<GithubCorner :href="githubLink"/>
 	<KManagerPicker
@@ -63,7 +56,7 @@
 		@add-example-data="addExampleData(activeManager)"
 	/>
 	<WNotifications :handler="notificationHandler"/>
-</div>
+</WRoot>
 </template>
 
 <script setup lang="ts">
@@ -77,7 +70,7 @@ import {
 	setManagerProp,
 } from "@witchcraft/shortcuts-manager"
 import { safeSetManagerChain } from "@witchcraft/shortcuts-manager/helpers/safeSetManagerChain.js"
-import { provide, ref } from "vue"
+import { ref } from "vue"
 
 import { clearVirtuallyPressed } from "./common/clearVirtuallyPressed.js"
 import { notificationHandler } from "./common/notificationHandler.js"
@@ -88,16 +81,13 @@ import KManager from "./components/Manager.vue"
 import KManagerImportExport from "./components/ManagerImportExport.vue"
 import KManagerPicker from "./components/ManagerPicker.vue"
 import { useMultipleManagers } from "./composables/useMultipleManagers.js"
-import { notificationHandlerSymbol } from "./injectionSymbols.js"
 
 import { repository as githubLink } from "../../package.json"
 
-provide(notificationHandlerSymbol, notificationHandler)
-const el = ref<HTMLElement | null>(null)
-const { outline } = useAccesibilityOutline(el as any)
-const { darkMode } = useDarkMode()
-const triggerState = ref(false)
+const isClientSide = import.meta.client
+useNotificationHandler(notificationHandler, isClientSide)
 
+const triggerState = ref(false)
 
 const {
 	deleteManager,

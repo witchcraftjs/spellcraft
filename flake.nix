@@ -58,7 +58,7 @@
                                        languages = {
                         javascript = {
                           enable = true;
-                          package = pkgs.nodejs_22;
+                          package = pkgs.nodejs_23;
                           pnpm.enable = true;
                         };
                       };
@@ -93,7 +93,7 @@
                         description = "Prints out some information about the environment.";
                         exec = ''
                           echo "Environment Package Versions:"
-                          echo "node `${pkgs.nodejs}/bin/node --version`"
+                          echo "node `${pkgs.nodejs_23}/bin/node --version`"
                           echo "pnpm `${pkgs.nodePackages.pnpm}/bin/pnpm --version`"
                         '';
                       };

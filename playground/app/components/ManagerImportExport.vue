@@ -3,7 +3,7 @@
 	<WButton
 		aria-label="Export All"
 		title="Export All"
-		class="flex-1"
+		class="flex-1 whitespace-nowrap"
 		@click="emit('exportAll', managers)"
 	>
 		<template #icon> <WIcon> <i-fa-solid-file-export/> </WIcon> </template>
@@ -13,7 +13,7 @@
 	<WFileInput
 		aria-label="Import"
 		title="Import"
-		wrapper-class="flex-1 px-2 pl-1 border-[1px] hover:text-accent-600"
+		wrapper-class="flex-1 px-2 pl-1 border-[1px] hover:text-accent-600 whitespace-nowrap"
 		:formats="['.json']"
 		:compact="true"
 		@input="importManagers as any"

@@ -132,9 +132,7 @@
 import { isBlank } from "@alanscodelog/utils/isBlank.js"
 import { vExtractRootEl } from "@witchcraft/ui/directives/vExtractRootEl.js"
 import { computed, inject, ref, toRef, watch, watchEffect } from "vue"
-
-import { notificationHandlerSymbol } from "../injectionSymbols.js"
-
+import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler.js"
 
 const props = defineProps<{
 	managers: string[]
@@ -153,7 +151,7 @@ const emit = defineEmits<{
 	duplicate: [{ oldName: string, newName: string }]
 }>()
 
-const notificationHandler = inject(notificationHandlerSymbol)
+const notificationHandler = useNotificationHandler()
 const tempValue = ref(props.activeManager)
 
 watch(activeManager, newVal => {

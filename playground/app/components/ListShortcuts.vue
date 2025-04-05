@@ -1,8 +1,8 @@
 <template>
 <div>
 	<div :class="`
-		rounded-tl
-		rounded-tr
+		rounded-tl-sm
+		rounded-tr-sm
 		border-x
 		border-t
 		border-neutral-600
@@ -34,20 +34,25 @@
 	</div>
 	<div :class="`
 			grid
-			grid-cols-[min-content,repeat(3,minmax(0,1fr)),min-content]
+			grid-cols-[min-content_repeat(3,minmax(0,1fr))_min-content]
 			items-stretch
-
-			[&>div:nth-last-of-type(1)]:rounded-br
-			[&>div:nth-last-of-type(5)]:rounded-bl
+			[&>div:nth-last-of-type(1)]:rounded-br-sm
+			[&>div:nth-last-of-type(5)]:rounded-bl-sm
 			[&>div]:border-neutral-400
+			dark:[&>div]:border-neutral-600
 			[&>div:nth-of-type(-n+5)]:bg-neutral-200
+			dark:[&>div:nth-of-type(-n+5)]:bg-neutral-800
 			[&>div:nth-of-type(-n+5)]:border-t-neutral-600
-			[&>div:nth-last-of-type(-n+4)]:border-b-neutral-600
+			dark:[&>div:nth-of-type(-n+5)]:border-t-neutral-800
+			[&>div:nth-last-of-type(-n+5)]:border-b-neutral-600
+			dark:[&>div:nth-last-of-type(-n+5)]:border-b-neutral-800
 			[&>div:nth-of-type(-n+5)]:border-t
 			[&>div]:border-b
 			[&>div:nth-of-type(5n+1)]:border-l
 			[&>div:nth-of-type(5n+1)]:border-l-neutral-600
+			dark:[&>div:nth-of-type(5n+1)]:border-l-neutral-800
 			[&>div:nth-of-type(5n+5)]:border-r-neutral-600
+			dark:[&>div:nth-of-type(5n+5)]:border-r-neutral-800
 			[&>div]:border-r
 			relative
 		`"
@@ -132,7 +137,6 @@
 				/>
 			</div>
 			<div class="">
-				<!-- @vue-expect-error todo -->
 				<WInput
 					:placeholder="'(None)'"
 					:border="false"
@@ -174,7 +178,6 @@ import { setReadOnly } from "@alanscodelog/utils"
 import { isWhitespace } from "@alanscodelog/utils/isWhitespace.js"
 import { keys, keys as ObjectKeys } from "@alanscodelog/utils/keys.js"
 import { Result } from "@alanscodelog/utils/Result.js"
-import { unreachable } from "@alanscodelog/utils/unreachable.js"
 import type { createManagerEventListeners } from "@witchcraft/shortcuts-manager"
 import { addCommand, addShortcut as managerAddShortcut, attach, createCommand, createShortcut, detach, removeShortcut as managerRemoveShortcut, setManagerProp, setShortcutProp } from "@witchcraft/shortcuts-manager"
 import { equalsShortcut } from "@witchcraft/shortcuts-manager/helpers/equalsShortcut.js"

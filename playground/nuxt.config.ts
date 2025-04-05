@@ -9,7 +9,7 @@ export default defineNuxtConfig({
 		baseURL: process.env.NODE_ENV === "production" ? "./demo" : "",
 	},
 	modules: [
-		"@witchcraft/ui",
+		"@witchcraft/ui/nuxt",
 		"../src/module"
 		// or "@witchcraft/shortcuts-manager"// either work
 	],

@@ -4,16 +4,7 @@ import {
 	createResolver,
 	defineNuxtModule,
 	installModule } from "@nuxt/kit"
-// import { addTailwindContents, globFiles } from "@witchcraft/nuxt-utils/utils"
-// note the lack of extension
-// this is so it works in dev when the module is only stubbed (the file is a ts file, not js yet)
-// import { unpluginIconViteOptions } from "@witchcraft/ui/build/unpluginIconViteOptions"
 import { defu } from "defu"
-// import fastGlob from "fast-glob"
-// import { type Config as TwConfig } from "tailwindcss"
-// import IconsResolver from "unplugin-icons/resolver"
-// import Icons from "unplugin-icons/vite"
-// import ViteComponents from "unplugin-vue-components/vite"
 
 
 const { resolve } = createResolver(import.meta.url)
@@ -23,12 +14,15 @@ const { resolve } = createResolver(import.meta.url)
 //
 
 declare module "@nuxt/schema" {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
 	interface PublicRuntimeConfig {
+		// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 		witchcraftShortcutsManager: {}
 	}
 }
 
  
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export interface ModuleOptions {
 
 }
@@ -47,7 +41,7 @@ export default defineNuxtModule<ModuleOptions>({
 			}
 		)
 		addTypeTemplate({
-			filename: "witchcraft-shortcuts-manager.d.ts",
+			filename: "types/witchcraft-shortcuts-manager.d.ts",
 
 			getContents: () => `
 				import { type NavigatorWKeyboard } from "./src/types/general.ts"
@@ -61,17 +55,6 @@ export default defineNuxtModule<ModuleOptions>({
 			`,
 		})
 
-		// await addComponentsDir({
-		// 	path: resolve("runtime/components"),
-		// })
-
-		// nuxt.hook("tailwindcss:config" as any, async (config: DeepPartial<TwConfig>) => {
-		// 	addTailwindContents(config, [
-		// 		resolve("runtime/**/*.vue"),
-		// 	])
-		// })
-
-		// installs tailwind
 		await installModule("@witchcraft/ui/nuxt", (nuxt.options as any).witchcraftUi)
 
 		addImportsDir(resolve("runtime/composables"))

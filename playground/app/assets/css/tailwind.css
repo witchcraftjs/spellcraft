@@ -1,4 +1,2 @@
-@import "@witchcraft/ui/base.css";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "../../../.nuxt/witchcraft-ui.css";

@@ -10,7 +10,7 @@
 	</template>
 	<template #popup="{extractEl}">
 		<div class="h-[500px] p-10" :ref="extractEl">
-			<div class="bg-white h-full p-4 rounded border border-neutral-500">
+			<div class="bg-white h-full p-4 rounded-sm border border-neutral-500">
 				Basics:
 				<ul class="list-disc ml-4">
 					<li>

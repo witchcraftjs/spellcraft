@@ -11,10 +11,11 @@ All css variables are set here for maximum flexibility.
 		relative
 		border
 		border-neutral-500
-		rounded
+		dark:border-neutral-700
+		rounded-sm
 		after:absolute
 		after:border-transparent
-		after:rounded
+		after:rounded-sm
 		after:pointer-events-none
 		after:inset-[-2px]
 		after:border-4
@@ -23,12 +24,12 @@ All css variables are set here for maximum flexibility.
 	`,
 		/* after:inset-[calc(-1*var(--outerScrollMargin))]
 		after:[border-width:var(--scrollBorder)] */
-		isDragging && ` border-accent-500 `,
 		scrollIndicator.right && `after:border-r-accent-500/60`,
 		scrollIndicator.down && `after:border-b-accent-500/60`,
 		scrollIndicator.left && `after:border-l-accent-500/60`,
 		scrollIndicator.up && `after:border-t-accent-500/60`,
-		triggerState && `border-blue-400`
+		isDragging && ` border-accent-500`,
+		triggerState && `border-blue-400 dark:border-blue-600`
 
 	)"
 	:style="`
@@ -127,12 +128,14 @@ All css variables are set here for maximum flexibility.
 						no-touch-action
 						border
 						border-neutral-500
+						dark:border-neutral-700
 						h-full
 						whitespace-pre
 						shadow-[0_var(--shadow)_var(--shadow)_rgb(0_0_0/50%)]
 						rounded-[var(--padding)]
 						relative
 						bg-bg
+						dark:bg-neutral-800/90
 						grid
 						grid-rows-[min-content,1fr]
 						grid-cols-1
@@ -140,33 +143,44 @@ All css variables are set here for maximum flexibility.
 						before:border-transparent
 						before:inset-[-3px]
 						before:absolute
-						before:rounded
+						before:rounded-sm
 						before:z-[-1]
 						ease-[cubic-bezier(0,1,1,0)]
 						`,
 						triggerState && `
 						border-blue-400
+						dark:border-blue-600
 						`,
 						key.pressed && `
 						border-accent-600
+						dark:border-accent-800
 						bg-accent-100
+						dark:bg-accent-950
 						before:bg-neutral-300
+						dark:before:bg-neutral-600
 						`,
 						!key.enabled && `
 							border-neutral-600
+							dark:border-neutral-400
 							bg-neutral-200
+							dark:bg-neutral-800
 						`,
-						key.toggleOnPressed && `border-accent-600`,
+						key.toggleOnPressed && `border-accent-600 dark:border-accent-400`,
 						keyShortcutMap[key.id]?.isModifierHint && `
 							before:border-neutral-300
+							dark:before:border-neutral-600
 						`,
 						candidateKey && equalsKey(candidateKey.id, key.id, manager.keys) && canDrop === true && `
 							border-accent-600
-							bg-accent-200
+							dark:border-accent-800
+							bg-accent-300
+							dark:bg-accent-900
 						`,
 						candidateKey && equalsKey(candidateKey.id,key.id, manager.keys) && canDrop !== true && `
 							border-red-600
+							dark:border-red-800
 							bg-red-200
+							dark:bg-red-950
 						`
 					)"
 					:title="key.label"
@@ -200,10 +214,12 @@ All css variables are set here for maximum flexibility.
 							p-[3px]
 							[overflow:unset]
 							w-[min-content]
-							rounded
+							rounded-sm
 							bg-bg
+							dark:bg-neutral-800
 							border-[1px]
 							border-neutral-300
+							dark:border-neutral-600
 						`,
 						)"
 						:data-contains-conflicting="keyShortcutMap[key.id]?.containsConflicting"
@@ -212,7 +228,7 @@ All css variables are set here for maximum flexibility.
 							:class="twMerge(`
 									${shortcutClass}
 									truncate
-									rounded-sm
+									rounded-xs
 									px-1
 									flex-1
 									border-2
@@ -238,7 +254,9 @@ All css variables are set here for maximum flexibility.
 								`,
 								isPressed && `
 									border-accent-700
+									dark:border-accent-300
 									bg-accent-200
+									dark:bg-accent-800
 								`,
 
 							)
@@ -284,9 +302,11 @@ All css variables are set here for maximum flexibility.
 					w-[300px]
 					text-sm
 					bg-bg
+					dark:bg-neutral-800
 					border-2
-					rounded
+					rounded-sm
 					border-neutral-300
+					dark:border-neutral-600
 					px-2
 				"
 			>
@@ -296,9 +316,11 @@ All css variables are set here for maximum flexibility.
 				class="
 					border-2
 					border-neutral-300
+					dark:border-neutral-600
 					bg-bg
+					dark:bg-neutral-800
 					px-2
-					rounded
+					rounded-sm
 					xl:text-sm
 				"
 			>
@@ -347,7 +369,7 @@ import { clearVirtuallyPressed } from "../common/clearVirtuallyPressed.js"
 import { createDropChain } from "../common/createDropChain.js"
 import { transformShortcutAllowsChainRes } from "../common/transformShortcutAllowsChainRes.js"
 import { type Filters, useFilterableShortcutsList } from "../composables/useFilterableShortcutsList.js"
-import { notificationHandlerSymbol } from "../injectionSymbols.js"
+import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler.js"
 
 
 const props = defineProps<{
@@ -373,7 +395,7 @@ const keyShortcutMap = computed(() => generateKeyShortcutMap(chain.value, shortc
 const keysList = computed(() => Object.values(props.manager.keys.entries))
 
 
-const notificationHandler = inject(notificationHandlerSymbol)
+const notificationHandler = useNotificationHandler()
 
 const keyClass = "container-key"
 const shortcutClass = "shortcut"

@@ -15,7 +15,7 @@
 			after:inset-0
 			after:border-2
 			after:border-transparent
-			after:rounded
+			after:rounded-sm
 			relative
 			after:absolute
 			disabled:text-transparent
@@ -41,7 +41,7 @@
 					border
 					border-neutral-300
 					bg-neutral-100
-					rounded
+					rounded-sm
 					px-2
 					flex
 					gap-2
@@ -102,9 +102,9 @@
 <script setup lang="ts">
 import { isBlank } from "@alanscodelog/utils/isBlank.js"
 import { keys } from "@alanscodelog/utils/keys.js"
+import {useNotificationHandler} from "@witchcraft/ui/composables/useNotificationHandler.js"
 import { computed, inject, type PropType, ref } from "vue"
 
-import { notificationHandlerSymbol } from "../injectionSymbols.js"
 import type { ContextInfo } from "../types/index.js"
 
 
@@ -118,7 +118,7 @@ const emit = defineEmits<{
 	remove: [val:string]
 }>()
 
-const notificationHandler = inject(notificationHandlerSymbol)
+const notificationHandler = useNotificationHandler()
 const tempValue = ref("")
 const addContext = (): void => {
 	if (!isBlank(tempValue.value)) {
@@ -143,3 +143,4 @@ const deactivateAll = (): void => {
 }
 
 </script>
+

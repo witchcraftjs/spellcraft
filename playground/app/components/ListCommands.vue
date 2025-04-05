@@ -1,7 +1,7 @@
 <template>
 <div>
 	<div :class="`
-		rounded
+		rounded-sm
 		border
 		border-neutral-600
 		grid
