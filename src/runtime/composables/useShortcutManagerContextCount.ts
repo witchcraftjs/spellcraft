@@ -2,7 +2,7 @@ import { keys } from "@alanscodelog/utils/keys.js"
 import { unreachable } from "@alanscodelog/utils/unreachable.js"
 import { extractTokens } from "@witchcraft/expressit/utils/extractTokens.js"
 import type { Manager } from "@witchcraft/shortcuts-manager/types/index.js"
-import { type Ref, watch } from "vue"
+import { type ComputedRef, type Ref, watch } from "vue"
 
 import type { Manager } from "../../types/manager.js"
 import type { ContextInfo } from "../types.js"
@@ -12,7 +12,7 @@ import type { ContextInfo } from "../types.js"
  *
  * Useful to know if we can delete a context.
  */
-export function useShortcutManagerContextCount(manager: Ref<Manager>, contexts: Ref<ContextInfo>): {
+export function useShortcutManagerContextCount(manager: Ref<Manager> | ComputedRef<Manager>, contexts: Ref<ContextInfo>): {
 	addContext(context: string): void
 	removeContext(context: string): void
 	activateContext(context: string): void
@@ -24,7 +24,7 @@ export function useShortcutManagerContextCount(manager: Ref<Manager>, contexts: 
 			if (!("ast" in shortcut.condition)) continue
 			const c = shortcut.condition.ast
 			if (c) {
-				const tokens = extractTokens(c)
+				const tokens = extractTokens(c as any) // todo
 				const seen: string[] = []
 				for (const token of tokens) {
 					if (token.type === "VALUE") {

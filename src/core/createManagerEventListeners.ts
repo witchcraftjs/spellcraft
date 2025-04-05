@@ -11,7 +11,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 	types: TTypes = ["keydown", "keyup", "keypress", "wheel", "mousedown", "mouseup", "mouseenter"] as TTypes,
 	{ debug }: { debug?: true | ((type: EventTypes, e: KeyboardEvent | MouseEvent) => void) } = {},
 ): EventListenerTypes<TTypes[number]> {
-	const debugFn = debug === true ? console.log : debug
+	const debugFn = debug === true ? console.log : undefined
 	const listeners: Partial<EventListenerTypes<EventTypes>> = {}
 	for (const type of types) {
 		switch (type) {
