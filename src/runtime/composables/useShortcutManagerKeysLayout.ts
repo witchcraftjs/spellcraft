@@ -1,4 +1,3 @@
-import { type Keys } from "@witchcraft/shortcuts-manager/types/index.js"
 import { useGlobalResizeObserver } from "@witchcraft/ui/composables/useGlobalResizeObserver.js"
 import { computed, reactive, type Ref, ref, watch } from "vue"
 

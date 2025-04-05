@@ -1,8 +1,9 @@
-import { getKeyboardLayoutMap } from "@witchcraft/shortcuts-manager/helpers/getKeyboardLayoutMap.js"
-import { labelWithKeyboardMap } from "@witchcraft/shortcuts-manager/helpers/labelWithKeyboardMap.js"
-import { onKeyboardLayoutChange } from "@witchcraft/shortcuts-manager/helpers/onKeyboardLayoutChange.js"
-import type { Manager } from "@witchcraft/shortcuts-manager/types/manager.js"
-import { ref } from "vue"
+import { type Ref,ref } from "vue"
+
+import { getKeyboardLayoutMap } from "../../helpers/getKeyboardLayoutMap.js"
+import { labelWithKeyboardMap } from "../../helpers/labelWithKeyboardMap.js"
+import { onKeyboardLayoutChange } from "../../helpers/onKeyboardLayoutChange.js"
+import type { Manager } from "../../types/manager.js"
 
 /**
  * Sets up {@link getKeyboardLayoutMap} and {@link onKeyboardLayoutChange} to use {@link labelWithKeyboardMap}.

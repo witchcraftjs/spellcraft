@@ -1,4 +1,4 @@
-import type { Manager, PickManager, Shortcut } from "@witchcraft/shortcuts-manager"
+import type { Manager, PickManager, Shortcut } from "@witchcraft/spellcraft"
 
 
 /** Turns a shortcut into an id to use in a v-for loop. */

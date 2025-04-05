@@ -1,6 +1,6 @@
 <template>
 	<WRoot
-		id="shortcuts-manager-app"
+		id="spellcraft-app"
 		class="dark:bg-neutral-900 dark:text-white gap-2 p-4"
 		:is-client-side="isClientSide"
 	>
@@ -68,8 +68,8 @@ import {
 	createShortcut,
 	type Manager,
 	setManagerProp,
-} from "@witchcraft/shortcuts-manager"
-import { safeSetManagerChain } from "@witchcraft/shortcuts-manager/helpers/safeSetManagerChain.js"
+} from "@witchcraft/spellcraft"
+import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain.js"
 import { ref } from "vue"
 
 import { clearVirtuallyPressed } from "./common/clearVirtuallyPressed.js"

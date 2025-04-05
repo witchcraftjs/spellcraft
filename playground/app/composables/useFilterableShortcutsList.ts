@@ -1,6 +1,6 @@
-import { shortcutCanExecuteIn } from "@witchcraft/shortcuts-manager/helpers"
-import { type Manager } from "@witchcraft/shortcuts-manager/types"
-import { chainContainsSubset, equalsKeys } from "@witchcraft/shortcuts-manager/utils"
+import { shortcutCanExecuteIn } from "@witchcraft/spellcraft/helpers"
+import { type Manager } from "@witchcraft/spellcraft/types"
+import { chainContainsSubset, equalsKeys } from "@witchcraft/spellcraft/utils"
 import { computed, type Ref } from "vue"
 
 

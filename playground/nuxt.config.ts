@@ -11,7 +11,7 @@ export default defineNuxtConfig({
 	modules: [
 		"@witchcraft/ui/nuxt",
 		"../src/module"
-		// or "@witchcraft/shortcuts-manager"// either work
+		// or "@witchcraft/spellcraft"// either work
 	],
 	witchcraftShortcutsManager: {
 	},

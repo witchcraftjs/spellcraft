@@ -8,10 +8,6 @@ import { defu } from "defu"
 
 
 const { resolve } = createResolver(import.meta.url)
-// const componentsInfo = globFiles([
-// 	`${resolve("runtime/components")}/**/*.vue`,
-// ], [], (filepath, name) => ({ filepath, name }))
-//
 
 declare module "@nuxt/schema" {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -41,7 +37,7 @@ export default defineNuxtModule<ModuleOptions>({
 			}
 		)
 		addTypeTemplate({
-			filename: "types/witchcraft-shortcuts-manager.d.ts",
+			filename: "types/witchcraft-spellcraft.d.ts",
 
 			getContents: () => `
 				import { type NavigatorWKeyboard } from "./src/types/general.ts"
@@ -60,6 +56,6 @@ export default defineNuxtModule<ModuleOptions>({
 		addImportsDir(resolve("runtime/composables"))
 		addImportsDir(resolve("runtime/utils"))
 				
-		nuxt.options.alias["#witchcraft-shortcuts-manager"] = resolve("runtime")
+		nuxt.options.alias["#witchcraft-spellcraft"] = resolve("runtime")
 	},
 })

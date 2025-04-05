@@ -344,7 +344,7 @@ import {
 	detach,
 	setManagerProp,
 	setShortcutProp,
-} from "@witchcraft/shortcuts-manager"
+} from "@witchcraft/spellcraft"
 import {
 	generateKeyShortcutMap,
 	getKeyFromIdOrVariant,
@@ -352,17 +352,17 @@ import {
 	shortcutSwapChords,
 	virtualPress,
 	virtualRelease,
-} from "@witchcraft/shortcuts-manager/helpers"
+} from "@witchcraft/spellcraft/helpers"
 import type {
 	Key,
 	Manager,
 	ShortcutInfo,
-} from "@witchcraft/shortcuts-manager/types"
+} from "@witchcraft/spellcraft/types"
 import {
 	cloneChain,
 	equalsKey,
-} from "@witchcraft/shortcuts-manager/utils"
-import { equalsKeys } from "@witchcraft/shortcuts-manager/utils/equalsKeys.js"
+} from "@witchcraft/spellcraft/utils"
+import { equalsKeys } from "@witchcraft/spellcraft/utils/equalsKeys.js"
 import { computed,inject,onBeforeUnmount,onMounted, onUnmounted, type Ref, ref, shallowRef, toRefs } from "vue"
 
 import { clearVirtuallyPressed } from "../common/clearVirtuallyPressed.js"

@@ -1,6 +1,6 @@
 import { keys as objectKeys } from "@alanscodelog/utils/keys.js"
 import { type MakeRequired } from "@alanscodelog/utils/types"
-import type { EventListenerTypes } from "@witchcraft/shortcuts-manager/types"
+import type { EventListenerTypes } from "@witchcraft/spellcraft/types"
 
 /**
  * Overlays/wraps the given manager listeners for certain keys to allow different behavior on regular key presses vs hold. Note this requires preventDefault and stopPropagation on all keydown events for the keys given.

@@ -7,11 +7,11 @@ import {
 	type CommandExecute,
 	type Context,
 	type Manager,
-} from "@witchcraft/shortcuts-manager"
-import { createContext , ShortcutManagerManager } from "@witchcraft/shortcuts-manager"
+} from "@witchcraft/spellcraft"
+import { createContext , ShortcutManagerManager } from "@witchcraft/spellcraft"
 import { computed, ref, watch } from "vue"
 
-import type { ContextInfo } from "#witchcraft-shortcuts-manager/types.js"
+import type { ContextInfo } from "#witchcraft-spellcraft/types.js"
 
 import { conditionParser } from "../common/conditionParser.js"
 import { createDefaultManager } from "../common/createDefaultManager.js"

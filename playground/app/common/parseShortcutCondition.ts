@@ -2,7 +2,7 @@ import { isWhitespace } from "@alanscodelog/utils/isWhitespace.js"
 import { readable } from "@alanscodelog/utils/readable.js"
 import { Result } from "@alanscodelog/utils/Result.js"
 import { extractTokens } from "@witchcraft/expressit/utils/extractTokens.js"
-import type { Shortcut } from "@witchcraft/shortcuts-manager/types/shortcuts.js"
+import type { Shortcut } from "@witchcraft/spellcraft/types/shortcuts.js"
 
 import { conditionParser } from "./conditionParser.js"
 

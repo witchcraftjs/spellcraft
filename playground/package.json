@@ -1,6 +1,6 @@
 {
 	"private": true,
-	"name": "@witchcraft/shortcuts-manager-playground",
+	"name": "@witchcraft/spellcraft-playground",
 	"type": "module",
 	"scripts": {
 		"dev": "nuxi dev",
@@ -10,7 +10,7 @@
 	"dependencies": {
 		"@alanscodelog/utils": "^4.0.0",
 		"@witchcraft/expressit": "^0.2.0",
-		"@witchcraft/shortcuts-manager": "^0.0.0",
+		"@witchcraft/spellcraft": "^0.0.0",
 		"@witchcraft/ui": "^0.0.0",
 		"nuxt": "^3.16.2",
 		"tailwindcss": "^4.0.17",

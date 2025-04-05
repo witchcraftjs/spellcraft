@@ -1,5 +1,5 @@
 <template>
-<div id="@witchcraft/shortcuts-manager"
+<div id="@witchcraft/spellcraft"
 	:class="twMerge(`
 		dark:bg-neutral-900
 		dark:text-white
@@ -73,14 +73,14 @@
 <script setup lang="ts">
 import { castType } from "@alanscodelog/utils/castType.js"
 import { last } from "@alanscodelog/utils/last.js"
-import { type Manager } from "@witchcraft/shortcuts-manager"
+import { type Manager } from "@witchcraft/spellcraft"
 import {
 	attach,
 	createManagerEventListeners,
 	detach,
-} from "@witchcraft/shortcuts-manager"
-import { getKeyFromIdOrVariant } from "@witchcraft/shortcuts-manager/helpers/getKeyFromIdOrVariant.js"
-import { safeSetManagerChain } from "@witchcraft/shortcuts-manager/helpers/safeSetManagerChain.js"
+} from "@witchcraft/spellcraft"
+import { getKeyFromIdOrVariant } from "@witchcraft/spellcraft/helpers/getKeyFromIdOrVariant.js"
+import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain.js"
 import { onMounted, onUnmounted, reactive, type Ref, ref, toRefs, watch, watchEffect } from "vue"
 
 import KContext from "./Contexts.vue"

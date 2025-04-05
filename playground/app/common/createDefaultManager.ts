@@ -10,14 +10,14 @@ import {
 	type Manager,
 	type PickManager,
 	setKeyProp,
-} from "@witchcraft/shortcuts-manager"
-import { labelWithEvent } from "@witchcraft/shortcuts-manager/helpers/index.js"
-import { createLayout } from "@witchcraft/shortcuts-manager/layouts/createLayout.js"
+} from "@witchcraft/spellcraft"
+import { labelWithEvent } from "@witchcraft/spellcraft/helpers/index.js"
+import { createLayout } from "@witchcraft/spellcraft/layouts/createLayout.js"
 
 import { conditionParser } from "./conditionParser.js"
 import { parseShortcutCondition } from "./parseShortcutCondition.js"
 
-import type { ContextInfo } from "#witchcraft-shortcuts-manager/types.js"
+import type { ContextInfo } from "#witchcraft-spellcraft/types.js"
 
 export function createDefaultManager(
 	raw: Partial<Omit<Manager, "options" | "hooks" | "listener" | "state">> & {

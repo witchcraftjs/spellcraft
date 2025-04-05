@@ -70,8 +70,8 @@
 </div>
 </template>
 <script setup lang="ts">
-import { addCommand as managerAddCommand, createCommand, removeCommand as managerRemoveCommand, setCommandProp } from "@witchcraft/shortcuts-manager"
-import type { Command, Manager } from "@witchcraft/shortcuts-manager/types"
+import { addCommand as managerAddCommand, createCommand, removeCommand as managerRemoveCommand, setCommandProp } from "@witchcraft/spellcraft"
+import type { Command, Manager } from "@witchcraft/spellcraft/types"
 import { computed, ref } from "vue"
 
 import { notifyIfError } from "../common/notifyIfError.js"

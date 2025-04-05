@@ -1,6 +1,6 @@
 import { last } from "@alanscodelog/utils/last.js"
-import { type Manager } from "@witchcraft/shortcuts-manager"
-import { cloneChain } from "@witchcraft/shortcuts-manager/utils"
+import { type Manager } from "@witchcraft/spellcraft"
+import { cloneChain } from "@witchcraft/spellcraft/utils"
 
 
 export const createDropChain = (

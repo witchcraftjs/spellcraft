@@ -1,18 +1,16 @@
-### 🚧 WIP, BETA COMING SOON 🚧
+### 🚧 BETA RELEASE 🚧
 
-[![Docs](https://github.com/alanscodelog/shortcuts-manager/workflows/Docs/badge.svg)](https://github.com/alanscodelog/shortcuts-manager/actions/workflows/docs.yml)
-[![Build](https://github.com/alanscodelog/shortcuts-manager/actions/workflows/build.yml/badge.svg)](https://github.com/alanscodelog/shortcuts-manager/actions/workflows/build.yml)
-[![Release](https://github.com/alanscodelog/shortcuts-manager/actions/workflows/release.yml/badge.svg)](https://github.com/alanscodelog/shortcuts-manager/actions/workflows/release.yml)
-[![NPM Version (with latest tag)](https://img.shields.io/npm/v/%40alanscodelog%2Fshortcuts-manager/latest)](https://www.npmjs.com/package/@alanscodelog/shortcuts-manager/v/latest)
-<!-- [![NPM Version (with beta tag)](https://img.shields.io/npm/v/%40alanscodelog%2Fshortcuts-manager/beta)](https://www.npmjs.com/package/@alanscodelog/shortcuts-manager/v/beta) -->
+[![NPM Version (with latest tag)](https://img.shields.io/npm/v/%40witchcraft%2Fspellcraft/latest)](https://www.npmjs.com/package/@witchcraft/spellcraft/v/latest)
+<!-- [![NPM Version (with beta tag)](https://img.shields.io/npm/v/%40witchcraft%2Fspellcraft/beta)](https://www.npmjs.com/package/@witchcraft/spellcraft/v/beta) -->
+[![Docs](https://github.com/witchcraftjs/spellcraft/workflows/Docs/badge.svg)](https://github.com/witchcraftjs/spellcraft/actions/workflows/docs.yml)
+[![Release](https://github.com/witchcraftjs/spellcraft/actions/workflows/release.yml/badge.svg)](https://github.com/witchcraftjs/spellcraft/actions/workflows/release.yml)
 
-# ...Name Pending
+# Spellcraft
 
-This is a shortcut manager library for handling ALL the shortcut needs of an application.
+A shortcut manager library for handling ALL the shortcut needs of an application.
 
-# [Docs](https://alanscodelog.github.io/shortcuts-manager)
-
-# [Demo (mostly complete, please report any issues)](https://alanscodelog.github.io/shortcuts-manager/demo)
+# [Docs](https://witchcraftjs.github.io/spellcraft)
+# [Demo](https://witchcraftjs.github.io/spellcraft/demo) (please report any issues)
 
 # Features
 - Manages anything key like (mouse + keyboard).
@@ -36,20 +34,20 @@ This is a shortcut manager library for handling ALL the shortcut needs of an app
 This is a simple example of how you can quickly setup a manager. 
 
 ```ts
-// While a barrel "@witchcraft/shortcuts-manager" import is available
+// While a barrel "@witchcraft/spellcraft" import is available
 // for the root and all the parts of the library. It's
 // recommended to import the individual functions instead, 
 // especially if using a bundler like vite which does not tree-shake
 // in dev mode. It will be faster.
 
-import { createManager } from "@witchcraft/shortcuts-manager/createManager.js"
-import { createKeys } from "@witchcraft/shortcuts-manager/createKeys.js"
-import { createContext } from "@witchcraft/shortcuts-manager/createContext.js"
-import {type Context, ERROR} from "@witchcraft/shortcuts-manager/types"
-import { createCommand } from "@witchcraft/shortcuts-manager/createCommand.js"
-import { createShortcut } from "@witchcraft/shortcuts-manager/createShortcut.js"
-import { addCommand } from "@witchcraft/shortcuts-manager/addCommand.js"
-import { addShortcut } from "@witchcraft/shortcuts-manager/addShortcut.js"
+import { createManager } from "@witchcraft/spellcraft/createManager.js"
+import { createKeys } from "@witchcraft/spellcraft/createKeys.js"
+import { createContext } from "@witchcraft/spellcraft/createContext.js"
+import {type Context, ERROR} from "@witchcraft/spellcraft/types"
+import { createCommand } from "@witchcraft/spellcraft/createCommand.js"
+import { createShortcut } from "@witchcraft/spellcraft/createShortcut.js"
+import { addCommand } from "@witchcraft/spellcraft/addCommand.js"
+import { addShortcut } from "@witchcraft/spellcraft/addShortcut.js"
 
 const manager = createManager({
 	name: "default",
@@ -176,7 +174,7 @@ const options = createManagerOptions({
 
 Then we need to create a layout. This is a list of keys in their raw form (they can be missing some properties), that describes the position of the keys and their width/height. `createLayout` is provided to help generate variations of the common ansi/iso layouts. We can then create real keys from these.
 ```ts
-import { createLayout } from "@witchcraft/shortcuts-manager/layouts/createLayout.js"
+import { createLayout } from "@witchcraft/spellcraft/layouts/createLayout.js"
 
 const layout = createLayout("ansi", {
 	numpad: false // don't add numbpad keys
@@ -193,7 +191,7 @@ You can also build completely custom layouts, the `calculateAndSetPositionAndSiz
 **Note: Key ids must be valid KeyboardEvent.code values, unless they are toggles, or have a list of variants. See `Key` docs for more info.**
 
  ```ts
-import { calculateAndSetPositionAndSize } from "@witchcraft/shortcuts-manager/helpers/calculateAndSetPositionAndWidth.js"
+import { calculateAndSetPositionAndSize } from "@witchcraft/spellcraft/helpers/calculateAndSetPositionAndWidth.js"
  
 const firstRow = calculateAndSetPositionAndSize([
 	{ id: "Escape" as const, label: "Esc" }, // {x: 0, width: 1, height: 1}
@@ -218,7 +216,7 @@ Rotation is not currently supported, but it's easy to add. You can extend the `B
 
 ```ts
 // global.d.ts
-declare module "@witchcraft/shortcuts-manager/types/index.js" {
+declare module "@witchcraft/spellcraft/types/index.js" {
 	export interface BaseKey {
 		yourProperty:string
 	}
@@ -229,7 +227,7 @@ export { }
 Next you need to create a `Keys` object which describes a group of `Key`s. When keys are added/removed with `add/removeKey`, they will take care of adding/removing keys properly from the `Keys` since keys also need to be added to additional properties of `Keys` such as `toggles`, `variants`, etc. properties. These are used to speed up lookups and can be useful for searching for keys and or applying styles (e.g. `if (toggles[id]) // id is toggle`).
 
 ```ts
-import { createKeys } from "@witchcraft/shortcuts-manager/createKeys.js"
+import { createKeys } from "@witchcraft/spellcraft/createKeys.js"
 
 // using the keysList and options we created above
 const keys = createKeys(keysList, options).unwrap()
@@ -242,7 +240,7 @@ Command creation cannot error, so there is no unwrap.
 `command.execute` is of type `CommandExecute` if you need to type your command execute function separately.
 
 ```ts
-import { createCommand } from "@witchcraft/shortcuts-manager/createCommand.js"
+import { createCommand } from "@witchcraft/spellcraft/createCommand.js"
 
 const command = createCommand(
 	"test",
@@ -273,7 +271,7 @@ To extend `Condition` and add properties to it, you can extend the `Condition` i
 ```ts
 // global.d.ts
 import type { ConditionNode, ExpressionNode, GroupNode } from "@witchcraft/expressit/types"
-declare module "@witchcraft/shortcuts-manager/types/index.js" {
+declare module "@witchcraft/spellcraft/types/index.js" {
 	export interface Condition {
 		ast?: ExpressionNode | ConditionNode | GroupNode
 	}
@@ -384,7 +382,7 @@ Note that while the built in errors are property specific, custom errors are not
 A helper class `ShortcutManagerManager` is provided to help manage multiple managers.
 
 ```ts
-import { ShortcutManagerManager } from "@witchcraft/shortcuts-manager"
+import { ShortcutManagerManager } from "@witchcraft/spellcraft"
 
 const managerManager = new ShortcutManagerManager(
 	raw => {
@@ -459,7 +457,7 @@ There's also some smaller utility functions in `/utils`:
 - `isAny/Trigger/Wheel/MouseKey`.
 
 
-There's also a few other functions that in the future might be moved from the demo were I created them and into the library. See [demo/src/common](https://github.com/AlansCodeLog/shortcuts-manager/tree/master/demo/src/common).
+There's also a few other functions that in the future might be moved from the demo were I created them and into the library. See [demo/src/common](https://github.com/AlansCodeLog/spellcraft/tree/master/demo/src/common).
 
 ## More Examples
 
@@ -467,19 +465,17 @@ I'm currently working polishing the library and making it easier to use.
 
 Many of the methods/properties have extensive documentation with examples.
 
-For a more advanced example, you can look at the [demo](https://alanscodelog.github.io/shortcuts-manager/demo) and it's [code](https://github.com/AlansCodeLog/shortcuts-manager/tree/master/demo).
+For a more advanced example, you can look at the [demo](https://alanscodelog.github.io/spellcraft/demo) and it's [code](https://github.com/AlansCodeLog/spellcraft/tree/master/demo).
 
-There are also extensive tests you can look at, specifically the [tests/Manager.spec.ts](https://github.com/AlansCodeLog/shortcuts-manager/tree/master/tests/Manager.spec.ts) file.
+There are also extensive tests you can look at, specifically the [tests/Manager.spec.ts](https://github.com/AlansCodeLog/spellcraft/tree/master/tests/Manager.spec.ts) file.
 
 ## Usage with Frameworks 
 
 Originally this was written with classes, but that kind of grew into a tangled mess and it made it hard to override/customize functionality and save objects. It also made it hard to work with frameworks, even proxy-based ones.
 
-Now everything is just a plain object. The library still mutates everything directly and that is unlikely to change\*, but in frameworks like vue which allow deep reactivity, this should work perfectly. In frameworks that don't, you might have to resort to a library like valtio to be able to use proxy based reactivity. 
+Now everything is just a plain object. The library still mutates everything directly and that is unlikely to change\*, but in frameworks like vue which allow deep reactivity, this should work perfectly. In frameworks that don't, I would suggest a library like valtio to be able to use proxy based reactivity, or set listeners on all state and copy it all each time. 
 
-The reason the library mutates objects directly is that some changes can cause multiple other changes to happen (for example, safely setting the manager's chain can touch a lot of state) and making the library immutable would probably be expensive, especially for frameworks that don't need it.
-
-Note that the `on*` hooks were not intended for intercepting property changes since they have no record of what the given value *was*. This could be changed if it would help, but I would need to test/rewrite the demo in something like React to be sure everything is working as intended.
+The reason the library mutates objects directly is that some changes can cause multiple other changes to happen (for example, safely setting the manager's chain can touch a lot of state) and making the library immutable would is expensive for frameworks that don't need it.
 
 \* The other possibility is to add immutable versions of the `set*` functions and the listeners.
 

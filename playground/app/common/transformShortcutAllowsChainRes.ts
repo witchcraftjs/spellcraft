@@ -1,7 +1,7 @@
 import { type Result } from "@alanscodelog/utils/Result.js"
-import { type KnownError } from "@witchcraft/shortcuts-manager/helpers"
-import { ERROR, type Manager, type ManagerSetEntries, type MultipleErrors, type PickManager, type ShortcutSetEntries } from "@witchcraft/shortcuts-manager/types"
-import { equalsKeys } from "@witchcraft/shortcuts-manager/utils"
+import { type KnownError } from "@witchcraft/spellcraft/helpers"
+import { ERROR, type Manager, type ManagerSetEntries, type MultipleErrors, type PickManager, type ShortcutSetEntries } from "@witchcraft/spellcraft/types"
+import { equalsKeys } from "@witchcraft/spellcraft/utils"
 
 
 export const transformShortcutAllowsChainRes = (

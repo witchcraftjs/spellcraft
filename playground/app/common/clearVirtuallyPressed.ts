@@ -1,5 +1,5 @@
-import type { Manager } from "@witchcraft/shortcuts-manager"
-import { virtualRelease } from "@witchcraft/shortcuts-manager/helpers/virtualRelease.js"
+import type { Manager } from "@witchcraft/spellcraft"
+import { virtualRelease } from "@witchcraft/spellcraft/helpers/virtualRelease.js"
 
 
 export function clearVirtuallyPressed(
