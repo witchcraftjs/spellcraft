@@ -108,8 +108,8 @@
 	"devDependencies": {
 		"@alanscodelog/commitlint-config": "^3.0.1",
 		"@alanscodelog/eslint-config": "^5.0.0",
-		"@alanscodelog/semantic-release-config": "^5.0.3",
-		"@alanscodelog/tsconfigs": "^5.0.1",
+		"@alanscodelog/semantic-release-config": "^5.0.4",
+		"@alanscodelog/tsconfigs": "^6.0.0",
 		"@alanscodelog/vite-config": "^0.0.5",
 		"@commitlint/cli": "^19.3.0",
 		"@nuxt/kit": "^3.16.2",
@@ -119,7 +119,7 @@
 		"@types/node": "^22.14.0",
 		"@vitejs/plugin-vue": "^5.0.4",
 		"@vitest/coverage-c8": "^0.33.0",
-		"@witchcraft/ui": "^0.0.0",
+		"@witchcraft/ui": "^0.0.1",
 		"concurrently": "^9.1.2",
 		"cross-env": "^7.0.3",
 		"defu": "^6.1.4",
@@ -129,7 +129,6 @@
 		"indexit": "2.1.0-beta.3",
 		"madge": "^8.0.0",
 		"onchange": "^7.1.0",
-		"postcss": "^8.4.38",
 		"semantic-release": "^24.2.3",
 		"typedoc": "0.28.1",
 		"typescript": "~5.8.2",
@@ -138,7 +137,7 @@
 		"vite-plugin-externalize-deps": "^0.9.0",
 		"vite-tsconfig-paths": "^5.0.1",
 		"vitest": "^3.1.1",
-		"vue-tsc": "^2.0.19"
+		"vue-tsc": "^2.2.8"
 	},
 	"author": "Alan <alanscodelog@gmail.com>",
 	"repository": "https://github.com/witchcraftjs/spellcraft",
@@ -171,7 +170,7 @@
 	},
 	"browserslist": "> 0.5%, last 2 versions, not dead, not < 0.25%, not IE > 0, maintained node versions",
 	"engines": {
-		"node": ">=23.0.0"
+		"node": ">=20.0.0"
 	},
 	"private": true
 }
