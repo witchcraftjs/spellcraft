@@ -1,5 +1,7 @@
+import { crop, indent } from "@alanscodelog/utils"
 import {
 	addImportsDir,
+	addTemplate,
 	addTypeTemplate,
 	createResolver,
 	defineNuxtModule,
@@ -13,7 +15,7 @@ declare module "@nuxt/schema" {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	interface PublicRuntimeConfig {
 		// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-		witchcraftShortcutsManager: {}
+		witchcraftSpellcraft: {}
 	}
 }
 
@@ -25,14 +27,14 @@ export interface ModuleOptions {
 
 export default defineNuxtModule<ModuleOptions>({
 	meta: {
-		name: "witchcraftShortcutsManager",
-		configKey: "witchcraftShortcutsManager",
+		name: "witchcraftSpellcraft",
+		configKey: "witchcraftSpellcraft",
 	},
 	defaults: {
 	},
 	async setup(_options, nuxt) {
-		nuxt.options.runtimeConfig.public.witchcraftShortcutsManager = defu(
-			nuxt.options.runtimeConfig.public.witchcraftShortcutsManager,
+		nuxt.options.runtimeConfig.public.witchcraftSpellcraft = defu(
+			nuxt.options.runtimeConfig.public.witchcraftSpellcraft,
 			{
 			}
 		)
