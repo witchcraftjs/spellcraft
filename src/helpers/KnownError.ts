@@ -1,6 +1,6 @@
 import { TypedError } from "@alanscodelog/utils"
 
-import type { ERROR, ErrorInfo, TYPE_ERROR } from "../types/index.js"
+import type { ErrorInfo, ShortcutError, TypeError } from "../types/index.js"
 
 
 /**
@@ -8,6 +8,6 @@ import type { ERROR, ErrorInfo, TYPE_ERROR } from "../types/index.js"
  * All the variables used to create the error message are stored in it's info property so you can easily craft your own error messages to show to users.
  */
 export class KnownError<
-	T extends ERROR | TYPE_ERROR = ERROR | TYPE_ERROR,
+	T extends ShortcutError | TypeError = ShortcutError | TypeError,
 	// TInfo extends ErrorInfo<T> = ErrorInfo<T>,
 > extends TypedError<T, ErrorInfo<T>> {}

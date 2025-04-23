@@ -1,59 +1,63 @@
+import { type EnumLike } from "@alanscodelog/utils"
+import { enumFromArray } from "@alanscodelog/utils/enumFromArray.js"
+
 import type { AnyInputEvent, Command, Commands, Key, Keys, Shortcut, Shortcuts } from "./index.js"
 
 import type { KnownError } from "../helpers/index.js"
 
-
 /**
  * All possible errors.
  */
-export enum ERROR {
+export const SHORTCUT_ERROR = enumFromArray([
 	// === shortcut init related problems
-	CHORD_W_ONLY_MODIFIERS = "CHORD_W_ONLY_MODIFIERS",
-	CHORD_W_MULTIPLE_TRIGGER_KEYS = "CHORD_W_MULTIPLE_TRIGGER_KEYS",
-	CHORD_W_MULTIPLE_WHEEL_KEYS = "CHORD_W_MULTIPLE_WHEEL_KEYS",
-	CHORD_W_DUPLICATE_KEY = "CHORD_W_DUPLICATE_KEY",
-	IMPOSSIBLE_TOGGLE_SEQUENCE = "IMPOSSIBLE_TOGGLE_SEQUENCE",
-	MISSING = "MISSING", // removing
-	INVALID_VARIANT = "VARIANT_EXISTS_AS_KEY",
-	INVALID_VARIANT_PAIR = "INVALID_VARIANT_PAIR",
+	"CHORD_W_ONLY_MODIFIERS",
+	"CHORD_W_MULTIPLE_TRIGGER_KEYS",
+	"CHORD_W_MULTIPLE_WHEEL_KEYS",
+	"CHORD_W_DUPLICATE_KEY",
+	"IMPOSSIBLE_TOGGLE_SEQUENCE",
+	"MISSING", // removing
+	"INVALID_VARIANT",
+	"INVALID_VARIANT_PAIR",
 
 	// === duplicate "bases"
-	DUPLICATE_KEY = "DUPLICATE_KEY",
-	DUPLICATE_COMMAND = "DUPLICATE_COMMAND",
-	DUPLICATE_SHORTCUT = "DUPLICATE_SHORTCUT",
+	"DUPLICATE_KEY",
+	"DUPLICATE_COMMAND",
+	"DUPLICATE_SHORTCUT",
 
 	// === other
-	INVALID_SWAP_CHORDS = "INCORRECT_SWAP_PARAMS",
-	CANNOT_SET_WHILE_DISABLED = "CANNOT_SET_WHILE_DISABLED",
+	"INVALID_SWAP_CHORDS",
+	"CANNOT_SET_WHILE_DISABLED",
 
 	// === manager
-	MULTIPLE_MATCHING_SHORTCUTS = "MULTIPLE_MATCHING_SHORTCUTS",
-	INCORRECT_TOGGLE_STATE = "INCORRECT_TOGGLE_STATE",
-	NO_MATCHING_SHORTCUT = "NO_MATCHING_SHORTCUT",
-	UNKNOWN_KEY = "UNKNOWN_KEY",
-	UNKNOWN_KEY_ID = "UNKNOWN_KEY_ID",
-	UNKNOWN_COMMAND = "UNKNOWN_COMMANDS",
-	KEY_IN_USE = "KEYS_IN_USE",
-	COMMAND_IN_USE = "COMMANDS_IN_USE",
-	UNKNOWN_KEY_EVENT = "UNKNOWN_KEY_EVENT",
-	// for when we must return multiple custom errors
-	MULTIPLE_ERRORS = "MULTIPLE_ERRORS",
-}
+	"MULTIPLE_MATCHING_SHORTCUTS",
+	"INCORRECT_TOGGLE_STATE",
+	"NO_MATCHING_SHORTCUT",
+	"UNKNOWN_KEY",
+	"UNKNOWN_KEY_ID",
+	"UNKNOWN_COMMAND",
+	"KEY_IN_USE",
+	"COMMAND_IN_USE",
+	"UNKNOWN_KEY_EVENT",
+	"MULTIPLE_ERRORS",
+])
+export type ShortcutError = EnumLike<typeof SHORTCUT_ERROR>
 
-export type ChainErrors =
-| ERROR.UNKNOWN_KEY
-| ERROR.CHORD_W_DUPLICATE_KEY
-| ERROR.CHORD_W_ONLY_MODIFIERS
-| ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS
-| ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS
-| ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE
+export type ChainError =
+| typeof SHORTCUT_ERROR.UNKNOWN_KEY
+| typeof SHORTCUT_ERROR.CHORD_W_DUPLICATE_KEY
+| typeof SHORTCUT_ERROR.CHORD_W_ONLY_MODIFIERS
+| typeof SHORTCUT_ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS
+| typeof SHORTCUT_ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS
+| typeof SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE
 
 /** Errors that will throw since they should be caught at production. */
-export enum TYPE_ERROR {
-	ILLEGAL_OPERATION = "ILLEGAL_OPERATION",
-	HOOK_OR_LISTENER_DOES_NOT_EXIST = "HOOK_OR_LISTENER_DOES_NOT_EXIST",
-	FILTER_DOES_NOT_EXIST = "FILTER_DOES_NOT_EXIST",
-}
+
+export const TYPE_ERROR = enumFromArray([
+	"ILLEGAL_OPERATION",
+	"HOOK_OR_LISTENER_DOES_NOT_EXIST",
+	"FILTER_DOES_NOT_EXIST",
+])
+export type TypeError = EnumLike<typeof TYPE_ERROR>
 
 /**
  * Defines the properties attached to each error.
@@ -61,13 +65,13 @@ export enum TYPE_ERROR {
  * Makes it easy to define the properties attached to each error by just allowing passing the error (regardless of error type) as T in [[KnownError]] and [[InternalError]].
  */
 
-export type ErrorInfo<T extends ERROR | TYPE_ERROR> =
-	T extends ERROR
+export type ErrorInfo<T extends ShortcutError | TypeError> =
+	T extends ShortcutError
 	? ERROR_Info[T]
 	: never
 
 /** Type multiple {@link KnownError} errors to work like a discriminated union. */
-export type MultipleErrors<T extends ERROR | TYPE_ERROR> = {
+export type MultipleErrors<T extends ShortcutError | TypeError> = {
 	[k in T]: KnownError<k>
 }[T]
 
@@ -76,64 +80,64 @@ export type MultipleErrors<T extends ERROR | TYPE_ERROR> = {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 type ERROR_Info = {
 	// === shortcut init related problems
-	[ERROR.CHORD_W_ONLY_MODIFIERS]: {
+	[SHORTCUT_ERROR.CHORD_W_ONLY_MODIFIERS]: {
 		chord: string[]
 		i: number
 		keys: string[]
 	}
-	[ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS]: {
+	[SHORTCUT_ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS]: {
 		chord: string[]
 		i: number
 		keys: string[]
 	}
-	[ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS]: {
+	[SHORTCUT_ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS]: {
 		chord: string[]
 		i: number
 		keys: string[]
 	}
-	[ERROR.CHORD_W_DUPLICATE_KEY]: {
+	[SHORTCUT_ERROR.CHORD_W_DUPLICATE_KEY]: {
 		chord: string[]
 		i: number
 		keys: string[]
 	}
-	[ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE]: {
+	[SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE]: {
 		chain: string[][]
 		i: number
 		key: Key
 	}
-	[ERROR.MISSING]: {
+	[SHORTCUT_ERROR.MISSING]: {
 		entry: Key | Shortcut | Command | string
 		self: Keys | Shortcuts | Commands
 	}
-	[ERROR.INVALID_VARIANT]: {
+	[SHORTCUT_ERROR.INVALID_VARIANT]: {
 		variants: string[]
 		id: string
 	}
-	[ERROR.INVALID_VARIANT_PAIR]: {
+	[SHORTCUT_ERROR.INVALID_VARIANT_PAIR]: {
 		variants: Key[]
 		key: Key
 		otherKey: Key
 	}
 	
-	[ERROR.DUPLICATE_KEY]: {
+	[SHORTCUT_ERROR.DUPLICATE_KEY]: {
 		existing: Key
 		self: Keys
 	}
-	[ERROR.DUPLICATE_SHORTCUT]: {
+	[SHORTCUT_ERROR.DUPLICATE_SHORTCUT]: {
 		existing: Shortcut
 		self: Shortcuts
 		/** If the error is caused by a change, key and value will contain the new key and value. */
 		key?: string
 		value?: any
 	}
-	[ERROR.DUPLICATE_COMMAND]: {
+	[SHORTCUT_ERROR.DUPLICATE_COMMAND]: {
 		existing: Command
 		self: Commands
 	}
 	
 
 	// === other
-	[ERROR.INVALID_SWAP_CHORDS]:
+	[SHORTCUT_ERROR.INVALID_SWAP_CHORDS]:
 	{
 		chord: string[][]
 	} |
@@ -142,82 +146,84 @@ type ERROR_Info = {
 		chordsB: string[][]
 	}
 
-	[ERROR.CANNOT_SET_WHILE_DISABLED]:
+	[SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED]:
 	{
 		key: Key
 	}
 
 	// === manager
-	[ERROR.MULTIPLE_MATCHING_SHORTCUTS]: {
+	[SHORTCUT_ERROR.MULTIPLE_MATCHING_SHORTCUTS]: {
 		shortcuts: Shortcut[]
 	}
-	[ERROR.INCORRECT_TOGGLE_STATE]: {
+	[SHORTCUT_ERROR.INCORRECT_TOGGLE_STATE]: {
 		key: Key
 	}
-	[ERROR.NO_MATCHING_SHORTCUT]: {
+	[SHORTCUT_ERROR.NO_MATCHING_SHORTCUT]: {
 		chain: string[][]
 	}
-	[ERROR.UNKNOWN_KEY]: {
+	[SHORTCUT_ERROR.UNKNOWN_KEY]: {
 		shortcut?: Pick<Shortcut, "chain">
 		keys: string[] | Keys
 	}
-	[ERROR.UNKNOWN_COMMAND]: {
+	[SHORTCUT_ERROR.UNKNOWN_COMMAND]: {
 		shortcut?: Pick<Shortcut, "chain" | "command">
 		command: string
 		commands: string[] | Commands
 	}
-	[ERROR.MULTIPLE_ERRORS]: {
+	[SHORTCUT_ERROR.MULTIPLE_ERRORS]: {
 		errors: Error[]
 	}
-	[ERROR.KEY_IN_USE]: {
+	[SHORTCUT_ERROR.KEY_IN_USE]: {
 		inUseShortcuts: Shortcut[]
 	}
-	[ERROR.COMMAND_IN_USE]: {
+	[SHORTCUT_ERROR.COMMAND_IN_USE]: {
 		inUseShortcuts: Shortcut[]
 	}
-	[ERROR.UNKNOWN_KEY_EVENT]: {
+	[SHORTCUT_ERROR.UNKNOWN_KEY_EVENT]: {
 		e: AnyInputEvent
 		button?: string
 		code?: string
 		key?: string
-		deltaY?: number
+		deltaY?: number | string
 	}
-	[ERROR.UNKNOWN_KEY_ID]: {
+	[SHORTCUT_ERROR.UNKNOWN_KEY_ID]: {
 		id: string
 	}
 }
 
 
-export enum MOUSE {
-	R = "R",
-	M = "M",
-	L = "L",
-	BACK = "Back",
-	FORWARD = "Forward",
-}
+export const MOUSE = enumFromArray([
+	"R",
+	"M",
+	"L",
+	"BACK",
+	"FORWARD",
+])
+export type Mouse = EnumLike<typeof MOUSE>
+	
+export const WHEEL = enumFromArray([
+	"down",
+	"up",
+])
+export type Wheel = EnumLike<typeof WHEEL>
 
-export enum WHEEL {
-	DOWN = "down",
-	UP = "up",
-}
-
-/* eslint-disable @typescript-eslint/prefer-enum-initializers */
+ 
 // These do not need to be initialized, we want the order they're declared in.
-export enum KEY_SORT_POS {
-	mod,
-	modmouse,
+export const KEY_SORT_POS = {
+	mod: 0,
+	modmouse: 1,
 	// modmousewheel = error
-	modwheel, // weird...
-	modtoggle, // weird...
-	modtogglemouse, // weird...
-	modtogglewheel, // weird...
+	modwheel: 2, // weird...
+	modtoggle: 3, // weird...
+	modtogglemouse: 4, // weird...
+	modtogglewheel: 5, // weird...
 	// modtogglemousewheel = error
-	normal,
-	mouse,
-	wheel,
-	toggle,
-	togglemouse,
-	togglewheel, // weird...
+	normal: 6,
+	mouse: 7,
+	wheel: 8,
+	toggle: 9,
+	togglemouse: 10,
+	togglewheel: 11, // weird...
 	// modtogglemousewheel = error
 }
-/* eslint-enable @typescript-eslint/prefer-enum-initializers */
+ 

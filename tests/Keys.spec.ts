@@ -6,7 +6,7 @@ import { manager } from "./helpers.keys.js"
 import { addKey } from "../src/core/addKey.js"
 import { createKey } from "../src/core/createKey.js"
 import { createKeys } from "../src/core/createKeys.js"
-import { ERROR, type Key } from "../src/types/index.js"
+import { SHORTCUT_ERROR, type Key } from "../src/types/index.js"
 
 
 it("should add keys", () => {
@@ -32,13 +32,13 @@ it("should throw on duplicate keys", () => {
 			createKey("a").unwrap(),
 			createKey("a").unwrap(),
 		]).unwrap()
-	}).code).to.equal(ERROR.DUPLICATE_KEY)
+	}).code).to.equal(SHORTCUT_ERROR.DUPLICATE_KEY)
 	expect(catchError(() => {
 		const keys = createKeys([
 			createKey("a").unwrap(),
 		]).unwrap()
 		addKey(createKey("a").unwrap(), { ...manager, keys }).unwrap()
-	}).code).to.equal(ERROR.DUPLICATE_KEY)
+	}).code).to.equal(SHORTCUT_ERROR.DUPLICATE_KEY)
 })
 it("should not throw on \"duplicate\" keys with different ids", () => {
 	expect(() => {

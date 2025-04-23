@@ -7,7 +7,7 @@ import { areValidVariants } from "../internal/areValidVariants.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
 import { errorTextInUse } from "../internal/errorTextInUse.js"
 import { errorTextRemove } from "../internal/errorTextRemove.js"
-import { type CanHookErrors, type CanHookKeysProps, ERROR, type Key, type Keys, type KeysSetEntries, type Manager,type MultipleErrors } from "../types/index.js"
+import { type CanHookErrors, type CanHookKeysProps, type Key, type Keys, type KeysSetEntries, type Manager,type MultipleErrors,SHORTCUT_ERROR } from "../types/index.js"
 import { containsKey } from "../utils/containsKey.js"
 
 
@@ -49,7 +49,7 @@ export function setKeysProp<
 
 				if (existing) {
 					return Err(new KnownError(
-						ERROR.DUPLICATE_KEY,
+						SHORTCUT_ERROR.DUPLICATE_KEY,
 						errorTextAdd(
 							"Key",
 							s.stringify(existing, manager),
@@ -72,7 +72,7 @@ export function setKeysProp<
 				const key = val
 				if (!keys.entries[key.id]) {
 					return Err(new KnownError(
-						ERROR.MISSING,
+						SHORTCUT_ERROR.MISSING,
 						errorTextRemove(
 							"Key",
 							s.stringify(key),
@@ -86,7 +86,7 @@ export function setKeysProp<
 
 				if (inUseShortcuts.length > 0) {
 					return Err(new KnownError(
-						ERROR.KEY_IN_USE,
+						SHORTCUT_ERROR.KEY_IN_USE,
 						errorTextInUse(
 							"key",
 							s.stringify(key),

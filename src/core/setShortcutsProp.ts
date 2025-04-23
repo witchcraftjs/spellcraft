@@ -7,7 +7,7 @@ import { isValidShortcut } from "../helpers/isValidShortcut.js"
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
 import { errorTextRemove } from "../internal/errorTextRemove.js"
-import { type CanHookErrors, type CanHookShortcutsProps, ERROR, type Manager,type MultipleErrors, type Shortcut, type Shortcuts, type ShortcutsSetEntries } from "../types/index.js"
+import { type CanHookErrors, type CanHookShortcutsProps, SHORTCUT_ERROR, type Manager,type MultipleErrors, type Shortcut, type Shortcuts, type ShortcutsSetEntries } from "../types/index.js"
 
 
 const canHookable: CanHookShortcutsProps[] = ["entries@add", "entries@remove"]
@@ -50,7 +50,7 @@ export function setShortcutsProp<
 
 				if (existing) {
 					return Err(new KnownError(
-						ERROR.DUPLICATE_SHORTCUT,
+						SHORTCUT_ERROR.DUPLICATE_SHORTCUT,
 						errorTextAdd(
 							"Shortcut",
 							s.stringify(existing.chain, manager),
@@ -72,7 +72,7 @@ export function setShortcutsProp<
 				)
 				if (existing === undefined) {
 					return Err(new KnownError(
-						ERROR.MISSING,
+						SHORTCUT_ERROR.MISSING,
 						errorTextRemove(
 							"Shortcut",
 							s.stringify(shortcut, manager),

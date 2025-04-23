@@ -1,12 +1,12 @@
 import { crop } from "@alanscodelog/utils/crop.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "./KnownError.js"
 
 import { setShortcutProp } from "../core/setShortcutProp.js"
 import { defaultStringifier } from "../defaults/Stringifier.js"
 import type { IStringifier, Keys, Manager, PickManager, Shortcut, Shortcuts } from "../types/index.js"
-import { ERROR } from "../types/index.js"
+import { SHORTCUT_ERROR } from "../types/index.js"
 import { equalsKeys } from "../utils/equalsKeys.js"
 
 
@@ -28,7 +28,7 @@ function canSwapChords(
 	chainA: string[][],
 	chainB: string[][],
 	filter?: (shortcut: Shortcut) => boolean
-): Result<true, Error | KnownError<ERROR.INVALID_SWAP_CHORDS | ERROR.DUPLICATE_SHORTCUT>> {
+): Result<true, Error | KnownError<typeof SHORTCUT_ERROR.INVALID_SWAP_CHORDS | typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT>> {
 	let can: Result<true, any> = Ok(true)
 	const shortcutsClone = { ...shortcuts, entries: [...shortcuts.entries.map(_ => ({ ..._ }))]}
 	const managerClone = { ...manager, shortcuts: shortcutsClone }
@@ -67,14 +67,14 @@ function canSwapChords(
 function assertChordsNotEmpty(chord: string[][],
 	keys: Keys,
 	{ stringifier: s = defaultStringifier }: { stringifier?: IStringifier } = {}
-): Result<true, KnownError<ERROR.INVALID_SWAP_CHORDS>> {
+): Result<true, KnownError<typeof SHORTCUT_ERROR.INVALID_SWAP_CHORDS>> {
 	let found: undefined | string[][]
 	if (chord.length === 0 || chord.find(ks => ks.length === 0)) {
 		found = chord
 	}
 	if (found) {
 		return Err(new KnownError(
-			ERROR.INVALID_SWAP_CHORDS,
+			SHORTCUT_ERROR.INVALID_SWAP_CHORDS,
 			`Cannot swap with empty chord, but ${s.stringify(chord, { keys })} contains an empty chord.`,
 			{ chord }
 		))
@@ -91,7 +91,7 @@ function assertCorrectSwapParameters(
 	}: {
 		stringifier?: IStringifier
 	} = {}
-): Result<true, KnownError<ERROR.INVALID_SWAP_CHORDS>> {
+): Result<true, KnownError<typeof SHORTCUT_ERROR.INVALID_SWAP_CHORDS>> {
 	const canA = assertChordsNotEmpty(chordsA, keys, { stringifier: s })
 	if (canA.isError) { return canA }
 	const canB = assertChordsNotEmpty(chordsB, keys, { stringifier: s })
@@ -100,7 +100,7 @@ function assertCorrectSwapParameters(
 	if (equalsKeys(chordsA, chordsB, keys, chordsB.length)
 			|| equalsKeys(chordsB, chordsA, keys, chordsA.length)
 	) {
-		return Err(new KnownError(ERROR.INVALID_SWAP_CHORDS, crop`
+		return Err(new KnownError(SHORTCUT_ERROR.INVALID_SWAP_CHORDS, crop`
 			The chords to swap cannot share starting chords.
 			Chords:
 			${s.stringify(chordsA, { keys })}
@@ -207,7 +207,7 @@ export function shortcutSwapChords(
 		check?: boolean | "only"
 	} = {},
 	filter?: (shortcut: Shortcut) => boolean
-): Result<true, KnownError<ERROR.INVALID_SWAP_CHORDS | ERROR.INVALID_SWAP_CHORDS | ERROR.DUPLICATE_SHORTCUT> | Error> {
+): Result<true, KnownError<typeof SHORTCUT_ERROR.INVALID_SWAP_CHORDS | typeof SHORTCUT_ERROR.INVALID_SWAP_CHORDS | typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT> | Error> {
 	const res = assertCorrectSwapParameters(manager.keys, chainA, chainB)
 	if (res.isError) { return res }
 

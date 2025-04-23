@@ -1,15 +1,15 @@
 import { isArray } from "@alanscodelog/utils/isArray.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "./KnownError.js"
 
-import { ERROR, type Key, type Keys } from "../types/index.js"
+import { type Key, type Keys,SHORTCUT_ERROR } from "../types/index.js"
 
 
 export function getKeyFromIdOrVariant(
 	id: string,
 	keys: Keys
-): Result<Key[], KnownError<ERROR.UNKNOWN_KEY_ID>> {
+): Result<Key[], KnownError<typeof SHORTCUT_ERROR.UNKNOWN_KEY_ID>> {
 	let k: Key | Key[] = keys.entries[id] ?? keys.toggles[id]
 	if (k === undefined) {
 		if (keys.variants[id]) {
@@ -24,7 +24,7 @@ export function getKeyFromIdOrVariant(
 	if (!isArray(k) && k !== undefined) k = [k]
 	if (k === undefined) {
 		return Err(new KnownError(
-			ERROR.UNKNOWN_KEY_ID,
+			SHORTCUT_ERROR.UNKNOWN_KEY_ID,
 				`Tried to get unknown key (${id}).`,
 				{ id }
 		))

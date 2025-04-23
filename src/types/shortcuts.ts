@@ -1,7 +1,7 @@
 import type { Command } from "./commands.js"
 import type { Condition } from "./condition.js"
 import type { PickManager } from "./general.js"
-import type { ChainErrors, ERROR } from "./index.js"
+import type { ChainError, SHORTCUT_ERROR } from "./index.js"
 import type { Key } from "./keys.js"
 import type { Manager } from "./manager.js"
 
@@ -131,7 +131,7 @@ export type ShortcutSetEntries = {
 		& PickManager<"options", "stringifier" | "sorter">
 		& Pick<Manager, "shortcuts" | "commands" | "keys">
 		hooks: GetShortcutHooks<"chain">
-		error: ChainErrors | ERROR.DUPLICATE_KEY | ERROR.DUPLICATE_SHORTCUT
+		error: ChainError | typeof SHORTCUT_ERROR.DUPLICATE_KEY | typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT
 	}
 	command: {
 		val: Shortcut["command"]
@@ -141,7 +141,7 @@ export type ShortcutSetEntries = {
 		& Partial<Pick<Manager, "keys">>
 
 		hooks: GetShortcutHooks<"command">
-		error: ERROR.UNKNOWN_COMMAND
+		error: typeof SHORTCUT_ERROR.UNKNOWN_COMMAND
 	}
 	condition: {
 		val: Shortcut["condition"]
@@ -191,15 +191,15 @@ export type ShortcutsSetEntries = {
 		& PickManager<"options", "sorter">
 	
 		error:
-		| ERROR.DUPLICATE_SHORTCUT
-		| ERROR.UNKNOWN_COMMAND
-		| ChainErrors
+		| typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT
+		| typeof SHORTCUT_ERROR.UNKNOWN_COMMAND
+		| ChainError
 	}
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	"entries@remove": {
 		val: Shortcut
 		hooks: GetShortcutHooks<`entries@remove`>
 		manager: BaseShortcutsManager
-		error: ERROR.MISSING
+		error: typeof SHORTCUT_ERROR.MISSING
 	}
 }

@@ -8,7 +8,7 @@ import { safeSetEmulatedToggleState } from "./safeSetEmulatedToggleState.js"
 import { setKeyProp } from "../core/setKeyProp.js"
 import { KnownError } from "../helpers/KnownError.js"
 import type { AnyInputEvent, Manager } from "../types/index.js"
-import { ERROR } from "../types/index.js"
+import { SHORTCUT_ERROR } from "../types/index.js"
 
 /**
  * Should be used after we attempt to process the event and set key states.
@@ -31,7 +31,7 @@ export function updateNativeKeysState(
 	for (const id of manager.keys.nativeToggleKeys) {
 		const key = manager.keys.entries[id]
 		if (key.toggleOnPressed && key.toggleOffPressed) {
-			throw new KnownError(ERROR.INCORRECT_TOGGLE_STATE, `Key ${s.stringify(key, manager)} is a toggle key whose on and off versions are both pressed, which is not a valid state.`, { key })
+			throw new KnownError(SHORTCUT_ERROR.INCORRECT_TOGGLE_STATE, `Key ${s.stringify(key, manager)} is a toggle key whose on and off versions are both pressed, which is not a valid state.`, { key })
 		}
 		// this does not guarantee the key code is valid
 		// it just returns false even for made up keys

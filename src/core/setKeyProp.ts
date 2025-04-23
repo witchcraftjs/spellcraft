@@ -1,11 +1,11 @@
 import { castType } from "@alanscodelog/utils/castType.js"
 import { crop } from "@alanscodelog/utils/crop.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 import { set } from "@alanscodelog/utils/set.js"
 
 import { KnownError } from "../helpers/KnownError.js"
 import type { CanHookErrors, Key, KeySetEntries, Manager, MultipleErrors, OnHookKeyProps } from "../types/index.js"
-import { ERROR } from "../types/index.js"
+import { SHORTCUT_ERROR } from "../types/index.js"
 
 
 const canHookable: OnHookKeyProps[] = ["x", "y", "width", "height", "label", "enabled", "render", "classes"]
@@ -46,7 +46,7 @@ export function setKeyProp<
 				const s = manager.options.stringifier
 				if (!key.enabled && val === true) {
 					return Err(
-						new KnownError(ERROR.CANNOT_SET_WHILE_DISABLED, crop`
+						new KnownError(SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED, crop`
 							The "${prop}" property cannot be set to true while a key is disabled. (Key: ${s.stringify(key, manager)})
 						`, { key })
 					)

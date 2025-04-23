@@ -1,5 +1,5 @@
 import type { Condition } from "./condition.js"
-import type { Context, ERROR, PickManager } from "./index.js"
+import type { Context, SHORTCUT_ERROR, PickManager } from "./index.js"
 import type { AnyInputEvent, Manager, MinimalInputEvent } from "./manager.js"
 import type { Shortcut } from "./shortcuts.js"
 
@@ -116,7 +116,7 @@ export type CommandSetEntries = {
 		manager: Pick<Manager, "commands" | "shortcuts" | "keys"> & PickManager<"options", "stringifier">
 		hooks: GetCommandHooks<"name">
 		// see name above, missing should NOT be an error
-		error: ERROR.COMMAND_IN_USE | ERROR.DUPLICATE_COMMAND | ERROR.MULTIPLE_ERRORS
+		error: typeof SHORTCUT_ERROR.COMMAND_IN_USE | typeof SHORTCUT_ERROR.DUPLICATE_COMMAND | typeof SHORTCUT_ERROR.MULTIPLE_ERRORS
 	}
 }
 export type OnHookCommandProps = "condition" | "execute" | "description"
@@ -131,14 +131,14 @@ export type CommandsSetEntries = {
 		val: Command
 		hooks: GetCommandHooks<`entries@add`>
 		manager: BaseCommandsManager
-		error: ERROR.DUPLICATE_COMMAND
+		error: typeof SHORTCUT_ERROR.DUPLICATE_COMMAND
 	}
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	"entries@remove": {
 		val: Command
 		hooks: GetCommandHooks<`entries@remove`>
 		manager: BaseCommandsManager & Pick<Manager, "shortcuts" | "keys">
-		error: ERROR.COMMAND_IN_USE | ERROR.MISSING
+		error: typeof SHORTCUT_ERROR.COMMAND_IN_USE | typeof SHORTCUT_ERROR.MISSING
 	}
 }
 

@@ -6,7 +6,7 @@ import { removeShortcut } from "./removeShortcut.js"
 
 import { isValidChain } from "../internal/isValidChain.js"
 import { isValidCommand } from "../internal/isValidCommand.js"
-import { type CanHookErrors, type CanHookShortcutProps, ERROR, type Hooks, type Manager, type MultipleErrors, type Shortcut, type Shortcuts, type ShortcutSetEntries } from "../types/index.js"
+import { type CanHookErrors, type CanHookShortcutProps, SHORTCUT_ERROR, type Hooks, type Manager, type MultipleErrors, type Shortcut, type Shortcuts, type ShortcutSetEntries } from "../types/index.js"
 
 
 const canHookable: CanHookShortcutProps[] = ["chain", "command", "condition", "enabled"]
@@ -54,7 +54,7 @@ export function setShortcutProp<
 				// todo better way
 				const resRemove = removeShortcut(shortcut, managerClone)
 				// we could be setting a shortcut not in the set
-				if (resRemove.isError && "code" in resRemove.error && resRemove.error.code !== ERROR.MISSING) return resRemove as any
+				if (resRemove.isError && "code" in resRemove.error && resRemove.error.code !== SHORTCUT_ERROR.MISSING) return resRemove as any
 				const resAdd = addShortcut({ ...shortcut, chain: val }, managerClone)
 				if (resAdd.isError) return resAdd as any
 				break

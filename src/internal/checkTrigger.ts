@@ -5,7 +5,7 @@ import { inChain } from "./inChain.js"
 import { setManagerProp } from "../core/setManagerProp.js"
 import { getTriggerableShortcut } from "../helpers/getTriggerableShortcut.js"
 import { KnownError } from "../helpers/KnownError.js"
-import { type AnyInputEvent, ERROR,type Manager } from "../types/index.js"
+import { type AnyInputEvent, type Manager,SHORTCUT_ERROR } from "../types/index.js"
 import { isTriggerKey } from "../utils/isTriggerKey.js"
 
 
@@ -19,7 +19,7 @@ export function checkTrigger(
 	if (!manager.options.enableShortcuts) return
 	const res = getTriggerableShortcut(manager)
 	if (res.isError) {
-		cb(manager, res.error as KnownError<ERROR.MULTIPLE_MATCHING_SHORTCUTS>, e)
+		cb(manager, res.error as KnownError<typeof SHORTCUT_ERROR.MULTIPLE_MATCHING_SHORTCUTS>, e)
 	} else if (res.value && res.value !== hadUntrigger) {
 		setManagerProp(manager, "state.untrigger", res.value)
 		setManagerProp(manager, "state.nextIsChord", false)
@@ -43,7 +43,7 @@ export function checkTrigger(
 			}
 		} else if (!manager.state.isRecording && !inChain(manager) && (res.isOk && !res.value) && manager.state.chain.length > 1) {
 			const error = new KnownError(
-				ERROR.NO_MATCHING_SHORTCUT,
+				SHORTCUT_ERROR.NO_MATCHING_SHORTCUT,
 				"A chord containing a non-modifier key was pressed while in a chord chain, but no shortcut found to trigger.",
 				{ chain: manager.state.chain }
 			)

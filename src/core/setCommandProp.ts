@@ -8,7 +8,7 @@ import { setShortcutProp } from "./setShortcutProp.js"
 
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
-import { type CanHookCommandProps, type CanHookErrors, type Command, type CommandSetEntries, ERROR, type Manager,type MultipleErrors } from "../types/index.js"
+import { type CanHookCommandProps, type CanHookErrors, type Command, type CommandSetEntries, SHORTCUT_ERROR, type Manager,type MultipleErrors } from "../types/index.js"
 
 
 const canHookable: CanHookCommandProps[] = ["condition", "execute"]
@@ -51,7 +51,7 @@ export function setCommandProp<
 				const existing = manager.commands.entries[val as string]
 				if (existing) {
 					return Err(new KnownError(
-						ERROR.DUPLICATE_COMMAND,
+						SHORTCUT_ERROR.DUPLICATE_COMMAND,
 						errorTextAdd(
 							"Command",
 							val as string,
@@ -85,7 +85,7 @@ export function setCommandProp<
 				}
 				if (shortcutErrors.length > 0) {
 					return Err(new KnownError(
-						ERROR.MULTIPLE_ERRORS,
+						SHORTCUT_ERROR.MULTIPLE_ERRORS,
 						crop`
 							Received multiple errors attempting to change command name from ${command.name} to ${val}: 
 							${indent(shortcutErrors.map(_ => _.message).join("\n"), 7)}

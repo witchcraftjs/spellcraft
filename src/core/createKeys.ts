@@ -1,11 +1,11 @@
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 import type { RecordFromArray } from "@alanscodelog/utils/types"
 
 import { addKey } from "./addKey.js"
 
 import { defaultStringifier } from "../defaults/Stringifier.js"
 import { calculateLayoutSize } from "../helpers/calculateLayoutSize.js"
-import { type ERROR, type Key, type Keys, type MultipleErrors, type PickManager } from "../types/index.js"
+import { type Key, type Keys, type MultipleErrors, type PickManager,type SHORTCUT_ERROR } from "../types/index.js"
 
 
 export function createKeys<
@@ -34,7 +34,7 @@ TCheck extends boolean | "only" = true,
 ): Result<
 	TCheck extends "only" ? true : Keys<TEntries>,
 		MultipleErrors<
-			ERROR.DUPLICATE_KEY
+			typeof SHORTCUT_ERROR.DUPLICATE_KEY
 		>
 	> {
 	const keysList = entries

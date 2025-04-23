@@ -1,8 +1,8 @@
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { isValidShortcut } from "../helpers/isValidShortcut.js"
-import type { ChainErrors, Command, Condition, ERROR, Manager, MultipleErrors, PickManager, RawShortcut, Shortcut } from "../types/index.js"
+import type { ChainError, Command, Condition, Manager, MultipleErrors, PickManager, RawShortcut, Shortcut,SHORTCUT_ERROR } from "../types/index.js"
 
 
 /**
@@ -20,8 +20,8 @@ TRawCommand extends Command["name"] | Command = Command["name"] | Command,
 	manager: Pick<Manager, "keys" | "commands">
 	& PickManager<"options", "stringifier" | "sorter">,
 ): Result< Shortcut<TCommand["name"], TCondition>, MultipleErrors<
-| ChainErrors
-| ERROR.UNKNOWN_COMMAND
+| ChainError
+| typeof SHORTCUT_ERROR.UNKNOWN_COMMAND
 	>> {
 	const sorter = manager.options.sorter
 

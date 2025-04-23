@@ -1,15 +1,15 @@
 import { crop } from "@alanscodelog/utils/crop.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
-import { ERROR, type Key, type KeysSetEntries } from "../types/index.js"
+import { type Key, type KeysSetEntries,SHORTCUT_ERROR } from "../types/index.js"
 
 
 export function areValidVariants(
 	key: Key,
 	manager: KeysSetEntries["entries@add"]["manager"]
-): Result<true, KnownError<ERROR.INVALID_VARIANT_PAIR>> {
+): Result<true, KnownError<typeof SHORTCUT_ERROR.INVALID_VARIANT_PAIR>> {
 	const keys = manager.keys
 	const s = manager.options.stringifier
 	const existingVariants = (keys.variants?.[key.id]?.map(id => keys.entries[id]) ?? [])
@@ -29,7 +29,7 @@ export function areValidVariants(
 		if (!!key.isToggle !== !!k.isToggle) {
 			const stringKey = s.stringify(key, manager)
 			const stringOtherKey = s.stringify(k, manager)
-			return Err(new KnownError(ERROR.INVALID_VARIANT_PAIR, crop`
+			return Err(new KnownError(SHORTCUT_ERROR.INVALID_VARIANT_PAIR, crop`
 				Key ${stringKey} specifies a variant or matches an existing key's variant (${stringOtherKey}), but their functionality is not the same.
 
 				Key ${stringKey} "isToggle" is "${key.isToggle}" while key ${stringOtherKey} "isToggle" is "${k.isToggle}".
@@ -44,7 +44,7 @@ export function areValidVariants(
 		if (!!key.isModifier !== !!k.isModifier) {
 			const stringKey = s.stringify(key, manager)
 			const stringOtherKey = s.stringify(k, manager)
-			return Err(new KnownError(ERROR.INVALID_VARIANT_PAIR, crop`
+			return Err(new KnownError(SHORTCUT_ERROR.INVALID_VARIANT_PAIR, crop`
 				Key ${stringKey} specifies a variant or matches an existing key's variant (${stringOtherKey}), but their functionality is not the same.
 
 				Key ${stringKey} "isModifier" is "${key.isModifier}" while key ${stringOtherKey} "isModifier" is "${k.isModifier}".

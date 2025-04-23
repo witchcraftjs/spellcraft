@@ -10,7 +10,7 @@ import { defaultStringifier, Stringifier } from "../src/defaults/Stringifier.js"
 import { getLabel } from "../src/helpers/getLabel.js"
 import { virtualPress } from "../src/helpers/virtualPress.js"
 import { setKeyProp } from "../src/setKeyProp.js"
-import { ERROR } from "../src/types/enums.js"
+import { SHORTCUT_ERROR } from "../src/types/enums.js"
 import { equalsKey } from "../src/utils/equalsKey.js"
 
 
@@ -87,5 +87,5 @@ it("stringify works", () => {
 it("gaurds against invalid variant", () => {
 	expect(catchError(() => {
 		createKey("a", { variants: ["a"]}).unwrap()
-	}).code).to.equal(ERROR.INVALID_VARIANT)
+	}).code).to.equal(SHORTCUT_ERROR.INVALID_VARIANT)
 })

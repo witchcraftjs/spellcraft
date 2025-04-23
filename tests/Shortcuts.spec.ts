@@ -12,7 +12,7 @@ import { removeCommand } from "../src/core/removeCommand.js"
 import { removeKey } from "../src/core/removeKey.js"
 import { setShortcutProp } from "../src/core/setShortcutProp.js"
 import { shortcutSwapChords } from "../src/helpers/shortcutSwapChords.js"
-import { ERROR } from "../src/types/index.js"
+import { SHORTCUT_ERROR } from "../src/types/index.js"
 
 
 describe("Shortcuts", () => {
@@ -45,13 +45,13 @@ describe("Shortcuts", () => {
 		const res = setShortcutProp(shortcut, "chain", [[k.c.id]], m)
 		expect(res.isError).to.equal(true)
 		if (res.isError) {
-			expect(res.error.code).to.equal(ERROR.DUPLICATE_SHORTCUT)
+			expect(res.error.code).to.equal(SHORTCUT_ERROR.DUPLICATE_SHORTCUT)
 		}
 	})
 	it("does not allow unknown keys", () => {
 		expect(catchError(() =>
 			createShortcut({ chain: [["unknown key"]]}, manager).unwrap()
-		).code).to.equal(ERROR.UNKNOWN_KEY)
+		).code).to.equal(SHORTCUT_ERROR.UNKNOWN_KEY)
 	})
 	it("does not allow removal of in use keys", () => {
 		const shortcuts = createShortcuts([
@@ -60,7 +60,7 @@ describe("Shortcuts", () => {
 		
 		expect(catchError(() =>
 			removeKey(k.a, { ...manager, shortcuts }, { check: "only" }).unwrap()
-		).code).to.equal(ERROR.KEY_IN_USE)
+		).code).to.equal(SHORTCUT_ERROR.KEY_IN_USE)
 	})
 	it("does not allow removal of in use commands", () => {
 		const commands = createCommands([
@@ -73,13 +73,13 @@ describe("Shortcuts", () => {
 		
 		expect(catchError(() =>
 			removeCommand(commands.entries.test, { ...m, shortcuts }, { check: "only" }).unwrap()
-		).code).to.equal(ERROR.COMMAND_IN_USE)
+		).code).to.equal(SHORTCUT_ERROR.COMMAND_IN_USE)
 	})
 
 	it("does not allow unknown commands", () => {
 		expect(catchError(() =>
 			createShortcut({ chain: [[k.a]], command: "unknown command" }, manager).unwrap()
-		).code).to.equal(ERROR.UNKNOWN_COMMAND)
+		).code).to.equal(SHORTCUT_ERROR.UNKNOWN_COMMAND)
 	})
 	it("swapChords, check only", () => {
 		const shortcuts = createShortcuts([
@@ -90,18 +90,18 @@ describe("Shortcuts", () => {
 		
 		expect(catchError(() =>
 			shortcutSwapChords(shortcuts, [[k.a.id]], [[k.a.id]], manager, { check: "only" }).unwrap()
-		).code).to.equal(ERROR.INVALID_SWAP_CHORDS)
+		).code).to.equal(SHORTCUT_ERROR.INVALID_SWAP_CHORDS)
 
 		expect(catchError(() =>
 			shortcutSwapChords(shortcuts, [[k.modA.id]], [[k.modA.id, k.b.id], []], manager, { check: "only" }).unwrap()
-		).code).to.equal(ERROR.INVALID_SWAP_CHORDS)
+		).code).to.equal(SHORTCUT_ERROR.INVALID_SWAP_CHORDS)
 
 		expect(catchError(() =>
 			shortcutSwapChords(shortcuts, [[k.a.id]], [[k.b.id]], manager, { check: "only" }, shortcut => {
 				if (shortcut.chain[0][0] === k.a.id) return false
 				return true
 			}).unwrap()
-		).code).to.equal(ERROR.DUPLICATE_SHORTCUT)
+		).code).to.equal(SHORTCUT_ERROR.DUPLICATE_SHORTCUT)
 
 
 		const CAB = createShortcut({ chain: [[k.c], [k.a], [k.b]]}, manager).unwrap()
@@ -113,7 +113,7 @@ describe("Shortcuts", () => {
 
 		expect(catchError(() =>
 			shortcutSwapChords(shortcuts2, [CA.chain[0]], CAB.chain, manager, { check: "only" }).unwrap()
-		).code).to.equal(ERROR.INVALID_SWAP_CHORDS)
+		).code).to.equal(SHORTCUT_ERROR.INVALID_SWAP_CHORDS)
 
 		const AB = createShortcut({ chain: [[k.c], [k.a], [k.b]]}, manager).unwrap()
 		const A = createShortcut({ chain: [[k.c], [k.c]]}, manager).unwrap()
@@ -124,11 +124,11 @@ describe("Shortcuts", () => {
 
 		expect(catchError(() =>
 			shortcutSwapChords(shortcuts3, [A.chain[0]], AB.chain, manager, { check: "only" }).unwrap()
-		).code).to.equal(ERROR.INVALID_SWAP_CHORDS)
+		).code).to.equal(SHORTCUT_ERROR.INVALID_SWAP_CHORDS)
 
 		expect(catchError(() =>
 			shortcutSwapChords(shortcuts3, [AB.chain[0]], A.chain, manager, { check: "only" }).unwrap()
-		).code).to.equal(ERROR.INVALID_SWAP_CHORDS)
+		).code).to.equal(SHORTCUT_ERROR.INVALID_SWAP_CHORDS)
 	})
 	it("swapChords", () => {
 	// 	// eslint-disable-next-line @typescript-eslint/no-shadow

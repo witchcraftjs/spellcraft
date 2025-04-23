@@ -1,3 +1,4 @@
+import type { DeepPartial } from "@alanscodelog/utils"
 import { debounce } from "@alanscodelog/utils/debounce.js"
 import { isArray } from "@alanscodelog/utils/isArray.js"
 import { keys } from "@alanscodelog/utils/keys.js"
@@ -34,56 +35,60 @@ export class ShortcutManagerManager {
 		removeItem: (key: string) => void
 	}
 
-	constructor(
-		/**
-		 * All new managers will be created using this function. It should be capable of taking as little information as `{name}` (when a new manager is created) and returining a full manger.
-		 *
-		 * It's suggested you not do validation here, use the `onParse` hook instead.
-		 *
-		 * If you return an error, `onError` will be called, and no manager will be created.
-		 */
-		public createManager: (
-			raw: Partial<Omit<Manager, "options" | "hooks" | "listener" | "state">> & {
-				options: PickManager<"options", "enableShortcuts" | "enableListeners" | "updateStateOnAllEvents" >
-			},
-			isNew: boolean
-		) => Manager | Error,
-		public hooks: {
-			/**
-			 * Called on any errors loading/saving/etc, should be used to notify the user.
-			 */
-			onError: (err: Error) => void
-			/**
-			 * Called when a manager is parsed from storage after being sucessfully JSON.parsed.
-			 *
-			 * You can validate the parsed object here so it's in the correct shape to pass to `createManager`.
-			 *
-			 * If you return an error, `onError` will be called and `createManager` will be skipped.
-			 */
-			onParse?: (parsed: object) => void | undefined | Error
-			/**
-			 * Called when a manager is saved or exported. It's called with the cloned version of the manager that has been stripped of properties that should not be saved (see {@link managerToStorableClone}).
-			 *
-			 * You can delete/add properties here (it will not modify the original manager).
-			 */
-			onSave?: (clone: DeepPartial<Manager>) => void
-			/**
-			 * Called when a manager is exported. Can be used to actually do the export.
-			 */
-			onExport?: (res: object) => void
-			/**
-			 * Called when a manager is set. Can be used to update your state.
-			 */
-			onSetManager?: (name: string, clone: Manager) => void
-			/**
-			 * Called when the manager names are set. Can be used to update your state.
-			 */
-			onSetManagerNames?: (names: string[]) => void
-			/**
-			 * Called when the active manager is set. Can be used to update your state.
-			 */
-			onSetActiveManager?: (name: string) => void
+	/**
+	 * All new managers will be created using this function. It should be capable of taking as little information as `{name}` (when a new manager is created) and returining a full manger.
+	 *
+	 * It's suggested you not do validation here, use the `onParse` hook instead.
+	 *
+	 * If you return an error, `onError` will be called, and no manager will be created.
+	 */
+	createManager: (
+		raw: Partial<Omit<Manager, "options" | "hooks" | "listener" | "state">> & {
+			options: PickManager<"options", "enableShortcuts" | "enableListeners" | "updateStateOnAllEvents" >
 		},
+		isNew: boolean
+	) => Manager | Error
+
+	hooks: {
+		/**
+		 * Called on any errors loading/saving/etc, should be used to notify the user.
+		 */
+		onError: (err: Error) => void
+		/**
+		 * Called when a manager is parsed from storage after being sucessfully JSON.parsed.
+		 *
+		 * You can validate the parsed object here so it's in the correct shape to pass to `createManager`.
+		 *
+		 * If you return an error, `onError` will be called and `createManager` will be skipped.
+		 */
+		onParse?: (parsed: object) => void | undefined | Error
+		/**
+		 * Called when a manager is saved or exported. It's called with the cloned version of the manager that has been stripped of properties that should not be saved (see {@link managerToStorableClone}).
+		 *
+		 * You can delete/add properties here (it will not modify the original manager).
+		 */
+		onSave?: (clone: DeepPartial<Manager>) => void
+		/**
+		 * Called when a manager is exported. Can be used to actually do the export.
+		 */
+		onExport?: (res: object) => void
+		/**
+		 * Called when a manager is set. Can be used to update your state.
+		 */
+		onSetManager?: (name: string, clone: Manager) => void
+		/**
+		 * Called when the manager names are set. Can be used to update your state.
+		 */
+		onSetManagerNames?: (names: string[]) => void
+		/**
+		 * Called when the active manager is set. Can be used to update your state.
+		 */
+		onSetActiveManager?: (name: string) => void
+	}
+
+	constructor(
+		createManager: ShortcutManagerManager["createManager"],
+		hooks: ShortcutManagerManager["hooks"],
 		{
 			storageKeys = {} as any,
 			storage = localStorage,
@@ -93,6 +98,8 @@ export class ShortcutManagerManager {
 			storage?: ShortcutManagerManager["storage"]
 		} = {}
 	) {
+		this.createManager = createManager
+		this.hooks = hooks
 		storageKeys.prefix ??= ""
 		storageKeys.managerNames ??= "shortcut-manager:names"
 		storageKeys.managerPrefix ??= "shortcut-manager:manager."

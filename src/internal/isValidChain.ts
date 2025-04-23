@@ -4,11 +4,11 @@ import { areValidKeys } from "./areValidKeys.js"
 import { containsPossibleToggleChords } from "./containsPossibleToggleChords.js"
 import { isValidChord } from "./isValidChord.js"
 
-import { type ChainErrors, type Manager, type MultipleErrors, type PickManager } from "../types/index.js"
+import { type ChainError, type Manager, type MultipleErrors, type PickManager } from "../types/index.js"
 
 
 /**
- * Guards against invalid chains (for various reasons). See the {@link ChainErrors}.
+ * Guards against invalid chains (for various reasons). See the {@link ChainError}.
  *
  * Checks {@link areValidKeys}, {@link isValidChord} and {@link containsPossibleToggleChords}
  *
@@ -18,7 +18,7 @@ export function isValidChain(
 	chain: string[][],
 	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier" | "sorter">,
 ): Result<true,
-		MultipleErrors< ChainErrors >
+		MultipleErrors< ChainError >
 	> {
 	const sorter = manager.options.sorter
 

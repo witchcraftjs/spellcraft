@@ -1,6 +1,13 @@
 import { type Result } from "@alanscodelog/utils/Result.js"
 import { type KnownError } from "@witchcraft/spellcraft/helpers"
-import { ERROR, type Manager, type ManagerSetEntries, type MultipleErrors, type PickManager, type ShortcutSetEntries } from "@witchcraft/spellcraft/types"
+import {
+	type Manager,
+	type ManagerSetEntries,
+	type MultipleErrors,
+	type PickManager,
+	SHORTCUT_ERROR,
+	type ShortcutSetEntries,
+} from "@witchcraft/spellcraft/types"
 import { equalsKeys } from "@witchcraft/spellcraft/utils"
 
 
@@ -21,8 +28,8 @@ export const transformShortcutAllowsChainRes = (
 		const s = manager.options.stringifier
 		const isSelf = equalsKeys(oldChain, newChain, manager.keys)
 		if (isSelf) return false
-		if ("code" in res.error && res.error.code === ERROR.DUPLICATE_SHORTCUT) {
-			const err = res.error as KnownError<ERROR.DUPLICATE_SHORTCUT>
+		if ("code" in res.error && res.error.code === SHORTCUT_ERROR.DUPLICATE_SHORTCUT) {
+			const err = res.error as KnownError<typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT>
 
 			const chainWanted = s.stringify(newChain, manager)
 			const chainOfConflicting = s.stringify(err.info.existing, manager)

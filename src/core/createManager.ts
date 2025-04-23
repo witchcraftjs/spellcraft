@@ -1,6 +1,6 @@
 import { castType } from "@alanscodelog/utils/castType.js"
 import { isArray } from "@alanscodelog/utils/isArray.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Ok,type Result } from "@alanscodelog/utils/Result.js"
 import type { RecordFromArray } from "@alanscodelog/utils/types"
 
 import { createCommand } from "./createCommand.js"
@@ -11,7 +11,7 @@ import { createManagerOptions } from "./createManagerOptions.js"
 import { createShortcut } from "./createShortcut.js"
 import { createShortcuts } from "./createShortcuts.js"
 
-import { type CanHookErrors, type CanHooks, type Command, type Commands, type CommandsSetEntries, type Context, type ERROR, type Hooks, type Key, type Keys, type KeysSetEntries, type Manager, type ManagerListener, type MultipleErrors, type RawCommand, type RawKey, type RawShortcut, type Shortcut, type Shortcuts, type ShortcutsSetEntries } from "../types/index.js"
+import { type CanHookErrors, type CanHooks, type Command, type Commands, type CommandsSetEntries, type Context, type Hooks, type Key, type Keys, type KeysSetEntries, type Manager, type ManagerListener, type MultipleErrors, type RawCommand, type RawKey, type RawShortcut, type Shortcut, type SHORTCUT_ERROR, type Shortcuts, type ShortcutsSetEntries } from "../types/index.js"
 
 /**
  * Create a manager which can track key states, layouts, and trigger shortcuts. Basically the brains of the operation.
@@ -66,7 +66,7 @@ import { type CanHookErrors, type CanHooks, type Command, type Commands, type Co
  *
  * If there are no shortcuts to trigger but there are "potential shortcuts" that start with the current chain and could trigger and current chord contains any non-modifier keys (see {@link Manager.pressedNonModifierKeys}), an empty chord will be added to the chain on the next key pressed and the process repeats.
  *
- * If there are no shortcuts and no potential shortcuts, the callback will be called with {@link ERROR.NO_MATCHING_SHORTCUT} and you will probably want to clear the chain. When the chain is cleared (see {@link Manager._chain}), the manager will not add/remove keys from the chain until all non-modifier keys are unpressed. Pressed state is still set/tracked though.
+ * If there are no shortcuts and no potential shortcuts, the callback will be called with {@link SHORTCUT_ERROR.NO_MATCHING_SHORTCUT} and you will probably want to clear the chain. When the chain is cleared (see {@link Manager._chain}), the manager will not add/remove keys from the chain until all non-modifier keys are unpressed. Pressed state is still set/tracked though.
  *
  * The moment a key is released after a shortcut is triggered, the command's execute function is fired again with `isKeydown = false`.
  *
@@ -124,7 +124,7 @@ export function createManager<
 		| CommandsSetEntries["entries@add"]["error"]
 		| KeysSetEntries["entries@add"]["error"]
 		| ShortcutsSetEntries["entries@add"]["error"]
-		| ERROR.INVALID_VARIANT
+		| typeof SHORTCUT_ERROR.INVALID_VARIANT
 		> | CanHookErrors<THooks extends never ? never : THooks, keyof CanHooks>
 	>
 {

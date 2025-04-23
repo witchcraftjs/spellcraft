@@ -29,7 +29,7 @@ import { setCommandProp } from "../src/core/setCommandProp.js"
 import { setKeyProp } from "../src/core/setKeyProp.js"
 import { setManagerProp } from "../src/core/setManagerProp.js"
 import { setShortcutProp } from "../src/core/setShortcutProp.js"
-import { type ChainErrors,type Command,type CommandExecute, type Context,ERROR, type Key,type Manager, type MultipleErrors, type Shortcut } from "../src/types/index.js"
+import { type ChainErrors,type Command,type CommandExecute, type Context,SHORTCUT_ERROR, type Key,type Manager, type MultipleErrors, type Shortcut } from "../src/types/index.js"
 
 
 vi.useFakeTimers()
@@ -44,7 +44,7 @@ describe("basic functions", () => {
 	describe("should correctly add/remove from manager.state.chain state", () => {
 		const callback = vi.fn(((manager, error, _e) => {
 			setManagerProp(manager, "state.chain", [])
-			if (!ignoreError && error.code === ERROR.UNKNOWN_KEY_EVENT) {
+			if (!ignoreError && error.code === SHORTCUT_ERROR.UNKNOWN_KEY_EVENT) {
 				throw error
 			}
 		}) as Manager["options"]["cb"])
@@ -290,7 +290,7 @@ describe("basic functions", () => {
 			expect(manager.state.chain).to.deep.equal([[ctrl.id, d.id]])
 			emulator.fire("ControlLeft+ KeyD+", ["ControlLeft"])
 			expect(callback.mock.calls.length).to.equal(1)
-			expect(callback.mock.calls[0][1].code).to.equal(ERROR.NO_MATCHING_SHORTCUT)
+			expect(callback.mock.calls[0][1].code).to.equal(SHORTCUT_ERROR.NO_MATCHING_SHORTCUT)
 			expect(manager.state.chain).to.deep.equal([])
 
 			expect(executeNoClear.mock.calls.length).to.equal(0)
@@ -462,7 +462,7 @@ describe("basic functions", () => {
 	describe("real world examples", () => {
 		const callback = vi.fn(((manager, error, _e) => {
 			setManagerProp(manager, "state.chain", [])
-			if (error.code === ERROR.UNKNOWN_KEY_EVENT) throw error
+			if (error.code === SHORTCUT_ERROR.UNKNOWN_KEY_EVENT) throw error
 		}) as Manager["options"]["cb"])
 
 		let state = {
@@ -792,14 +792,14 @@ describe("basic functions", () => {
 
 			const res = setKeyProp(manager.keys.entries.key, "pressed", true, manager)
 			if (res.isError) {
-				expectType<CustomError | KnownError<ERROR.CANNOT_SET_WHILE_DISABLED>, "===", typeof res.error>(true)
+				expectType<CustomError | KnownError<SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED>, "===", typeof res.error>(true)
 			}
 			const res2 = setShortcutProp(manager.shortcuts.entries[0], "chain", [], manager)
 			if (res2.isError) {
 				res2.error
 				expectType<CustomError2 | MultipleErrors<
-					| ERROR.DUPLICATE_KEY
-					| ERROR.DUPLICATE_SHORTCUT
+					| SHORTCUT_ERROR.DUPLICATE_KEY
+					| SHORTCUT_ERROR.DUPLICATE_SHORTCUT
 					| ChainErrors
 				>, "===", typeof res2.error>(true)
 			}

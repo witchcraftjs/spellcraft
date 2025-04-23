@@ -1,8 +1,8 @@
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "./KnownError.js"
 
-import { ERROR, type Key } from "../types/index.js"
+import { type Key,SHORTCUT_ERROR } from "../types/index.js"
 
 
 export function getKeyFromEventCode(
@@ -16,7 +16,7 @@ export function getKeyFromEventCode(
 		includeDisabled?: boolean
 		pressedState?: boolean
 	} = {}
-): Result<string[], KnownError<ERROR.UNKNOWN_KEY_EVENT>> {
+): Result<string[], KnownError<typeof SHORTCUT_ERROR.UNKNOWN_KEY_EVENT>> {
 	const keyIds = []
 	const disabledIds = []
 	for (const key of Object.values(keys)) {
@@ -54,7 +54,7 @@ export function getKeyFromEventCode(
 			.join(", ")
 			
 		return Err(new KnownError(
-			ERROR.UNKNOWN_KEY_EVENT,
+			SHORTCUT_ERROR.UNKNOWN_KEY_EVENT,
 			`An unknown key (${info}) was pressed.`,
 			{ e: e as any, button: withButton, code: withCode, key: withKey, deltaY: withDeltaY }
 		))

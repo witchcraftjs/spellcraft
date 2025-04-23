@@ -7,7 +7,7 @@ import type {
 	CanHookKeysProps,
 	CanHookShortcutProps,
 	CanHookShortcutsProps,
-	ChainErrors,
+	ChainError,
 	Command,
 	Commands,
 	CommandSetEntries,
@@ -15,7 +15,6 @@ import type {
 	ConditionComparer,
 	ConditionEvaluator,
 	Context,
-	ERROR,
 	IKeysSorter,
 	IStringifier,
 	Key,
@@ -31,6 +30,7 @@ import type {
 	OnHookShortcutProps,
 	OnHookShortcutsProps,
 	Shortcut,
+	SHORTCUT_ERROR,
 	Shortcuts,
 	ShortcutSetEntries,
 	ShortcutsSetEntries,
@@ -55,7 +55,7 @@ export type MinimalInputEvent =
 
 
 export type ManagerReplaceValue = Partial<Pick<Manager, "shortcuts" | "keys" | "commands">>
-export type ManagerReplaceErrors = KnownError<ERROR.UNKNOWN_KEY | ERROR.UNKNOWN_COMMAND>
+export type ManagerReplaceErrors = KnownError<typeof SHORTCUT_ERROR.UNKNOWN_KEY | typeof SHORTCUT_ERROR.UNKNOWN_COMMAND>
 
 
 export type ManagerListener = ({ event, keys, isKeydown, manager }: { event?: AnyInputEvent, keys: string[], isKeydown: boolean, manager: Manager }) => void
@@ -104,25 +104,25 @@ export type ManagerSetEntries = {
 		val: string[][]
 		manager: Manager
 		hooks: GetManagerHooks<"state.chain">
-		error: ERROR.UNKNOWN_KEY
+		error: typeof SHORTCUT_ERROR.UNKNOWN_KEY
 	}
 	shortcuts: {
 		val: Shortcuts
 		manager: Manager
 		hooks: GetManagerHooks<"shortcuts">
-		error: ERROR.UNKNOWN_COMMAND | ChainErrors
+		error: typeof SHORTCUT_ERROR.UNKNOWN_COMMAND | ChainError
 	}
 	commands: {
 		val: Commands
 		manager: Manager
 		hooks: GetManagerHooks<"commands">
-		error: ERROR.UNKNOWN_COMMAND
+		error: typeof SHORTCUT_ERROR.UNKNOWN_COMMAND
 	}
 	keys: {
 		val: Keys
 		manager: Manager
 		hooks: GetManagerHooks<"keys">
-		error: ChainErrors
+		error: ChainError
 	}
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	"state.isRecording": ManagerStateHook<"isRecording">
@@ -201,10 +201,11 @@ export type Manager<
 		cb: (
 			manager: Manager,
 			error: MultipleErrors<
-			| ERROR.MULTIPLE_MATCHING_SHORTCUTS
-			| ERROR.NO_MATCHING_SHORTCUT
-			| ERROR.UNKNOWN_KEY_EVENT
-			| ERROR.UNKNOWN_KEY // for chain
+			| typeof SHORTCUT_ERROR.MULTIPLE_MATCHING_SHORTCUTS
+			| typeof SHORTCUT_ERROR.NO_MATCHING_SHORTCUT
+			| typeof SHORTCUT_ERROR.UNKNOWN_KEY_EVENT
+			| typeof SHORTCUT_ERROR.UNKNOWN_KEY_ID
+			| typeof SHORTCUT_ERROR.UNKNOWN_KEY // for chain
 			>
 			, e?: AnyInputEvent) => void
 

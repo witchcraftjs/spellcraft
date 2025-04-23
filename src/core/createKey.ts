@@ -1,7 +1,7 @@
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "../helpers/KnownError.js"
-import { ERROR, type Key, type MultipleErrors, type RawKey } from "../types/index.js"
+import { type Key, type MultipleErrors, type RawKey,SHORTCUT_ERROR } from "../types/index.js"
 
 
 /**
@@ -21,11 +21,11 @@ TKey extends RawKey<TId> = RawKey<TId>,
 ): Result<
 		Key<TId>,
 		MultipleErrors<
-		| ERROR.INVALID_VARIANT
+		| typeof SHORTCUT_ERROR.INVALID_VARIANT
 		>
 	> {
 	const k = rawKey
-	const key: Key = {
+	const key: Key<TId> = {
 		type: "key",
 		id,
 		label: k.label ?? id,
@@ -50,7 +50,7 @@ TKey extends RawKey<TId> = RawKey<TId>,
 	}
 	if (key.variants?.includes(key.id)) {
 		return Err(
-			new KnownError(ERROR.INVALID_VARIANT, `A key variant cannot be the key id itself. Attempted to use "${key.id}" in variants:[ ${key.variants.join(",")} ]`, { variants: key.variants as any /* todo*/, id: key.id })
+			new KnownError(SHORTCUT_ERROR.INVALID_VARIANT, `A key variant cannot be the key id itself. Attempted to use "${key.id}" in variants:[ ${key.variants.join(",")} ]`, { variants: key.variants as any /* todo*/, id: key.id })
 		)
 	}
 	return Ok(key)

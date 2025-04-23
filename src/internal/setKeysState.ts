@@ -1,11 +1,11 @@
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { safeSetEmulatedToggleState } from "./safeSetEmulatedToggleState.js"
 
 import { setKeyProp } from "../core/setKeyProp.js"
 import { KnownError } from "../helpers/KnownError.js"
 import type { CanHookErrors, KeySetEntries, Manager, MultipleErrors } from "../types/index.js"
-import { ERROR } from "../types/index.js"
+import { SHORTCUT_ERROR } from "../types/index.js"
 
 
 export function setKeysState<
@@ -22,8 +22,8 @@ export function setKeysState<
 ): Result<
 		true,
 		| MultipleErrors<
-			| ERROR.CANNOT_SET_WHILE_DISABLED
-			| ERROR.INCORRECT_TOGGLE_STATE
+			| typeof SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED
+			| typeof SHORTCUT_ERROR.INCORRECT_TOGGLE_STATE
 		>
 		| CanHookErrors<THooks extends never ? never : THooks, "canSetKeyProp">
 	>
@@ -49,7 +49,7 @@ export function setKeysState<
 				// state was never set
 				if (key.toggleOnPressed && key.toggleOffPressed) {
 					return Err(new KnownError(
-						ERROR.INCORRECT_TOGGLE_STATE,
+						SHORTCUT_ERROR.INCORRECT_TOGGLE_STATE,
 						`Key ${s.stringify(key, manager)} is a toggle key whose on and off versions are both pressed, which is not a valid state. This should not happen if letting the manager manage the state.`,
 						{ key }
 					))

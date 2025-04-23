@@ -6,7 +6,7 @@ import { commands, k, keys, manager, properOrder, properOrderExtraKeys } from ".
 import { createShortcut } from "../src/core/createShortcut.js"
 import { defaultSorter } from "../src/defaults/KeysSorter.js"
 import { equalsShortcut } from "../src/helpers/equalsShortcut.js"
-import { ERROR, type Key } from "../src/types/index.js"
+import { SHORTCUT_ERROR, type Key } from "../src/types/index.js"
 import { chainContainsSubset } from "../src/utils/chainContainsSubset.js"
 import { containsKey } from "../src/utils/containsKey.js"
 import { equalsKeys } from "../src/utils/equalsKeys.js"
@@ -21,7 +21,7 @@ it("it works", () => {
 it("should throw if duplicate keys in chords", () => {
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.a, k.a, k.a]]}, manager).unwrap()
-	}).code).to.equal(ERROR.CHORD_W_DUPLICATE_KEY)
+	}).code).to.equal(SHORTCUT_ERROR.CHORD_W_DUPLICATE_KEY)
 })
 it("should not throw if duplicate keys in different chords", () => {
 	expect(() => {
@@ -31,18 +31,18 @@ it("should not throw if duplicate keys in different chords", () => {
 it("should throw if duplicate mouse buttons", () => {
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.mouse2, k.mouse1]]}, manager).unwrap()
-	}).code).to.equal(ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS)
+	}).code).to.equal(SHORTCUT_ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS)
 })
 it("should throw if duplicate toggle - even different states", () => {
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.toggle1, k.toggle1.toggleOnId!]]}, manager).unwrap()
-	}).code).to.equal(ERROR.CHORD_W_DUPLICATE_KEY)
+	}).code).to.equal(SHORTCUT_ERROR.CHORD_W_DUPLICATE_KEY)
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.toggle1, k.toggle1.toggleOffId!]]}, manager).unwrap()
-	}).code).to.equal(ERROR.CHORD_W_DUPLICATE_KEY)
+	}).code).to.equal(SHORTCUT_ERROR.CHORD_W_DUPLICATE_KEY)
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.toggle1.toggleOnId!, k.toggle1.toggleOffId!]]}, manager).unwrap()
-	}).code).to.equal(ERROR.CHORD_W_DUPLICATE_KEY)
+	}).code).to.equal(SHORTCUT_ERROR.CHORD_W_DUPLICATE_KEY)
 })
 it("should assign keys properly", () => {
 	const shortcut2 = createShortcut({ chain: [[k.a]]}, manager).unwrap()
@@ -72,19 +72,19 @@ it("should compare equality properly", () => {
 it("should guard against impossible toggle shortcut", () => {
 	expect(catchError(() => {
 		const s = createShortcut({ chain: [[k.toggle1.toggleOffId!], [k.toggle1.toggleOffId!]]}, manager).unwrap()
-	}).code).to.equal(ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
+	}).code).to.equal(SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.toggle1], [k.toggle1.toggleOnId!], [k.toggle1.toggleOnId!]]}, manager).unwrap()
-	}).code).to.equal(ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
+	}).code).to.equal(SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.toggle1], [k.toggle1.toggleOnId!], [k.toggle1.toggleOnId!], [k.toggle1.toggleOnId!]]}, manager).unwrap()
-	}).code).to.equal(ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
+	}).code).to.equal(SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.toggle1], [k.toggle1.toggleOnId!], [k.a], [k.toggle1.toggleOnId!]]}, manager).unwrap()
-	}).code).to.equal(ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
+	}).code).to.equal(SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.toggle1.toggleOnId!], [k.toggle2.toggleOffId!], [k.toggle1.toggleOnId!], [k.toggle2.toggleOffId!]]}, manager).unwrap()
-	}).code).to.equal(ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
+	}).code).to.equal(SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE)
 	expect(() => {
 		createShortcut({ chain: [[k.toggle1.toggleOnId!], [k.toggle1], [k.toggle1.toggleOnId!]]}, manager).unwrap()
 		createShortcut({ chain: [[k.toggle1], [k.toggle1.toggleOnId!], [k.toggle1.toggleOffId!], [k.toggle1.toggleOnId!]]}, manager).unwrap()
@@ -96,7 +96,7 @@ it("should guard against impossible toggle shortcut", () => {
 it("should throw if chord only contains modifiers and it's not the last chord", () => {
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.modA], [k.modB]]}, manager).unwrap()
-	}).code).to.equal(ERROR.CHORD_W_ONLY_MODIFIERS)
+	}).code).to.equal(SHORTCUT_ERROR.CHORD_W_ONLY_MODIFIERS)
 	expect(() => {
 		createShortcut({ chain: [[k.a], [k.modA]]}, manager).unwrap()
 		createShortcut({ chain: [[k.a], [k.modA, k.modB]]}, manager).unwrap()
@@ -107,15 +107,15 @@ it("should throw if chord only contains modifiers and it's not the last chord", 
 it("should throw when shortcut contain more than one trigger key in a chord", () => {
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.a, k.b]]}, manager).unwrap()
-	}).code).to.equal(ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS)
+	}).code).to.equal(SHORTCUT_ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS)
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.c], [k.a, k.b]]}, manager).unwrap()
-	}).code).to.equal(ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS)
+	}).code).to.equal(SHORTCUT_ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS)
 })
 it("should throw when shortcut contain more than one wheel key in a chord", () => {
 	expect(catchError(() => {
 		createShortcut({ chain: [[k.wheelDown, k.wheelUp]]}, manager).unwrap()
-	}).code).to.equal(ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS)
+	}).code).to.equal(SHORTCUT_ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS)
 	expect(() => {
 		createShortcut({ chain: [[k.wheelDown], [k.wheelUp]]}, manager).unwrap()
 	}).to.not.throw()

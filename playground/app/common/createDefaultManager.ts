@@ -5,7 +5,7 @@ import {
 	createKey,
 	createKeys,
 	createManager,
-	ERROR,
+	SHORTCUT_ERROR,
 	type Hooks,
 	type Manager,
 	type PickManager,
@@ -60,7 +60,7 @@ export function createDefaultManager(
 				return res
 			},
 			cb(_manager, error, e) {
-				if (error.code === ERROR.UNKNOWN_KEY_EVENT && e && "deltaY" in e) {
+				if (error.code === SHORTCUT_ERROR.UNKNOWN_KEY_EVENT && e && "deltaY" in e) {
 				// ignore unknown wheel key
 				} else {
 					// eslint-disable-next-line no-console

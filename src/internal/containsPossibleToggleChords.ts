@@ -1,9 +1,9 @@
 import { crop } from "@alanscodelog/utils/crop.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
-import { ERROR, type Manager, type PickManager } from "../types/index.js"
+import { type Manager, type PickManager,SHORTCUT_ERROR } from "../types/index.js"
 
 /**
  * If you have toggle keys in chords, their are "chains" of the same toggle key that would be physically impossible. For example: `toggle(on) toggle(on)`.
@@ -17,7 +17,7 @@ import { ERROR, type Manager, type PickManager } from "../types/index.js"
 export function containsPossibleToggleChords(
 	chain: string[][],
 	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier">,
-): Result<true, KnownError<ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE>> {
+): Result<true, KnownError<typeof SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE>> {
 	const keys = manager.keys
 	const s = manager.options.stringifier
 
@@ -81,7 +81,7 @@ export function containsPossibleToggleChords(
 	if (impossible) {
 		const prettyShortcut = s.stringify(chain, manager)
 		const { pos, keyId: key } = impossible
-		const e = Err(new KnownError(ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE, crop`
+		const e = Err(new KnownError(SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE, crop`
 			Chain "${prettyShortcut}" is impossible.
 			This chain has a toggle key state "${s.stringify(key, manager)}" at key #${pos + 1} that would be impossible to trigger.
 		`, { chain, key: keys.entries[key] ?? keys.toggles[key], i: pos }))

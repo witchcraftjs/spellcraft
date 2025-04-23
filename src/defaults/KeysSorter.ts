@@ -8,14 +8,14 @@ import { type IKeysSorter, KEY_SORT_POS, type Keys, type KeySortPos } from "../t
  *
  * Creates a keys sorter for shortcut chains.
  *
- * Can either be passed some re-arranged enum of KeySortPos or it's keys, for example:
+ * Can either be passed some (object) enum of KeySortPos or it's keys with the values changed, for example:
  * ```ts
- * enum MyKeySortPos = {
- * 	KEY_SORT_POS.modmouse,
- * 	KEY_SORT_POS.mod,
+ * const MyKeySortPos = {
+ * 	[KEY_SORT_POS.modmouse]: 0,
+ * 	[KEY_SORT_POS.mod]: 1,
  * 	// or
- * 	"modmouse",
- * 	"mod",
+ * 	modmouse: 0,
+ * 	mod: 1,
  * 	//...
  * }
  *
@@ -41,7 +41,10 @@ export class KeysSorter implements IKeysSorter {
 		return aId.localeCompare(bId) // => alphabetical
 	}
 
-	constructor(public order: KeySortPos = KEY_SORT_POS) {
+	order: KeySortPos
+
+	constructor(order: KeysSorter["order"] = KEY_SORT_POS) {
+		this.order = order
 	}
 
 	sort(keyList: string[], keys: Keys): string[] {

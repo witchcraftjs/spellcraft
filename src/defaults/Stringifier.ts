@@ -54,7 +54,10 @@ import type { Command, Condition, DefaultStringifierOptions, IStringifier, Key, 
  */
  
 export class Stringifier implements IStringifier {
-	constructor(public opts: DefaultStringifierOptions = {}) {
+	opts: DefaultStringifierOptions
+
+	constructor(opts: DefaultStringifierOptions = {}) {
+		this.opts = opts
 	}
 	
 	stringify(

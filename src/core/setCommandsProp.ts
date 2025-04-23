@@ -5,7 +5,7 @@ import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
 import { errorTextInUse } from "../internal/errorTextInUse.js"
 import { errorTextRemove } from "../internal/errorTextRemove.js"
-import { type CanHookCommandsProps, type CanHookErrors, type Command, type Commands, type CommandsSetEntries, ERROR, type Manager,type MultipleErrors } from "../types/index.js"
+import { type CanHookCommandsProps, type CanHookErrors, type Command, type Commands, type CommandsSetEntries, SHORTCUT_ERROR, type Manager,type MultipleErrors } from "../types/index.js"
 
 
 const canHookable: CanHookCommandsProps[] = ["entries@add", "entries@remove"]
@@ -48,7 +48,7 @@ export function setCommandsProp<
 
 				if (existing) {
 					return Err(new KnownError(
-						ERROR.DUPLICATE_COMMAND,
+						SHORTCUT_ERROR.DUPLICATE_COMMAND,
 						errorTextAdd(
 							"Command",
 							s.stringifyCommand(existing.name, manager),
@@ -68,7 +68,7 @@ export function setCommandsProp<
 				const command = val
 				if (!commands.entries[command.name]) {
 					return Err(new KnownError(
-						ERROR.MISSING,
+						SHORTCUT_ERROR.MISSING,
 						errorTextRemove(
 							"Command",
 							s.stringify(command),
@@ -81,7 +81,7 @@ export function setCommandsProp<
 				const inUseShortcuts = manager.shortcuts.entries.filter(shortcut => shortcut.command === command.name)
 				if (inUseShortcuts.length > 0) {
 					return Err(new KnownError(
-						ERROR.COMMAND_IN_USE,
+						SHORTCUT_ERROR.COMMAND_IN_USE,
 						errorTextInUse(
 							"command",
 							s.stringify(command),

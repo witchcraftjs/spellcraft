@@ -1,6 +1,6 @@
 import { type Mutable } from "@alanscodelog/utils/types"
 
-import type { ERROR, KEY_SORT_POS } from "./enums.js"
+import type { KEY_SORT_POS,SHORTCUT_ERROR } from "./enums.js"
 import type { PickManager } from "./general.js"
 import type { Manager } from "./manager.js"
 
@@ -283,25 +283,25 @@ export type KeySetEntries = {
 		val: Key["pressed"]
 		manager: BaseKeyManager & Pick<Manager, "keys">
 		hooks: GetKeyHooks<"pressed">
-		error: ERROR.CANNOT_SET_WHILE_DISABLED
+		error: typeof SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED
 	}
 	toggleOnPressed: {
 		val: Key["toggleOnPressed"]
 		manager: BaseKeyManager & Pick<Manager, "keys">
 		hooks: GetKeyHooks<"toggleOnPressed">
-		error: ERROR.CANNOT_SET_WHILE_DISABLED
+		error: typeof SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED
 	}
 	toggleOffPressed: {
 		val: Key["toggleOffPressed"]
 		manager: BaseKeyManager & Pick<Manager, "keys">
 		hooks: GetKeyHooks<"toggleOffPressed">
-		error: ERROR.CANNOT_SET_WHILE_DISABLED
+		error: typeof SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED
 	}
 	enabled: {
 		val: Key["enabled"]
 		manager: BaseKeyManager
 		hooks: GetKeyHooks<"enabled">
-		error: ERROR.KEY_IN_USE
+		error: typeof SHORTCUT_ERROR.KEY_IN_USE
 	}
 	x: Unmanaged<"x">
 	y: Unmanaged<"y">
@@ -350,13 +350,13 @@ export type KeysSetEntries =
 		val: Key
 		manager: BaseKeysManager
 		hooks: GetKeyHooks<`entries@add`>
-		error: ERROR.DUPLICATE_KEY | ERROR.INVALID_VARIANT_PAIR
+		error: typeof SHORTCUT_ERROR.DUPLICATE_KEY | typeof SHORTCUT_ERROR.INVALID_VARIANT_PAIR
 	}>
 	& Record<`entries@remove`, {
 		val: Key
 		manager: BaseKeysManager & Pick<Manager, "shortcuts" | "commands">
 		hooks: GetKeyHooks<`entries@remove`>
-		error: ERROR.KEY_IN_USE | ERROR.MISSING
+		error: typeof SHORTCUT_ERROR.KEY_IN_USE | typeof SHORTCUT_ERROR.MISSING
 	}>
 	& Record<`toggles@${"add" | "remove"}@${string}`, {
 		val: Key
