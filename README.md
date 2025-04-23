@@ -96,7 +96,6 @@ const shortcut = createShortcut({
 addShortcut(shortcut,manager).unwrap()
 ```
 
-
 ### Listening to Events
 Then we need to attach the manager to the dom or an emulator\* so it can listen to events.
 

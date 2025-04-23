@@ -1,4 +1,3 @@
-// @ts-expect-error works in ide but not cli...
 import { defineBuildConfig } from "unbuild"
 
 export default defineBuildConfig({

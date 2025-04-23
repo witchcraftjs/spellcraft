@@ -26,6 +26,11 @@ declare module 'vue' {
     IFaSolidTimes: typeof import('~icons/fa-solid/times')['default']
     IFaSolidTrash: typeof import('~icons/fa-solid/trash')['default']
     IPhSunBold: typeof import('~icons/ph/sun-bold')['default']
+    IRadixIconsCalendar: typeof import('~icons/radix-icons/calendar')['default']
+    IRadixIconsChevronLeft: typeof import('~icons/radix-icons/chevron-left')['default']
+    IRadixIconsChevronRight: typeof import('~icons/radix-icons/chevron-right')['default']
+    IRadixIconsDoubleArrowLeft: typeof import('~icons/radix-icons/double-arrow-left')['default']
+    IRadixIconsDoubleArrowRight: typeof import('~icons/radix-icons/double-arrow-right')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

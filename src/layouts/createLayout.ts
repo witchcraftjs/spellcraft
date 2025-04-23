@@ -92,7 +92,7 @@ export function createLayout
 		navigation: TNavigation
 		arrowKeys: TArrowKeys
 	}> = {}
-): RawKey< TNames >[] {
+): RawKey<TNames>[] {
 	const keys = [
 		...calculateAndSetPositionAndSize([
 			{ id: "Escape" as const, label: "Esc" },
@@ -326,5 +326,5 @@ export function createLayout
 			: []
 		),
 	] satisfies RawKey[]
-	return keys
+	return keys as any
 }
