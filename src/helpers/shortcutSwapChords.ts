@@ -1,5 +1,5 @@
 import { crop } from "@alanscodelog/utils/crop.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "./KnownError.js"
 
@@ -29,7 +29,7 @@ function canSwapChords(
 	chainB: string[][],
 	filter?: (shortcut: Shortcut) => boolean
 ): Result<true, Error | KnownError<ERROR.INVALID_SWAP_CHORDS | ERROR.DUPLICATE_SHORTCUT>> {
-	let can: Result<true, any> = Result.Ok(true)
+	let can: Result<true, any> = Ok(true)
 	const shortcutsClone = { ...shortcuts, entries: [...shortcuts.entries.map(_ => ({ ..._ }))]}
 	const managerClone = { ...manager, shortcuts: shortcutsClone }
 
@@ -73,13 +73,13 @@ function assertChordsNotEmpty(chord: string[][],
 		found = chord
 	}
 	if (found) {
-		return Result.Err(new KnownError(
+		return Err(new KnownError(
 			ERROR.INVALID_SWAP_CHORDS,
 			`Cannot swap with empty chord, but ${s.stringify(chord, { keys })} contains an empty chord.`,
 			{ chord }
 		))
 	}
-	return Result.Ok(true)
+	return Ok(true)
 }
 
 
@@ -100,14 +100,14 @@ function assertCorrectSwapParameters(
 	if (equalsKeys(chordsA, chordsB, keys, chordsB.length)
 			|| equalsKeys(chordsB, chordsA, keys, chordsA.length)
 	) {
-		return Result.Err(new KnownError(ERROR.INVALID_SWAP_CHORDS, crop`
+		return Err(new KnownError(ERROR.INVALID_SWAP_CHORDS, crop`
 			The chords to swap cannot share starting chords.
 			Chords:
 			${s.stringify(chordsA, { keys })}
 			${s.stringify(chordsB, { keys })}
 			`, { chordsA, chordsB }))
 	}
-	return Result.Ok(true)
+	return Ok(true)
 }
 function getToSwap(
 	shortcuts: Shortcuts,
@@ -218,7 +218,7 @@ export function shortcutSwapChords(
 	}
 
 	if (check === "only") {
-		return Result.Ok(true)
+		return Ok(true)
 	}
 
 	const { shortcutsA, shortcutsB } = getToSwap(shortcuts, manager, chainA, chainB, filter)
@@ -236,6 +236,6 @@ export function shortcutSwapChords(
 	setForceUnequalOnAll(shortcutsA, wasB, true)
 
 	
-	return Result.Ok(true)
+	return Ok(true)
 }
 

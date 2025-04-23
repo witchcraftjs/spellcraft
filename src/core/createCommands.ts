@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { addCommand } from "./addCommand.js"
 
@@ -39,8 +39,8 @@ export function createCommands<
 			if (res.isError) return res
 		}
 	}
-	if (check === "only") return Result.Ok(true) satisfies Result<true, never> as any
+	if (check === "only") return Ok(true) satisfies Result<true, never> as any
 
-	return Result.Ok(commands)satisfies Result<Commands, never> as any
+	return Ok(commands)satisfies Result<Commands, never> as any
 }
 

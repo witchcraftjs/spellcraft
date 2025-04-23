@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { checkTrigger } from "./checkTrigger.js"
 import { checkUntrigger } from "./checkUntrigger.js"
@@ -15,7 +15,7 @@ export function removeFromChain(
 	keys: string[],
 	e?: AnyInputEvent,
 ): Result<true, MultipleErrors<ManagerSetEntries["state.chain"]["error"]>> {
-	if (keys.length === 0) return Result.Ok(true)
+	if (keys.length === 0) return Ok(true)
 	if (manager.state.isAwaitingKeyup) {
 		checkUntrigger(manager, e)
 		if (getPressedNonModifierKeys(manager).length === 0) {
@@ -23,7 +23,7 @@ export function removeFromChain(
 		}
 	}
 
-	if (manager.state.nextIsChord) return Result.Ok(true)
+	if (manager.state.nextIsChord) return Ok(true)
 	const lastChord = cloneLastChord(manager.state.chain) ?? []
 	for (const id of keys) {
 		const key = manager.keys.entries[id]
@@ -41,6 +41,6 @@ export function removeFromChain(
 		}
 	}
 	checkTrigger(manager, e)
-	return Result.Ok(true)
+	return Ok(true)
 }
 

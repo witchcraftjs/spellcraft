@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { safeSetEmulatedToggleState } from "./safeSetEmulatedToggleState.js"
 
@@ -48,7 +48,7 @@ export function setKeysState<
 			if ((ignoreToggleType && key.isToggle) || key.isToggle === "emulated") {
 				// state was never set
 				if (key.toggleOnPressed && key.toggleOffPressed) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.INCORRECT_TOGGLE_STATE,
 						`Key ${s.stringify(key, manager)} is a toggle key whose on and off versions are both pressed, which is not a valid state. This should not happen if letting the manager manage the state.`,
 						{ key }
@@ -67,6 +67,6 @@ export function setKeysState<
 			}
 		}
 	}
-	return Result.Ok(true)
+	return Ok(true)
 }
 

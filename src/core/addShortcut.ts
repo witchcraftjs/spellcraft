@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { setShortcutsProp } from "./setShortcutsProp.js"
 
@@ -21,5 +21,5 @@ THooks extends Manager["hooks"],
 {
 	const res = setShortcutsProp("entries@add", shortcut, manager, opts)
 	if (res.isError) return res
-	return Result.Ok(shortcut) satisfies Result<Shortcut, never> as any
+	return Ok(shortcut) satisfies Result<Shortcut, never> as any
 }

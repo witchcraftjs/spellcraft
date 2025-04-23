@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { areValidKeys } from "./areValidKeys.js"
 import { containsPossibleToggleChords } from "./containsPossibleToggleChords.js"
@@ -23,7 +23,7 @@ export function isValidChain(
 	const sorter = manager.options.sorter
 
 	if ((chain.length === 0) || (chain.length === 1 && chain[0].length === 0)) {
-		return Result.Ok(true)
+		return Ok(true)
 	}
 
 	const resIsValid = areValidKeys(chain, manager)
@@ -38,5 +38,5 @@ export function isValidChain(
 	}
 	const res = containsPossibleToggleChords(chain, manager)
 	if (res.isError) return res
-	return Result.Ok(true)
+	return Ok(true)
 }

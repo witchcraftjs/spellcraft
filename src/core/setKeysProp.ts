@@ -1,5 +1,5 @@
 import { castType } from "@alanscodelog/utils/castType.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { calculateLayoutSize } from "../helpers/calculateLayoutSize.js"
 import { KnownError } from "../helpers/KnownError.js"
@@ -48,7 +48,7 @@ export function setKeysProp<
 				const existing = keys.entries[key.id]
 
 				if (existing) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.DUPLICATE_KEY,
 						errorTextAdd(
 							"Key",
@@ -71,7 +71,7 @@ export function setKeysProp<
 
 				const key = val
 				if (!keys.entries[key.id]) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.MISSING,
 						errorTextRemove(
 							"Key",
@@ -85,7 +85,7 @@ export function setKeysProp<
 				const inUseShortcuts = manager.shortcuts.entries.filter(shortcut => containsKey(shortcut.chain, key.id, keys))
 
 				if (inUseShortcuts.length > 0) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.KEY_IN_USE,
 						errorTextInUse(
 							"key",
@@ -102,13 +102,13 @@ export function setKeysProp<
 		if (manager.hooks && "canSetKeysProp" in manager.hooks && canHookable.includes(prop as any)) {
 			const canHook = manager.hooks.canSetKeysProp?.(keys, prop as any, val as any)
 			if (canHook instanceof Error) {
-				return Result.Err(canHook) as any
+				return Err(canHook) as any
 			}
 		}
 	}
 	
 	if (check === "only") {
-		return Result.Ok(true) satisfies Result<true, never> as any
+		return Ok(true) satisfies Result<true, never> as any
 	}
 
 	// eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
@@ -202,6 +202,6 @@ export function setKeysProp<
 
 	manager.hooks?.onSetKeysProp?.(keys, prop as any, val as any)
 	
-	return Result.Ok(keys) satisfies Result<Keys, never> as any
+	return Ok(keys) satisfies Result<Keys, never> as any
 }
 

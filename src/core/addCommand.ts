@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { setCommandsProp } from "./setCommandsProp.js"
 
@@ -21,5 +21,5 @@ THooks extends Manager["hooks"],
 {
 	const res = setCommandsProp("entries@add", command, manager, opts)
 	if (res.isError) return res
-	return Result.Ok(command) satisfies Result<Command, never> as any
+	return Ok(command) satisfies Result<Command, never> as any
 }

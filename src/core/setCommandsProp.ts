@@ -1,5 +1,5 @@
 import { castType } from "@alanscodelog/utils/castType.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
@@ -47,7 +47,7 @@ export function setCommandsProp<
 				const existing = commands.entries[command.name]
 
 				if (existing) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.DUPLICATE_COMMAND,
 						errorTextAdd(
 							"Command",
@@ -67,7 +67,7 @@ export function setCommandsProp<
 
 				const command = val
 				if (!commands.entries[command.name]) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.MISSING,
 						errorTextRemove(
 							"Command",
@@ -80,7 +80,7 @@ export function setCommandsProp<
 
 				const inUseShortcuts = manager.shortcuts.entries.filter(shortcut => shortcut.command === command.name)
 				if (inUseShortcuts.length > 0) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.COMMAND_IN_USE,
 						errorTextInUse(
 							"command",
@@ -96,13 +96,13 @@ export function setCommandsProp<
 		if (manager?.hooks && "canSetCommandsProp" in manager.hooks && canHookable.includes(prop as any)) {
 			const canHook = manager.hooks?.canSetCommandsProp?.(commands, prop as any, val as any)
 			if (canHook instanceof Error) {
-				return Result.Err(canHook) as any
+				return Err(canHook) as any
 			}
 		}
 	}
 	
 	if (check === "only") {
-		return Result.Ok(true) satisfies Result<true, never> as any
+		return Ok(true) satisfies Result<true, never> as any
 	}
 
 	switch (prop) {
@@ -123,6 +123,6 @@ export function setCommandsProp<
 
 	manager.hooks?.onSetCommandsProp?.(commands, prop as any, val as any)
 	
-	return Result.Ok(commands) satisfies Result<Commands, never> as any
+	return Ok(commands) satisfies Result<Commands, never> as any
 }
 

@@ -1,7 +1,7 @@
 import { debounce } from "@alanscodelog/utils/debounce.js"
 import { isArray } from "@alanscodelog/utils/isArray.js"
 import { keys } from "@alanscodelog/utils/keys.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 import { setReadOnly } from "@alanscodelog/utils/setReadOnly.js"
 
 import { managerToStorableClone } from "../helpers/managerToStorableClone.js"
@@ -203,33 +203,33 @@ export class ShortcutManagerManager {
 	): Result<Manager, Error> {
 		const raw = this.storage.getItem(`${this.storageKeys.managerPrefix}${name}`)
 		if (!raw && !force) {
-			const res = Result.Err(new Error(`No manager found by the name of ${name}.`))
+			const res = Err(new Error(`No manager found by the name of ${name}.`))
 			return this.notifyIfError(res)
 		}
 		const r = this.createManager(
 			!raw && force ? { name } : this.parseJsonManager(raw!).unwrap(),
 			force,
 		)
-		if (r instanceof Error) return Result.Err(r)
-		return Result.Ok(r)
+		if (r instanceof Error) return Err(r)
+		return Ok(r)
 	}
 	
 	parseJsonManager(
 		raw: string,
 	): Result<any, Error> {
 		if (!raw) {
-			return Result.Err(new Error(`Nothing to parse.`))
+			return Err(new Error(`Nothing to parse.`))
 		}
 		try {
 			const parsed = JSON.parse(raw)
 			const res = this.hooks.onParse?.(parsed)
 			if (res instanceof Error) {
-				return this.notifyIfError(Result.Err(res))
+				return this.notifyIfError(Err(res))
 			}
 			if (res === undefined) throw new Error(`onParse must return a value.`)
-			return Result.Ok(res ?? parsed)
+			return Ok(res ?? parsed)
 		} catch (e) {
-			return Result.Err(e as Error)
+			return Err(e as Error)
 		}
 	}
 
@@ -258,7 +258,7 @@ export class ShortcutManagerManager {
 
 	save(name: string): void {
 		if (!this.managers[name]) {
-			this.notifyIfError(Result.Err(new Error(`Manager ${name} not found`)))
+			this.notifyIfError(Err(new Error(`Manager ${name} not found`)))
 		}
 		const clone = managerToStorableClone(this.managers[name])
 		this.hooks.onSave?.(clone)
@@ -275,14 +275,14 @@ export class ShortcutManagerManager {
 	changeManager(name: string, opts: { force?: boolean } = {}): Result<void, Error> {
 		if (this.managerNames.includes(name)) {
 			this.setActiveManager(name)
-			return Result.Ok()
+			return Ok()
 		} else {
 			const m = this.storageReadManager(name, opts)
 			if (m.isOk) {
 				this.load(m.value)
 				this.setActiveManager(name)
 			}
-			return Result.Ok()
+			return Ok()
 		}
 	}
 
@@ -309,16 +309,16 @@ export class ShortcutManagerManager {
 	duplicateManager(oldName: string, newName: string): Result<Manager, Error> {
 		const m = this.managers[oldName]
 		if (!m) {
-			const res = Result.Err(new Error(`No manager found by the name of ${oldName}.`))
+			const res = Err(new Error(`No manager found by the name of ${oldName}.`))
 			return this.notifyIfError(res)
 		}
 		const clone = managerToStorableClone(m)
 		clone.name = newName
 		const instance = this.createManager(clone as any, false)
-		if (instance instanceof Error) return this.notifyIfError(Result.Err(instance))
+		if (instance instanceof Error) return this.notifyIfError(Err(instance))
 		else if (instance) this.load(instance)
 
-		return Result.Ok(instance)
+		return Ok(instance)
 	}
 	
 	exportManagers(names: string[]): Result<object, Error> {
@@ -326,7 +326,7 @@ export class ShortcutManagerManager {
 		for (const name of names) {
 			const m = this.managers[name]
 			if (!m) {
-				const res = Result.Err(new Error(`No manager found by the name of ${name}.`))
+				const res = Err(new Error(`No manager found by the name of ${name}.`))
 				return this.notifyIfError(res)
 			}
 			const clone = managerToStorableClone(m)
@@ -334,13 +334,13 @@ export class ShortcutManagerManager {
 			obj.managers.push(clone)
 		}
 		this.hooks.onExport?.(obj)
-		return Result.Ok(obj)
+		return Ok(obj)
 	}
 
 	importManagers(content: string): Result<void, Error> {
 		const p = JSON.parse(content)
 		if (!p.managers || !isArray(p.manager)) {
-			return Result.Err(new Error(`Not a valid manager file.`))
+			return Err(new Error(`Not a valid manager file.`))
 		}
 		const ok: Manager[] = []
 		for (const parsedM of p.managers) {
@@ -349,14 +349,14 @@ export class ShortcutManagerManager {
 
 			if (m.isOk) {
 				const instance = this.createManager(m.value as any, false)
-				if (instance instanceof Error) return this.notifyIfError(Result.Err(instance))
+				if (instance instanceof Error) return this.notifyIfError(Err(instance))
 				ok.push(instance)
 			}
 		}
 		for (const instance of ok) {
 			this.load(instance)
 		}
-		return Result.Ok()
+		return Ok()
 	}
 	
 	/** Clears all managers and resets the state. `init` must be called again if you want to use the class instance again. */

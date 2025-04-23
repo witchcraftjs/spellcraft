@@ -1,6 +1,6 @@
 import { castType } from "@alanscodelog/utils/castType.js"
 import { isArray } from "@alanscodelog/utils/isArray.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 import type { RecordFromArray } from "@alanscodelog/utils/types"
 
 import { createCommand } from "./createCommand.js"
@@ -206,5 +206,5 @@ export function createManager<
 		context: rawManager.context!,
 		hooks: rawManager?.hooks as any as THooks,
 	}
-	return Result.Ok(manager) as any
+	return Ok(manager) as any
 }

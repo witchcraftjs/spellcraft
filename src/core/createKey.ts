@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "../helpers/KnownError.js"
 import { ERROR, type Key, type MultipleErrors, type RawKey } from "../types/index.js"
@@ -49,9 +49,9 @@ TKey extends RawKey<TId> = RawKey<TId>,
 		updateStateOnAllEvents: k.updateStateOnAllEvents ?? true,
 	}
 	if (key.variants?.includes(key.id)) {
-		return Result.Err(
+		return Err(
 			new KnownError(ERROR.INVALID_VARIANT, `A key variant cannot be the key id itself. Attempted to use "${key.id}" in variants:[ ${key.variants.join(",")} ]`, { variants: key.variants as any /* todo*/, id: key.id })
 		)
 	}
-	return Result.Ok(key)
+	return Ok(key)
 }

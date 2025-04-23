@@ -1,5 +1,5 @@
 import { crop } from "@alanscodelog/utils/crop.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
@@ -29,7 +29,7 @@ export function areValidVariants(
 		if (!!key.isToggle !== !!k.isToggle) {
 			const stringKey = s.stringify(key, manager)
 			const stringOtherKey = s.stringify(k, manager)
-			return Result.Err(new KnownError(ERROR.INVALID_VARIANT_PAIR, crop`
+			return Err(new KnownError(ERROR.INVALID_VARIANT_PAIR, crop`
 				Key ${stringKey} specifies a variant or matches an existing key's variant (${stringOtherKey}), but their functionality is not the same.
 
 				Key ${stringKey} "isToggle" is "${key.isToggle}" while key ${stringOtherKey} "isToggle" is "${k.isToggle}".
@@ -44,7 +44,7 @@ export function areValidVariants(
 		if (!!key.isModifier !== !!k.isModifier) {
 			const stringKey = s.stringify(key, manager)
 			const stringOtherKey = s.stringify(k, manager)
-			return Result.Err(new KnownError(ERROR.INVALID_VARIANT_PAIR, crop`
+			return Err(new KnownError(ERROR.INVALID_VARIANT_PAIR, crop`
 				Key ${stringKey} specifies a variant or matches an existing key's variant (${stringOtherKey}), but their functionality is not the same.
 
 				Key ${stringKey} "isModifier" is "${key.isModifier}" while key ${stringOtherKey} "isModifier" is "${k.isModifier}".
@@ -55,5 +55,5 @@ export function areValidVariants(
 			}))
 		}
 	}
-	return Result.Ok(true)
+	return Ok(true)
 }

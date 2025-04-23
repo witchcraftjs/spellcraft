@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "./KnownError.js"
 
@@ -53,11 +53,11 @@ export function getKeyFromEventCode(
 			.filter(_ => _ !== "undefined")
 			.join(", ")
 			
-		return Result.Err(new KnownError(
+		return Err(new KnownError(
 			ERROR.UNKNOWN_KEY_EVENT,
 			`An unknown key (${info}) was pressed.`,
 			{ e: e as any, button: withButton, code: withCode, key: withKey, deltaY: withDeltaY }
 		))
 	}
-	return Result.Ok(keyIds)
+	return Ok(keyIds)
 }

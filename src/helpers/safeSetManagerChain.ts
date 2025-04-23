@@ -1,6 +1,6 @@
 import { pushIfNotIn } from "@alanscodelog/utils"
 import { last } from "@alanscodelog/utils/last.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { setManagerProp } from "../core/setManagerProp.js"
 import { checkTrigger } from "../internal/checkTrigger.js"
@@ -61,6 +61,6 @@ export function safeSetManagerChain(
 	} else {
 		setManagerProp(manager, "state.nextIsChord", newChain.length === 0, { check: false })
 	}
-	return Result.Ok(manager.state.chain)
+	return Ok(manager.state.chain)
 }
 

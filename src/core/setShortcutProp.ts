@@ -1,5 +1,5 @@
 import { castType } from "@alanscodelog/utils/castType.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { addShortcut } from "./addShortcut.js"
 import { removeShortcut } from "./removeShortcut.js"
@@ -74,18 +74,18 @@ export function setShortcutProp<
 		if (manager?.hooks && "canSetShortcutProp" in manager.hooks && canHookable.includes(prop as any)) {
 			const canHook = (manager.hooks as Hooks).canSetShortcutProp?.(shortcut, prop as any, val)
 			if (canHook instanceof Error) {
-				return Result.Err(canHook) as any
+				return Err(canHook) as any
 			}
 		}
 	}
 	if (check === "only") {
-		return Result.Ok(true) satisfies Result<true, never> as any
+		return Ok(true) satisfies Result<true, never> as any
 	}
 	shortcut[prop] = val as any
 
 	(manager?.hooks as Hooks)?.onSetShortcutProp?.(shortcut, prop, val)
 	manager?.hooks?.onSetShortcutProp?.(shortcut, prop, val)
 
-	return Result.Ok(shortcut) satisfies Result<Shortcut, never> as any
+	return Ok(shortcut) satisfies Result<Shortcut, never> as any
 }
 

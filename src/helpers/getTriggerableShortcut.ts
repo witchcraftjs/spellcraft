@@ -1,6 +1,6 @@
 import { crop } from "@alanscodelog/utils/crop.js"
 import { indent } from "@alanscodelog/utils/indent.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "./KnownError.js"
 import { shortcutIsTriggerableBy } from "./shortcutIsTriggerableBy.js"
@@ -17,13 +17,13 @@ export function getTriggerableShortcut(
 ): Result<false | TriggerableShortcut, KnownError<ERROR.MULTIPLE_MATCHING_SHORTCUTS>> {
 	const s = manager.options.stringifier
 
-	if (manager.state.isRecording) return Result.Ok(false)
+	if (manager.state.isRecording) return Ok(false)
 		
 	const shortcuts = manager.shortcuts.entries.filter(shortcut => shortcutIsTriggerableBy(manager.state.chain, shortcut, manager))
 
-	if (shortcuts.length === 0) return Result.Ok(false)
+	if (shortcuts.length === 0) return Ok(false)
 	if (shortcuts.length > 1) {
-		return Result.Err(new KnownError(ERROR.MULTIPLE_MATCHING_SHORTCUTS,
+		return Err(new KnownError(ERROR.MULTIPLE_MATCHING_SHORTCUTS,
 			crop`
 				Multiple commands are assigned to the key combination ${s.stringify(manager.state.chain, manager)}:
 
@@ -31,7 +31,7 @@ export function getTriggerableShortcut(
 			`,
 			{ shortcuts }))
 	} else {
-		return Result.Ok(shortcuts[0] as TriggerableShortcut)
+		return Ok(shortcuts[0] as TriggerableShortcut)
 	}
 }
 

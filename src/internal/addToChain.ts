@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { checkTrigger } from "./checkTrigger.js"
 
@@ -13,8 +13,8 @@ export function addToChain(
 	e?: AnyInputEvent,
 ): Result<true, MultipleErrors<ManagerSetEntries["state.chain"]["error"]>> {
 	const sorter = manager.options.sorter
-	if (manager.state.isAwaitingKeyup) return Result.Ok(true)
-	if (keysList.length === 0) return Result.Ok(true)
+	if (manager.state.isAwaitingKeyup) return Ok(true)
+	if (keysList.length === 0) return Ok(true)
 
 	if (manager.state.nextIsChord) {
 		// we unwrap when setting the chain because the manager should not be creating invalid states
@@ -35,6 +35,6 @@ export function addToChain(
 			checkTrigger(manager, e)
 		}
 	}
-	return Result.Ok(true)
+	return Ok(true)
 }
 

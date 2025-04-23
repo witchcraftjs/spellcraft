@@ -177,7 +177,7 @@
 import { setReadOnly } from "@alanscodelog/utils"
 import { isWhitespace } from "@alanscodelog/utils/isWhitespace.js"
 import { keys, keys as ObjectKeys } from "@alanscodelog/utils/keys.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 import type { createManagerEventListeners } from "@witchcraft/spellcraft"
 import { addCommand, addShortcut as managerAddShortcut, attach, createCommand, createShortcut, detach, removeShortcut as managerRemoveShortcut, setManagerProp, setShortcutProp } from "@witchcraft/spellcraft"
 import { equalsShortcut } from "@witchcraft/spellcraft/helpers/equalsShortcut.js"
@@ -309,9 +309,9 @@ const conditionValidity = computed(() => {
 })
 
 function isValidCondition(shortcut: Shortcut): Result<true, Error> {
-	if (shortcut.condition.text === "") return Result.Ok(true)
+	if (shortcut.condition.text === "") return Ok(true)
 	const res = parseShortcutCondition(shortcut)
-	return res.isOk ? Result.Ok(true) : res
+	return res.isOk ? Ok(true) : res
 }
 function createCommandIfMissing(name: string): void {
 	let command = commands.value.entries[name]

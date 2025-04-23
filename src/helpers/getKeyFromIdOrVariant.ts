@@ -1,5 +1,5 @@
 import { isArray } from "@alanscodelog/utils/isArray.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "./KnownError.js"
 
@@ -23,11 +23,11 @@ export function getKeyFromIdOrVariant(
 	}
 	if (!isArray(k) && k !== undefined) k = [k]
 	if (k === undefined) {
-		return Result.Err(new KnownError(
+		return Err(new KnownError(
 			ERROR.UNKNOWN_KEY_ID,
 				`Tried to get unknown key (${id}).`,
 				{ id }
 		))
 	}
-	return Result.Ok(k)
+	return Ok(k)
 }

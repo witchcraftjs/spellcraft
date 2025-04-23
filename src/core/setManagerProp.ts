@@ -1,5 +1,5 @@
 import { castType } from "@alanscodelog/utils/castType.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 import { set } from "@alanscodelog/utils/set.js"
 
 import { isValidManager } from "../helpers/isValidManager.js"
@@ -86,12 +86,12 @@ export function setManagerProp<
 		if (manager?.hooks && "canSetManagerProp" in manager.hooks && canHookable.includes(prop as any)) {
 			const canHook = manager.hooks?.canSetManagerProp?.(manager, prop as any, val as any)
 			if (canHook instanceof Error) {
-				return Result.Err(canHook) as any
+				return Err(canHook) as any
 			}
 		}
 	}
 	if (check === "only") {
-		return Result.Ok(true) satisfies Result<true, never> as any
+		return Ok(true) satisfies Result<true, never> as any
 	}
 
 
@@ -106,6 +106,6 @@ export function setManagerProp<
 
 	manager.hooks?.onSetManagerProp?.(manager, prop, val)
 
-	return Result.Ok(manager) satisfies Result<Manager, never> as any
+	return Ok(manager) satisfies Result<Manager, never> as any
 }
 

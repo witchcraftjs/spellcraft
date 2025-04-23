@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { addShortcut } from "./addShortcut.js"
 
@@ -44,9 +44,9 @@ export function createShortcuts<
 			if (res.isError) return res
 		}
 	}
-	if (check === "only") return Result.Ok(true) satisfies Result<true, never> as any
+	if (check === "only") return Ok(true) satisfies Result<true, never> as any
 
 	
-	return Result.Ok(shortcuts) satisfies Result<Shortcuts, never> as any
+	return Ok(shortcuts) satisfies Result<Shortcuts, never> as any
 }
 

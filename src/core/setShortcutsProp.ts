@@ -1,5 +1,5 @@
 import { castType } from "@alanscodelog/utils/castType.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { doesShortcutConflict } from "../helpers/doesShortcutConflict.js"
 import { equalsShortcut } from "../helpers/equalsShortcut.js"
@@ -49,7 +49,7 @@ export function setShortcutsProp<
 				)
 
 				if (existing) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.DUPLICATE_SHORTCUT,
 						errorTextAdd(
 							"Shortcut",
@@ -71,7 +71,7 @@ export function setShortcutsProp<
 					_ === shortcut || equalsShortcut(shortcut, _, manager, { ignoreCommand: false })
 				)
 				if (existing === undefined) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.MISSING,
 						errorTextRemove(
 							"Shortcut",
@@ -89,13 +89,13 @@ export function setShortcutsProp<
 		if (manager?.hooks && "canSetShortcutsProp" in manager.hooks && canHookable.includes(prop as any)) {
 			const canHook = manager.hooks.canSetShortcutsProp?.(shortcuts, prop as any, val as any)
 			if (canHook instanceof Error) {
-				return Result.Err(canHook) as any
+				return Err(canHook) as any
 			}
 		}
 	}
 	
 	if (check === "only") {
-		return Result.Ok(true) satisfies Result<true, never> as any
+		return Ok(true) satisfies Result<true, never> as any
 	}
 
 	switch (prop) {
@@ -120,6 +120,6 @@ export function setShortcutsProp<
 
 	manager.hooks?.onSetShortcutsProp?.(shortcuts, prop as any, val as any)
 	
-	return Result.Ok(shortcuts) satisfies Result<Shortcuts, never> as any
+	return Ok(shortcuts) satisfies Result<Shortcuts, never> as any
 }
 

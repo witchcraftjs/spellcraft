@@ -8,7 +8,7 @@
 		"generate": "nuxi generate"
 	},
 	"dependencies": {
-		"@alanscodelog/utils": "^4.0.0",
+		"@alanscodelog/utils": "^5.0.0",
 		"@witchcraft/expressit": "^0.2.0",
 		"@witchcraft/spellcraft": "^0.0.0",
 		"@witchcraft/ui": "^0.0.0",

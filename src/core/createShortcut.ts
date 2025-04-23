@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { isValidShortcut } from "../helpers/isValidShortcut.js"
@@ -46,5 +46,5 @@ TRawCommand extends Command["name"] | Command = Command["name"] | Command,
 	if (res.isError) return res
 	
 
-	return Result.Ok(shortcut satisfies Shortcut as any)
+	return Ok(shortcut satisfies Shortcut as any)
 }

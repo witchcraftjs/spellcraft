@@ -1,5 +1,5 @@
 import { crop } from "@alanscodelog/utils/crop.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
@@ -81,11 +81,11 @@ export function containsPossibleToggleChords(
 	if (impossible) {
 		const prettyShortcut = s.stringify(chain, manager)
 		const { pos, keyId: key } = impossible
-		const e = Result.Err(new KnownError(ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE, crop`
+		const e = Err(new KnownError(ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE, crop`
 			Chain "${prettyShortcut}" is impossible.
 			This chain has a toggle key state "${s.stringify(key, manager)}" at key #${pos + 1} that would be impossible to trigger.
 		`, { chain, key: keys.entries[key] ?? keys.toggles[key], i: pos }))
 		return e
 	}
-	return Result.Ok(true)
+	return Ok(true)
 }

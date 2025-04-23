@@ -1,7 +1,7 @@
 import { crop } from "@alanscodelog/utils/crop.js"
 import { findDuplicates } from "@alanscodelog/utils/findDuplicates.js"
 import { indent } from "@alanscodelog/utils/indent.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
@@ -41,7 +41,7 @@ export function isValidChord(
 	if (repeated.length > 0) {
 		const prettyRepeated = s.stringifyList("keys", repeated, manager)
 
-		return Result.Err(new KnownError(ERROR.CHORD_W_DUPLICATE_KEY, crop`
+		return Err(new KnownError(ERROR.CHORD_W_DUPLICATE_KEY, crop`
 			Chord "${prettyChord}" in chain "${prettyChain}" contains duplicate or incompatible keys:
 				${indent(prettyRepeated, 4)}
 			Chords cannot contain duplicate keys. This includes more than one of the same toggle, regardless of the state.
@@ -51,7 +51,7 @@ export function isValidChord(
 	const onlyModifiers = chord.filter(id => (getKeyFromIdOrVariant(id, keys).unwrap()[0]).isModifier)
 	const containsOnlyModifiers = onlyModifiers.length === chord.length
 	if (i < chain.length - 1 && containsOnlyModifiers) {
-		return Result.Err(new KnownError(ERROR.CHORD_W_ONLY_MODIFIERS, crop`
+		return Err(new KnownError(ERROR.CHORD_W_ONLY_MODIFIERS, crop`
 			Chain "${prettyChain}" is impossible.
 			Chord #${i + 1} "${prettyChord}" cannot contain only modifiers if it is followed by another chord.
 			A chord can only consist of only modifiers if it's the last chord in a chain.
@@ -63,7 +63,7 @@ export function isValidChord(
 	const prettyWheelKeys = s.stringifyList("keys", wheelKeys, manager)
 
 	if (wheelKeys.length > 1) {
-		return Result.Err(new KnownError(ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS, crop`
+		return Err(new KnownError(ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS, crop`
 			Chain "${prettyChain}" is impossible.
 			Chord #${i + 1} "${prettyChord}" contains multiple wheel keys: ${prettyWheelKeys}
 			Chords can only contain one.
@@ -75,7 +75,7 @@ export function isValidChord(
 	const triggerKeys = chord.filter(id => isTriggerKey(getKeyFromIdOrVariant(id, keys).unwrap()[0]))
 	const prettyTriggerKeys = s.stringifyList("keys", triggerKeys, manager)
 	if (triggerKeys.length > 1) {
-		return Result.Err(new KnownError(ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS, crop`
+		return Err(new KnownError(ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS, crop`
 			Chain "${prettyChain}" is impossible.
 			Chord #${i + 1} "${prettyChord}" contains multiple trigger (non-modifier/non-root toggle) keys: ${prettyTriggerKeys}
 			Chords can only contain one.
@@ -83,5 +83,5 @@ export function isValidChord(
 	}
 
 
-	return Result.Ok(true)
+	return Ok(true)
 }

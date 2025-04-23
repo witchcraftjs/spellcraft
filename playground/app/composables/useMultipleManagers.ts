@@ -1,6 +1,6 @@
 import { browserSaveFile } from "@alanscodelog/utils/browserSaveFile.js"
 import { keys as objectKeys } from "@alanscodelog/utils/keys.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 import { setReadOnly } from "@alanscodelog/utils/setReadOnly.js"
 import {
 	type Command,
@@ -37,7 +37,7 @@ export function useMultipleManagers(
 			onParse: (parsed: any) => {
 				if (!("__version" in parsed) || !(parsed.__version as string).match(/^([0-9]+)\.([0-9]+)\.([0-9]+)$/)) {
 					// we should not actually return here as we can still import the manager
-					notifyIfError(Result.Err(`Parsed manager "${parsed.name}"'s __version property is not defined or does not match the version format. The manager will be imported anyways, but it might not function correctly.`))
+					notifyIfError(Err(`Parsed manager "${parsed.name}"'s __version property is not defined or does not match the version format. The manager will be imported anyways, but it might not function correctly.`))
 					;(parsed as any).__version = VERSION
 				}
 				// set the execute function to the global/default command exec

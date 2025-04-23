@@ -88,7 +88,7 @@
 		"gen:exports": "indexit update -o '${path}.js'"
 	},
 	"dependencies": {
-		"@alanscodelog/utils": "^4.0.0"
+		"@alanscodelog/utils": "^5.1.0"
 	},
 	"peerDependencies": {
 		"defu": "^6.1.4",

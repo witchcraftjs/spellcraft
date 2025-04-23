@@ -1,6 +1,6 @@
 import { castType } from "@alanscodelog/utils/castType.js"
 import { crop } from "@alanscodelog/utils/crop.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 import { set } from "@alanscodelog/utils/set.js"
 
 import { KnownError } from "../helpers/KnownError.js"
@@ -45,7 +45,7 @@ export function setKeyProp<
 				castType<TEntries["pressed"]["manager"]>(manager)
 				const s = manager.options.stringifier
 				if (!key.enabled && val === true) {
-					return Result.Err(
+					return Err(
 						new KnownError(ERROR.CANNOT_SET_WHILE_DISABLED, crop`
 							The "${prop}" property cannot be set to true while a key is disabled. (Key: ${s.stringify(key, manager)})
 						`, { key })
@@ -59,13 +59,13 @@ export function setKeyProp<
 		if (manager?.hooks && "canSetKeyProp" in manager.hooks && canHookable.includes(prop as any)) {
 			const canHook = manager.hooks.canSetKeyProp?.(key, prop as any, val as any)
 			if (canHook instanceof Error) {
-				return Result.Err(canHook) as any
+				return Err(canHook) as any
 			}
 		}
 	}
 	
 	if (check === "only") {
-		return Result.Ok(true) satisfies Result<true, never> as any
+		return Ok(true) satisfies Result<true, never> as any
 	}
 
 	if (prop.includes(".")) {
@@ -76,6 +76,6 @@ export function setKeyProp<
 
 	manager?.hooks?.onSetKeyProp?.(key, prop, val)
 	
-	return Result.Ok(key) satisfies Result<Key, never> as any
+	return Ok(key) satisfies Result<Key, never> as any
 }
 

@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 import type { RecordFromArray } from "@alanscodelog/utils/types"
 
 import { addKey } from "./addKey.js"
@@ -61,12 +61,12 @@ TCheck extends boolean | "only" = true,
 			if (res.isError) return res as any
 		}
 	}
-	if (check === "only") return Result.Ok(true) satisfies Result<true, never> as any
+	if (check === "only") return Ok(true) satisfies Result<true, never> as any
 
 	
 	if (rawKeys?.autoManageLayout) {
 		keys.autoManageLayout = true
 		keys.layout = calculateLayoutSize(keys)
 	}
-	return Result.Ok(keys) satisfies Result<Keys, never> as any
+	return Ok(keys) satisfies Result<Keys, never> as any
 }

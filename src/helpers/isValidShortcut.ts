@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { isValidChain } from "../internal/isValidChain.js"
 import { isValidCommand } from "../internal/isValidCommand.js"
@@ -16,5 +16,5 @@ export function isValidShortcut(
 	if (resCommandsValid.isError) return resCommandsValid
 	const resChainValid = isValidChain(shortcut.chain, manager)
 	if (resChainValid.isError) return resChainValid
-	return Result.Ok(true)
+	return Ok(true)
 }

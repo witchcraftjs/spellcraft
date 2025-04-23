@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { isValidShortcut } from "./isValidShortcut.js"
 
@@ -15,5 +15,5 @@ export function isValidManager(manager: Manager): Result< true, MultipleErrors<
 		if (res.isError) return res
 	}
 
-	return Result.Ok(true)
+	return Ok(true)
 }

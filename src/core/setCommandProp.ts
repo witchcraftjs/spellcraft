@@ -1,7 +1,7 @@
 import { castType } from "@alanscodelog/utils/castType.js"
 import { crop } from "@alanscodelog/utils/crop.js"
 import { indent } from "@alanscodelog/utils/indent.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { setCommandsProp } from "./setCommandsProp.js"
 import { setShortcutProp } from "./setShortcutProp.js"
@@ -50,7 +50,7 @@ export function setCommandProp<
 				const s = manager.options.stringifier
 				const existing = manager.commands.entries[val as string]
 				if (existing) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.DUPLICATE_COMMAND,
 						errorTextAdd(
 							"Command",
@@ -84,7 +84,7 @@ export function setCommandProp<
 					}
 				}
 				if (shortcutErrors.length > 0) {
-					return Result.Err(new KnownError(
+					return Err(new KnownError(
 						ERROR.MULTIPLE_ERRORS,
 						crop`
 							Received multiple errors attempting to change command name from ${command.name} to ${val}: 
@@ -102,13 +102,13 @@ export function setCommandProp<
 		if (manager?.hooks && "canSetCommandProp" in manager.hooks && canHookable.includes(prop as any)) {
 			const canHook = manager.hooks.canSetCommandProp?.(command, prop as any, val)
 			if (canHook instanceof Error) {
-				return Result.Err(canHook) as any
+				return Err(canHook) as any
 			}
 		}
 	}
 	
 	if (check === "only") {
-		return Result.Ok(true) satisfies Result<true, never> as any
+		return Ok(true) satisfies Result<true, never> as any
 	}
 
 
@@ -136,6 +136,6 @@ export function setCommandProp<
 		manager?.hooks?.onSetCommandProp?.(command, prop as any, val)
 	}
 	
-	return Result.Ok(command) satisfies Result<Command, never> as any
+	return Ok(command) satisfies Result<Command, never> as any
 }
 

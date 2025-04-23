@@ -1,4 +1,4 @@
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { setKeysProp } from "./setKeysProp.js"
 
@@ -21,6 +21,6 @@ export function removeKey<
 {
 	const res = setKeysProp("entries@remove", key, manager, opts)
 	if (res.isError) return res
-	return Result.Ok(key) satisfies Result<Key, never> as any
+	return Ok(key) satisfies Result<Key, never> as any
 }
 

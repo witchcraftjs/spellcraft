@@ -1,5 +1,5 @@
 import { crop } from "@alanscodelog/utils/crop.js"
-import { Result } from "@alanscodelog/utils/Result.js"
+import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
@@ -29,12 +29,12 @@ export function areValidKeys(
 
 	if (unknownKeys.length > 0) {
 		const stringified = s.stringifyList("keys", unknownKeys, { keys })
-		return Result.Err(new KnownError(ERROR.UNKNOWN_KEY, crop`
+		return Err(new KnownError(ERROR.UNKNOWN_KEY, crop`
 			${s.stringify(shortcut ?? chain, manager)} contains unknown keys: ${stringified}
 			`, {
 			shortcut: shortcut ? shortcut : { chain },
 			keys: unknownKeys,
 		}))
 	}
-	return Result.Ok(true)
+	return Ok(true)
 }
