@@ -4,7 +4,6 @@
 	"version": "0.0.0",
 	"type": "module",
 	"main": "./dist/core/index.js",
-	"types": "./dist/core/index.d.ts",
 	"sideEffects": false,
 	"build": {
 		"failOnWarn": false
@@ -59,8 +58,7 @@
 			"import": "./dist/core/*"
 		},
 		"./nuxt": {
-			"import": "./dist/module.mjs",
-			"require": "./dist/module.cjs"
+			"import": "./dist/module.mjs"
 		}
 	},
 	"scripts": {
@@ -69,10 +67,9 @@
 		"dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
 		"dev:playground": "nuxi dev playground",
 		"dev": "nuxi dev playground",
-		"test": "pnpm test:types && vitest run --exclude '.direnv/**/*'",
+		"test": "pnpm lint:types && vitest run --exclude '.direnv/**/*'",
 		"test:watch": "vitest --watch --exclude '.direnv/**/*'",
 		"test:inspect-errors": "cross-env INSPECT_ERRORS=true npm run test",
-		"test:types": "vue-tsc --noEmit && echo 'todo cd playground && vue-tsc --noEmit'",
 		"coverage": "vitest --exclude '.direnv/**/*' --coverage",
 		"coverage:dev": "vitest --exclude '.direnv/**/*'  --watch --coverage",
 		"doc": "typedoc --options typedoc.config.cjs",
@@ -81,9 +78,10 @@
 		"doc:dev": "concurrently \"pnpm doc:watch\" \"pnpm doc:serve\"",
 		"doc:check-invalid": "typedoc --options typedoc.config.cjs --listInvalidSymbolLinks",
 		"lint:eslint": "eslint \"{src,test,playground/app}/**/*.{js,ts,vue,cjs}\" \"*.{js,ts}\" --max-warnings=0 --report-unused-disable-directives",
+		"lint:types": "vue-tsc --noEmit && echo 'todo cd playground && vue-tsc --noEmit'",
 		"lint:commits": "commitlint --from $(git rev-list --max-parents=0 HEAD) --to HEAD --verbose",
 		"lint:imports": "madge --circular --extensions ts ./src",
-		"lint": "pnpm test:types && pnpm lint:eslint && pnpm lint:imports",
+		"lint": "pnpm lint:types && pnpm lint:eslint && pnpm lint:imports",
 		"actions:debug": "act -r -v -j build",
 		"gen:exports": "indexit update -o '${path}.js'"
 	},
