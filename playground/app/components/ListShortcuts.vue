@@ -177,7 +177,7 @@
 import { setReadOnly } from "@alanscodelog/utils"
 import { isWhitespace } from "@alanscodelog/utils/isWhitespace.js"
 import { keys, keys as ObjectKeys } from "@alanscodelog/utils/keys.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 import type { createManagerEventListeners } from "@witchcraft/spellcraft"
 import { addCommand, addShortcut as managerAddShortcut, attach, createCommand, createShortcut, detach, removeShortcut as managerRemoveShortcut, setManagerProp, setShortcutProp } from "@witchcraft/spellcraft"
 import { equalsShortcut } from "@witchcraft/spellcraft/helpers/equalsShortcut.js"

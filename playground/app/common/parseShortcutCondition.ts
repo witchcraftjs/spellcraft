@@ -1,13 +1,13 @@
 import { isWhitespace } from "@alanscodelog/utils/isWhitespace.js"
 import { readable } from "@alanscodelog/utils/readable.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 import { extractTokens } from "@witchcraft/expressit/utils/extractTokens.js"
 import type { Shortcut } from "@witchcraft/spellcraft/types/shortcuts.js"
 
 import { conditionParser } from "./conditionParser.js"
 
 
-export function parseShortcutCondition(shortcut: Shortcut) {
+export function parseShortcutCondition(shortcut: Shortcut): Result<undefined | ReturnType<typeof conditionParser.parse>, Error> {
 	if (shortcut.condition.text && !isWhitespace(shortcut.condition.text)) {
 		const res = conditionParser.parse(shortcut.condition.text)
 		if ("valid" in res && !res.valid) {

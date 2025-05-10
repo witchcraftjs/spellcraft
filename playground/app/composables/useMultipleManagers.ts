@@ -1,6 +1,6 @@
 import { browserSaveFile } from "@alanscodelog/utils/browserSaveFile.js"
 import { keys as objectKeys } from "@alanscodelog/utils/keys.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,type Result } from "@alanscodelog/utils/Result.js"
 import { setReadOnly } from "@alanscodelog/utils/setReadOnly.js"
 import {
 	type Command,
@@ -19,6 +19,7 @@ import { createDefaultManager } from "../common/createDefaultManager.js"
 
 const VERSION = "0.0.1"
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function useMultipleManagers(
 	notifyIfError: <T extends Result<any, Error>>(res: T) => T,
 	commandExec: CommandExecute
@@ -82,7 +83,7 @@ export function useMultipleManagers(
 	const changeManager = managerManager.changeManager.bind(managerManager)
 
 
-	const contexts = ref<ContextInfo>({
+	const context = ref<ContextInfo>({
 		count: {},
 		isActive: {},
 	})
@@ -91,7 +92,7 @@ export function useMultipleManagers(
 		const m = managers.value[activeManagerName.value]!
 		const managerOverlay: Manager = {
 			...m,
-			context: createContext<Context<ContextInfo>>(contexts.value),
+			context: createContext<Context<ContextInfo>>(context.value),
 			listener: arg => {
 				updateVirtuallyPressed(arg)
 				m.listener!(arg)
@@ -123,7 +124,7 @@ export function useMultipleManagers(
 		removeContext,
 		activateContext,
 		deactivateContext,
-	} = useShortcutManagerContextCount(activeManager, contexts)
+	} = useShortcutManagerContextCount(activeManager, context)
 	
 	watch(() => activeManager.value.context.value, () => {
 		conditionParser.setContext(activeManager.value.context.value)
@@ -144,7 +145,7 @@ export function useMultipleManagers(
 		exportManagers,
 		importManagers,
 		virtuallyPressedKeys,
-		contexts,
+		context,
 		addContext,
 		removeContext,
 		activateContext,

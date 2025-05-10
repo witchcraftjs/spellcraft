@@ -1,11 +1,10 @@
 import type { Result } from "@alanscodelog/utils/Result.js"
-
-import { notificationHandler } from "./notificationHandler.js"
+import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler.js"
 
 
 export const notifyIfError = <T extends Result<any, Error>>(res: T): T => {
 	if (res.isError) {
-		void notificationHandler.notify({
+		void useNotificationHandler().notify({
 			message: res.error.message,
 			options: ["Ok"],
 			timeout: true,

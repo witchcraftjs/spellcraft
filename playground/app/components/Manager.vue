@@ -10,9 +10,9 @@
 		gap-2
 	`)"
 >
-	<KContext
+	<KContexts
 		class=""
-		:contexts="contexts"
+		:context="context"
 		@add="addContext($event)"
 		@remove="removeContext($event)"
 		@activate="activateContext($event)"
@@ -81,16 +81,16 @@ import {
 } from "@witchcraft/spellcraft"
 import { getKeyFromIdOrVariant } from "@witchcraft/spellcraft/helpers/getKeyFromIdOrVariant.js"
 import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain.js"
+// import { overlayHoldListeners } from "../common/overlayAccessibilityListeners.js"
+import type { ContextInfo } from "@witchcraft/spellcraft/types/index.js"
 import { onMounted, onUnmounted, reactive, type Ref, ref, toRefs, watch, watchEffect } from "vue"
 
-import KContext from "./Contexts.vue"
+import KContexts from "./Contexts.vue"
 import KKeyboard from "./Keyboard.vue"
 import ListCommands from "./ListCommands.vue"
 import ListShortcuts from "./ListShortcuts.vue"
 
 import { clearVirtuallyPressed } from "../common/clearVirtuallyPressed.js"
-import { overlayHoldListeners } from "../common/overlayAccessibilityListeners.js"
-import type { ContextInfo } from "../types/index.js"
 
 
 const el = ref<HTMLElement | null>(null)
@@ -98,7 +98,7 @@ const activeListTab = ref<"Shortcuts" | "Commands">("Shortcuts")
 
 const props = defineProps<{
 	manager: Manager
-	contexts: ContextInfo
+	context: ContextInfo
 	virtuallyPressedKeys: Record<string, boolean>
 	triggerState: boolean
 	addContext: (context: string) => void

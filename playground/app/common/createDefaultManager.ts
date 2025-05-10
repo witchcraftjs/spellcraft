@@ -5,11 +5,11 @@ import {
 	createKey,
 	createKeys,
 	createManager,
-	SHORTCUT_ERROR,
 	type Hooks,
 	type Manager,
 	type PickManager,
 	setKeyProp,
+	SHORTCUT_ERROR,
 } from "@witchcraft/spellcraft"
 import { labelWithEvent } from "@witchcraft/spellcraft/helpers/index.js"
 import { createLayout } from "@witchcraft/spellcraft/layouts/createLayout.js"

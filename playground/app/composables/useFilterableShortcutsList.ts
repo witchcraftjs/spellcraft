@@ -1,5 +1,5 @@
 import { shortcutCanExecuteIn } from "@witchcraft/spellcraft/helpers"
-import { type Manager } from "@witchcraft/spellcraft/types"
+import { type Manager, type Shortcut } from "@witchcraft/spellcraft/types"
 import { chainContainsSubset, equalsKeys } from "@witchcraft/spellcraft/utils"
 import { computed, type Ref } from "vue"
 
@@ -17,7 +17,7 @@ export const useFilterableShortcutsList = (
 	manager: Ref<Manager>,
 	filterChain: Ref<string[][]>,
 	filters?: Ref<Filters<boolean>>
-) => {
+): Ref<Shortcut[]> => {
 	const shortcutsList = computed(() => {
 		const list = []
 		const f = filters?.value

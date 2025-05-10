@@ -20,14 +20,14 @@
 			after:absolute
 			disabled:text-transparent
 			`,
-				activeContexts.length > 1 && `
+				activeContext.length > 1 && `
 				after:border-accent-400
 				hover:after:border-accent-600
 				after:border-dashed
 				text-accent-400
 				hover:text-accent-600
 			`)"
-			:disabled="activeContexts.length <= 1"
+			:disabled="activeContext.length <= 1"
 			:border="false"
 			aria-label="Clear Active Contexts"
 			auto-title-from-aria
@@ -54,17 +54,17 @@
 				tabindex="0"
 				:aria-label="'Toggle Context'"
 				:title="'Toggle Context'"
-				v-for="[name,isActive] in Object.entries(contexts.isActive)"
+				v-for="[name,isActive] in Object.entries(context.isActive)"
 				:key="name"
 				@click="emit(isActive ? 'deactivate' : 'activate' as any /* wat */, name)"
 			>
 				<span>{{ name }}</span>
 				<WButton
 					:border="false"
-					:aria-label="contexts.count[name] > 0 ? `Cannot remove, ${contexts.count[name]} ${contexts.count[name] === 1 ? 'shortcut' :'shortcuts'} using this context.` : 'Remove Context'"
+					:aria-label="context.count[name] > 0 ? `Cannot remove, ${context.count[name]} ${context.count[name] === 1 ? 'shortcut' :'shortcuts'} using this context.` : 'Remove Context'"
 					auto-title-from-aria
 					class="p-0 disabled:cursor-not-allowed"
-					:disabled="contexts.count[name] > 0"
+					:disabled="context.count[name] > 0"
 					@click="emit( 'remove', name )"
 				>
 					<template #icon> <WIcon> <i-fa-solid-times/> </WIcon> </template>
@@ -76,7 +76,7 @@
 				class="min-w-[0] w-[20ch]"
 				placeholder="Add Context"
 				wrapper-class="pr-0"
-				:valid="contexts.isActive[tempValue] === undefined"
+				:valid="context.isActive[tempValue] === undefined"
 				v-model="tempValue"
 				@submit="addContext"
 				@enter.prevent
@@ -101,15 +101,14 @@
 
 <script setup lang="ts">
 import { isBlank } from "@alanscodelog/utils/isBlank.js"
-import { keys } from "@alanscodelog/utils/keys.js"
-import {useNotificationHandler} from "@witchcraft/ui/composables/useNotificationHandler.js"
-import { computed, inject, type PropType, ref } from "vue"
+import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler.js"
+import { computed, ref } from "vue"
 
-import type { ContextInfo } from "../types/index.js"
+import type { ContextInfo } from "#witchcraft-spellcraft/types.js"
 
 
 const props = defineProps<{
-	contexts: ContextInfo
+	context: ContextInfo
 }>()
 const emit = defineEmits<{
 	add: [val: string]
@@ -131,13 +130,13 @@ const addContext = (): void => {
 	}
 }
 
-const activeContexts = computed(() => [...Object.entries(props.contexts.isActive)]
+const activeContext = computed(() => [...Object.entries(props.context.isActive)]
 	.filter(([_, isActive]) => isActive)
 	.map(([context]) => context),
 )
 
 const deactivateAll = (): void => {
-	for (const context of activeContexts.value) {
+	for (const context of activeContext.value) {
 		emit("deactivate", context)
 	}
 }

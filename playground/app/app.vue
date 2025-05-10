@@ -1,10 +1,9 @@
 <template>
-	<WRoot
-		id="spellcraft-app"
-		class="dark:bg-neutral-900 dark:text-white gap-2 p-4"
-		:is-client-side="isClientSide"
-	>
-	
+<WRoot
+	id="spellcraft-app"
+	class="dark:bg-neutral-900 dark:text-white gap-2 p-4"
+	:is-client-side="isClientSide"
+>
 	<div class="
 		grid grid-cols-3 grid-rows-1 gap-4
 	"
@@ -21,15 +20,15 @@
 			<KHelp/>
 		</div>
 		<div class="flex flex-wrap gap-2 items-center justify-end">
-		<KManagerImportExport
-			:managers="managerNames"
-			@export-all="exportManagers($event)"
-			@import="importManagers($event)"
-		/>
-		<WDarkModeSwitcher
-			class="mr-8"
-			:auto-label="false"
-		/>
+			<KManagerImportExport
+				:managers="managerNames"
+				@export-all="exportManagers($event)"
+				@import="importManagers($event)"
+			/>
+			<WDarkModeSwitcher
+				class="mr-8"
+				:auto-label="false"
+			/>
 		</div>
 	</div>
 	<GithubCorner :href="githubLink"/>
@@ -45,7 +44,7 @@
 		@export="exportManagers([$event])"
 	/>
 	<KManager
-		:contexts="contexts"
+		:context="context"
 		:add-context="addContext"
 		:remove-context="removeContext"
 		:activate-context="activateContext"
@@ -55,7 +54,6 @@
 		:trigger-state="triggerState"
 		@add-example-data="addExampleData(activeManager)"
 	/>
-	<WNotifications :handler="notificationHandler"/>
 </WRoot>
 </template>
 
@@ -67,13 +65,12 @@ import {
 	createCommand,
 	createShortcut,
 	type Manager,
-	setManagerProp,
+	// setManagerProp,
 } from "@witchcraft/spellcraft"
 import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain.js"
 import { ref } from "vue"
 
 import { clearVirtuallyPressed } from "./common/clearVirtuallyPressed.js"
-import { notificationHandler } from "./common/notificationHandler.js"
 import { notifyIfError } from "./common/notifyIfError.js"
 import GithubCorner from "./components/GithubCorner.vue"
 import KHelp from "./components/Help.vue"
@@ -85,7 +82,6 @@ import { useMultipleManagers } from "./composables/useMultipleManagers.js"
 import { repository as githubLink } from "../../package.json"
 
 const isClientSide = import.meta.client
-useNotificationHandler(notificationHandler, isClientSide)
 
 const triggerState = ref(false)
 
@@ -99,7 +95,7 @@ const {
 	importManagers,
 	managerNames,
 	virtuallyPressedKeys,
-	contexts,
+	context,
 	addContext,
 	removeContext,
 	activateContext,
