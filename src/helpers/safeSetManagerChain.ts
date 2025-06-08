@@ -1,6 +1,6 @@
 import { pushIfNotIn } from "@alanscodelog/utils"
 import { last } from "@alanscodelog/utils/last.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { setManagerProp } from "../core/setManagerProp.js"
 import { checkTrigger } from "../internal/checkTrigger.js"

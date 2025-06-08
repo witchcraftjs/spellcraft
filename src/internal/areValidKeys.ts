@@ -32,7 +32,7 @@ export function areValidKeys(
 		return Err(new KnownError(SHORTCUT_ERROR.UNKNOWN_KEY, crop`
 			${s.stringify(shortcut ?? chain, manager)} contains unknown keys: ${stringified}
 			`, {
-			shortcut: shortcut ? shortcut : { chain },
+			shortcut: shortcut ?? { chain },
 			keys: unknownKeys,
 		}))
 	}

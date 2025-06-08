@@ -7,7 +7,7 @@ import { isValidShortcut } from "../helpers/isValidShortcut.js"
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
 import { errorTextRemove } from "../internal/errorTextRemove.js"
-import { type CanHookErrors, type CanHookShortcutsProps, SHORTCUT_ERROR, type Manager,type MultipleErrors, type Shortcut, type Shortcuts, type ShortcutsSetEntries } from "../types/index.js"
+import { type CanHookErrors, type CanHookShortcutsProps, type Manager,type MultipleErrors, type Shortcut, SHORTCUT_ERROR, type Shortcuts, type ShortcutsSetEntries } from "../types/index.js"
 
 
 const canHookable: CanHookShortcutsProps[] = ["entries@add", "entries@remove"]

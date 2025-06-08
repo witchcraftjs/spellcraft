@@ -9,7 +9,16 @@ import type { Keys } from "../../types/keys.js"
  * While it also returns the width and the ratio, you should not set the element to them.
  *
  */
-export const useShortcutManagerKeysLayout = (keys: Keys, keyboardEl: Ref<HTMLElement | null>) => {
+export const useShortcutManagerKeysLayout = (keys: Keys, keyboardEl: Ref<HTMLElement | null>): {
+	width: Ref<number>
+	height: Ref<number>
+	ratio: Ref<number>
+	keyWidth: Ref<number>
+	layout: {
+		x: number
+		y: number
+	}
+} => {
 	const layout = reactive({ x: keys.layout.x, y: keys.layout.y })
 	watch([() => keys.layout.x, () => keys.layout.y], ([x, y]) => {
 		layout.x = x

@@ -10,8 +10,8 @@ import type { Manager } from "../../types/manager.js"
  *
  * Returns a ref of the latest key labels to have been set.
  */
-export function useLabeledByKeyboardLayoutMap(manager: Manager) {
-	const labeledByMap = ref<string[]>([])
+export function useLabeledByKeyboardLayoutMap(manager: Manager): Ref<ReturnType<typeof labelWithKeyboardMap> | undefined> {
+	const labeledByMap = ref<ReturnType<typeof labelWithKeyboardMap>>()
 
 	void getKeyboardLayoutMap().then(map => {
 		if (map) {

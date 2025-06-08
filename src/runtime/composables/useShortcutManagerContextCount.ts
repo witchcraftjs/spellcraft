@@ -7,15 +7,15 @@ import type { Manager } from "../../types/manager.js"
 import type { ContextInfo } from "../types.js"
 
 /**
- * Updates the count of the context variables depending on how many shortcuts are using the variable. Requires shortcuts use the expressit library to set the ast property of conditions.
+ * Updates the count of the ctx variables depending on how many shortcuts are using the variable. Requires shortcuts use the expressit library to set the ast property of conditions.
  *
- * Useful to know if we can delete a context.
+ * Useful to know if we can delete a ctx.
  */
-export function useShortcutManagerContextCount(manager: Ref<Manager> | ComputedRef<Manager>, contexts: Ref<ContextInfo>): {
-	addContext(context: string): void
-	removeContext(context: string): void
-	activateContext(context: string): void
-	deactivateContext(context: string): void
+export function useShortcutManagerContextCount(manager: Ref<Manager> | ComputedRef<Manager>, context: Ref<ContextInfo>): {
+	addContext(ctx: string): void
+	removeContext(ctx: string): void
+	activateContext(ctx: string): void
+	deactivateContext(ctx: string): void
 } {
 	watch(() => manager.value.shortcuts.entries, newShortcuts => {
 		const rc: Record<string, number> = {}
@@ -34,42 +34,42 @@ export function useShortcutManagerContextCount(manager: Ref<Manager> | ComputedR
 				}
 			}
 		}
-		for (const context of keys(contexts.value)) {
-			contexts.value.count[context] = rc[context] ?? 0
+		for (const ctx of keys(context.value)) {
+			context.value.count[ctx] = rc[ctx] ?? 0
 		}
-		for (const context of keys(rc)) {
-			if (!contexts.value.isActive[context]) {
-				contexts.value.isActive[context] = false
-				contexts.value.count[context] = rc[context]
+		for (const ctx of keys(rc)) {
+			if (!context.value.isActive[ctx]) {
+				context.value.isActive[ctx] = false
+				context.value.count[ctx] = rc[ctx]
 			}
 		}
 	}, { deep: true, immediate: true })
 	// we're using unreachable, because the checks should already be in the ui
 	
-	function addContext(context: string): void {
-		if (!contexts.value.isActive[context]) {
-			contexts.value.isActive[context] = true
-			contexts.value.count[context] = 0
+	function addContext(ctx: string): void {
+		if (!context.value.isActive[ctx]) {
+			context.value.isActive[ctx] = true
+			context.value.count[ctx] = 0
 		} else {
 			unreachable()
 		}
 	}
 
-	function removeContext(context: string): void {
-		if (contexts.value.count[context] === 0) {
-			delete contexts.value.isActive[context]
-			delete contexts.value.count[context]
+	function removeContext(ctx: string): void {
+		if (context.value.count[ctx] === 0) {
+			delete context.value.isActive[ctx]
+			delete context.value.count[ctx]
 		} else {
 			unreachable()
 		}
 	}
 
-	function activateContext(context: string): void {
-		contexts.value.isActive[context] ||= true
+	function activateContext(ctx: string): void {
+		context.value.isActive[ctx] ||= true
 	}
 
-	function deactivateContext(context: string): void {
-		contexts.value.isActive[context] &&= false
+	function deactivateContext(ctx: string): void {
+		context.value.isActive[ctx] &&= false
 	}
 
 	return {

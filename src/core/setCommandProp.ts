@@ -1,14 +1,14 @@
 import { castType } from "@alanscodelog/utils/castType.js"
 import { crop } from "@alanscodelog/utils/crop.js"
 import { indent } from "@alanscodelog/utils/indent.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { setCommandsProp } from "./setCommandsProp.js"
 import { setShortcutProp } from "./setShortcutProp.js"
 
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
-import { type CanHookCommandProps, type CanHookErrors, type Command, type CommandSetEntries, SHORTCUT_ERROR, type Manager,type MultipleErrors } from "../types/index.js"
+import { type CanHookCommandProps, type CanHookErrors, type Command, type CommandSetEntries, type Manager,type MultipleErrors,SHORTCUT_ERROR } from "../types/index.js"
 
 
 const canHookable: CanHookCommandProps[] = ["condition", "execute"]

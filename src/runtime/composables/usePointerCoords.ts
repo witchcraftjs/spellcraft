@@ -14,7 +14,12 @@ import { computed, type ComputedRef,reactive } from "vue"
  */
 
  
-export const usePointerCoords = () => {
+export const usePointerCoords = (): {
+	pointerCoords: { x: number, y: number }
+	coords: ComputedRef<{ x: number, y: number }>
+	setPointerCoords: (e: { clientX: number, clientY: number }) => void
+	setInitialPointerOffset: (e: { clientX: number, clientY: number }, el: HTMLElement) => void
+} => {
 	const pointerCoords = reactive<{ x: number, y: number }>({ x: 0, y: 0 })
 	const offsetCoords = reactive<{ x: number, y: number }>({ x: 0, y: 0 })
 	const coords = computed(() => ({ x: pointerCoords.x - offsetCoords.x, y: pointerCoords.y - offsetCoords.y }))

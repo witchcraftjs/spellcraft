@@ -1,4 +1,4 @@
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { areValidKeys } from "./areValidKeys.js"
 import { containsPossibleToggleChords } from "./containsPossibleToggleChords.js"

@@ -1,11 +1,11 @@
 import { castType } from "@alanscodelog/utils/castType.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
 import { errorTextInUse } from "../internal/errorTextInUse.js"
 import { errorTextRemove } from "../internal/errorTextRemove.js"
-import { type CanHookCommandsProps, type CanHookErrors, type Command, type Commands, type CommandsSetEntries, SHORTCUT_ERROR, type Manager,type MultipleErrors } from "../types/index.js"
+import { type CanHookCommandsProps, type CanHookErrors, type Command, type Commands, type CommandsSetEntries, type Manager,type MultipleErrors,SHORTCUT_ERROR } from "../types/index.js"
 
 
 const canHookable: CanHookCommandsProps[] = ["entries@add", "entries@remove"]

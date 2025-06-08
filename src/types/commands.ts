@@ -1,5 +1,5 @@
 import type { Condition } from "./condition.js"
-import type { Context, SHORTCUT_ERROR, PickManager } from "./index.js"
+import type { Context, PickManager,SHORTCUT_ERROR } from "./index.js"
 import type { AnyInputEvent, Manager, MinimalInputEvent } from "./manager.js"
 import type { Shortcut } from "./shortcuts.js"
 

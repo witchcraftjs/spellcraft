@@ -1,5 +1,5 @@
 import { equalsShortcut } from "./equalsShortcut.js"
-import { getKeyFromIdOrVariant } from "./index.js"
+import { getKeyFromIdOrVariant } from "./getKeyFromIdOrVariant.js"
 
 import type { Manager, PickManager, Shortcut } from "../types/index.js"
 import { equalsKey } from "../utils/equalsKey.js"

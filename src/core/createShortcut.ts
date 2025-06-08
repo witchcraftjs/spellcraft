@@ -1,6 +1,5 @@
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { Ok, type Result } from "@alanscodelog/utils/Result.js"
 
-import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { isValidShortcut } from "../helpers/isValidShortcut.js"
 import type { ChainError, Command, Condition, Manager, MultipleErrors, PickManager, RawShortcut, Shortcut,SHORTCUT_ERROR } from "../types/index.js"
 

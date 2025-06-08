@@ -1,12 +1,12 @@
 import { castType } from "@alanscodelog/utils/castType.js"
-import { type Result, Ok, Err } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { addShortcut } from "./addShortcut.js"
 import { removeShortcut } from "./removeShortcut.js"
 
 import { isValidChain } from "../internal/isValidChain.js"
 import { isValidCommand } from "../internal/isValidCommand.js"
-import { type CanHookErrors, type CanHookShortcutProps, SHORTCUT_ERROR, type Hooks, type Manager, type MultipleErrors, type Shortcut, type Shortcuts, type ShortcutSetEntries } from "../types/index.js"
+import { type CanHookErrors, type CanHookShortcutProps, type Hooks, type Manager, type MultipleErrors, type Shortcut, SHORTCUT_ERROR, type Shortcuts, type ShortcutSetEntries } from "../types/index.js"
 
 
 const canHookable: CanHookShortcutProps[] = ["chain", "command", "condition", "enabled"]

@@ -1,4 +1,4 @@
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { Ok, type Result } from "@alanscodelog/utils/Result.js"
 
 import { isValidChain } from "../internal/isValidChain.js"
 import { isValidCommand } from "../internal/isValidCommand.js"

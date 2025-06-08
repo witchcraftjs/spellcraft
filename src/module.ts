@@ -1,7 +1,5 @@
-import { crop, indent } from "@alanscodelog/utils"
 import {
 	addImportsDir,
-	addTemplate,
 	addTypeTemplate,
 	createResolver,
 	defineNuxtModule,
@@ -12,15 +10,12 @@ import { defu } from "defu"
 const { resolve } = createResolver(import.meta.url)
 
 declare module "@nuxt/schema" {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
 	interface PublicRuntimeConfig {
 		// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 		witchcraftSpellcraft: {}
 	}
 }
 
- 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export interface ModuleOptions {
 
 }
