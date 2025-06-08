@@ -564,6 +564,17 @@ function addToSelected(item) {
 }
 </script>
 ```
+# How to type the context?
 
-
+```ts [global.ts]
+declare module "@witchcraft/spellcraft/types.js" {
+// or for nuxt
+// declare module "#witchcraft/spellcraft/types.js" {
+	export interface Register {
+		ExtendedContextInfo: {
+			// extend types here
+		}
+	}
+}
+```
 
