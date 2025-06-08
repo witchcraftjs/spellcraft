@@ -90,7 +90,8 @@
 	},
 	"peerDependencies": {
 		"defu": "^6.1.4",
-		"vue": "^3.5.12"
+		"vue": "^3.5.12",
+		"@witchcraft/expressit": "^0.3.0"
 	},
 	"peerDependenciesMeta": {
 		"@witchcraft/ui": {
@@ -100,6 +101,9 @@
 			"optional": true
 		},
 		"defu": {
+			"optional": true
+		},
+		"@witchcraft/expressit": {
 			"optional": true
 		}
 	},
