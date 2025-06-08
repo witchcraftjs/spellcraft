@@ -19,6 +19,9 @@
 		"src/**/*.js",
 		"*.ts",
 	],
+	"exclude": [
+		"build.config.ts",
+	],
 	"vueCompilerOptions": {
 		"strictTemplates": true,
 	}

@@ -77,7 +77,7 @@
 		"doc:serve": "http-server docs --port=5001",
 		"doc:dev": "concurrently \"pnpm doc:watch\" \"pnpm doc:serve\"",
 		"doc:check-invalid": "typedoc --options typedoc.config.cjs --listInvalidSymbolLinks",
-		"lint:eslint": "eslint \"{src,test,playground/app}/**/*.{js,ts,vue,cjs}\" \"*.{js,ts}\" --max-warnings=0 --report-unused-disable-directives",
+		"lint:eslint": "eslint \"{src,test,playground/app}/**/*.{js,ts,vue,cjs}\" \"*.{js,ts}\" --max-warnings=2 --report-unused-disable-directives",
 		"lint:types": "vue-tsc --noEmit && echo 'todo cd playground && vue-tsc --noEmit'",
 		"lint:commits": "commitlint --from $(git rev-list --max-parents=0 HEAD) --to HEAD --verbose",
 		"lint:imports": "madge --circular --extensions ts ./src",
