@@ -15,6 +15,7 @@
 		[&>.filter:nth-child(4)]:after:content-['']
 		[&>.filter:nth-child(4)]:after:border-r-neutral-400
 		[&>.filter:nth-child(4)]:after:border-r-2
+		border-b-2
 	`"
 	>
 		<div>Filters:</div>
@@ -41,6 +42,8 @@
 			[&>div]:border-neutral-400
 			dark:[&>div]:border-neutral-600
 			[&>div:nth-of-type(-n+5)]:bg-neutral-200
+			[&>div:nth-of-type(n+6):nth-of-type(-n+10)]:bg-neutral-100
+			[&>div:nth-of-type(n+6):nth-of-type(-n+10)]:border-b-2
 			dark:[&>div:nth-of-type(-n+5)]:bg-neutral-800
 			[&>div:nth-of-type(-n+5)]:border-t-neutral-600
 			dark:[&>div:nth-of-type(-n+5)]:border-t-neutral-800
@@ -107,7 +110,8 @@
 		</div>
 
 		<div class="items-center px-1">
-			<WButton :border="false"
+			<WButton
+				:border="false"
 				aria-label="Add Shortcut"
 				auto-title-from-aria
 				@click="addShortcut"
