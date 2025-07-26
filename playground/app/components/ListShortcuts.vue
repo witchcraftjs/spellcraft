@@ -86,7 +86,7 @@
 			/>
 		</div>
 		<div class="">
-			<WInput
+			<WInputDeprecated
 				:placeholder="'(None)'"
 				:border="false"
 				:suggestions="commandsSuggestions"
@@ -96,7 +96,7 @@
 			/>
 		</div>
 		<div class="">
-			<WInput
+			<WInputDeprecated
 				:placeholder="activeContexts.length > 0 ? activeContexts.join(' && '): '(Global)'"
 				:border="false"
 				:valid="conditionValidity[0] === true"
@@ -137,7 +137,7 @@
 				/>
 			</div>
 			<div class="">
-				<WInput
+				<WInputDeprecated
 					:placeholder="'(None)'"
 					:border="false"
 					:model-value="item.command ?? editedCommand"
@@ -150,7 +150,7 @@
 			</div>
 			<div class="">
 				<!-- @vue-expect-error -->
-				<WInput
+				<WInputDeprecated
 					:placeholder="'(Global)'"
 					:border="false"
 					:model-value="item.condition.text"

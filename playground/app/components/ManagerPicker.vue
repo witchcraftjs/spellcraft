@@ -8,7 +8,7 @@
 		gap-2
 	"
 >
-	<WInput
+	<WInputDeprecated
 		:label="`Switch/Add Manager Set (Currently Active: ${activeManager})`"
 		class="min-w-[0] w-[20ch]"
 		placeholder="Select/Add Manager"
@@ -124,7 +124,7 @@
 				Add New
 			</WButton>
 		</template>
-	</WInput>
+	</WInputDeprecated>
 </div>
 </template>
 

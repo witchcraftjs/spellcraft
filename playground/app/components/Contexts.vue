@@ -72,7 +72,7 @@
 			</div>
 		</div>
 		<div class="flex-1 flex flex-col items-stretch gap-2 ">
-			<WInput
+			<WInputDeprecated
 				class="min-w-[0] w-[20ch]"
 				placeholder="Add Context"
 				wrapper-class="pr-0"
@@ -93,7 +93,7 @@
 						<template #icon> <WIcon> <i-fa-solid-plus/> </WIcon> </template>
 					</WButton>
 				</template>
-			</WInput>
+			</WInputDeprecated>
 		</div>
 	</div>
 </div>

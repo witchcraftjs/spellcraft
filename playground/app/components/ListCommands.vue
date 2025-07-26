@@ -15,7 +15,7 @@
 	`"
 	>
 		<!-- new command -->
-		<WInput
+		<WInputDeprecated
 			:border="false"
 			:model-value="newCommand.name"
 			@update:model-value="notifyIfError(setCommandProp(newCommand, 'name', $event, manager))"
@@ -35,7 +35,7 @@
 		<template v-for="command of commands" :key="command.name">
 			<div class="grid grid-cols-[minmax(0,1fr),min-content]">
 				<!-- @vue-expect-error todo -->
-				<WInput
+				<WInputDeprecated
 					:border="false"
 					:model-value="temporaryCommand.command === command ? temporaryCommand.name : command.name"
 					
