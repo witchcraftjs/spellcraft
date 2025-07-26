@@ -39,6 +39,7 @@ export const SHORTCUT_ERROR = enumFromArray([
 	"COMMAND_IN_USE",
 	"UNKNOWN_KEY_EVENT",
 	"MULTIPLE_ERRORS",
+	"INVALID_MANAGER"
 ])
 export type ShortcutError = EnumLike<typeof SHORTCUT_ERROR>
 
@@ -188,6 +189,9 @@ type ERROR_Info = {
 	}
 	[SHORTCUT_ERROR.UNKNOWN_KEY_ID]: {
 		id: string
+	}
+	[SHORTCUT_ERROR.INVALID_MANAGER]: {
+		keys: string[]
 	}
 }
 

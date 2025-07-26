@@ -83,7 +83,7 @@ export class Stringifier implements IStringifier {
 			switch (entry.type) {
 				case "key": return this.stringifyKey(entry)
 				case "shortcut": return this.stringifyShortcut(entry, manager as any)
-				case "command": return this.stringifyCommand(entry)
+				case "command": return this.stringifyCommand(entry as any, manager as any)
 				case "condition": return this.stringifyCondition(entry)
 			}
 		} else {
@@ -114,7 +114,7 @@ export class Stringifier implements IStringifier {
 			// ignore
 		}
 		const type = typeof entry
-		// eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
+
 		switch (type) {
 			case "string": return entry
 			case "number":
@@ -132,11 +132,11 @@ export class Stringifier implements IStringifier {
 
 	protected stringifyShortcut(
 		shortcut: Shortcut,
-		{ keys, commands }: Pick<Manager, "keys" | "commands">
+		manager: Pick<Manager, "keys" | "commands">
 	): string {
 		if (this.opts.shortcut) return this.opts.shortcut(shortcut)
-		const command = `command: ${this.stringifyCommand(shortcut.command ? commands.entries[shortcut.command] : undefined)}`
-		const chain = this.stringifyChain(shortcut.chain.map(chord => chord.map(id => keys.entries[id] ?? keys.toggles[id] ?? id)))
+		const command = `command: ${this.stringifyCommand(shortcut.command ? manager.commands.entries[shortcut.command] : undefined)}`
+		const chain = this.stringifyChain(shortcut.chain.map(chord => chord.map(id => manager.keys.entries[id] ?? manager.keys.toggles[id] ?? id)) as any, manager)
 		const condition = this.stringifyCondition(shortcut.condition)
 		return crop`Shortcut ${chain} (${command}${shortcut.condition ? `, ${condition}` : ""})`
 	}
