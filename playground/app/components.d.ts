@@ -8,30 +8,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    IFa6RegularCopy: typeof import('~icons/fa6-regular/copy')['default']
-    IFa6RegularFile: typeof import('~icons/fa6-regular/file')['default']
-    IFa6SolidArrowUpFromBracket: typeof import('~icons/fa6-solid/arrow-up-from-bracket')['default']
-    IFa6SolidChevronUp: typeof import('~icons/fa6-solid/chevron-up')['default']
-    IFa6SolidCircleHalfStroke: typeof import('~icons/fa6-solid/circle-half-stroke')['default']
-    IFa6SolidXmark: typeof import('~icons/fa6-solid/xmark')['default']
     IFaBrandsGithub: typeof import('~icons/fa-brands/github')['default']
     IFaSolidCheck: typeof import('~icons/fa-solid/check')['default']
     IFaSolidClone: typeof import('~icons/fa-solid/clone')['default']
     IFaSolidFileExport: typeof import('~icons/fa-solid/file-export')['default']
     IFaSolidFileImport: typeof import('~icons/fa-solid/file-import')['default']
     IFaSolidLink: typeof import('~icons/fa-solid/link')['default']
-    IFaSolidMoon: typeof import('~icons/fa-solid/moon')['default']
     IFaSolidPlus: typeof import('~icons/fa-solid/plus')['default']
     IFaSolidSave: typeof import('~icons/fa-solid/save')['default']
     IFaSolidTimes: typeof import('~icons/fa-solid/times')['default']
     IFaSolidTrash: typeof import('~icons/fa-solid/trash')['default']
-    IPhSunBold: typeof import('~icons/ph/sun-bold')['default']
-    IRadixIconsCalendar: typeof import('~icons/radix-icons/calendar')['default']
-    IRadixIconsChevronLeft: typeof import('~icons/radix-icons/chevron-left')['default']
-    IRadixIconsChevronRight: typeof import('~icons/radix-icons/chevron-right')['default']
-    IRadixIconsDoubleArrowLeft: typeof import('~icons/radix-icons/double-arrow-left')['default']
-    IRadixIconsDoubleArrowRight: typeof import('~icons/radix-icons/double-arrow-right')['default']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
   }
 }

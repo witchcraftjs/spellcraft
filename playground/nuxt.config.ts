@@ -13,6 +13,6 @@ export default defineNuxtConfig({
 		"../src/module"
 		// or "@witchcraft/spellcraft"// either work
 	],
-	witchcraftShortcutsManager: {
+	witchcraftSpellcraft: {
 	},
 })

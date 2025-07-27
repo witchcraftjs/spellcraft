@@ -9,8 +9,8 @@
 	},
 	"dependencies": {
 		"@alanscodelog/utils": "^5.1.0",
-		"@witchcraft/expressit": "^0.2.0",
-		"@witchcraft/spellcraft": "^0.0.0",
+		"@witchcraft/expressit": "^0.3.0",
+		"@witchcraft/spellcraft": "link:../",
 		"@witchcraft/ui": "~0.1.0",
 		"nuxt": "^4.0.1",
 		"tailwindcss": "^4.0.17",
