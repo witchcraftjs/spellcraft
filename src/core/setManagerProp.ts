@@ -1,12 +1,13 @@
 import { castType } from "@alanscodelog/utils/castType.js"
 import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
 import { set } from "@alanscodelog/utils/set.js"
+import { unreachable } from "@alanscodelog/utils/unreachable.js"
 
 import { isValidManager } from "../helpers/isValidManager.js"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { type safeSetManagerChain } from "../helpers/safeSetManagerChain.js"
 import { areValidKeys } from "../internal/areValidKeys.js"
-import type { CanHookErrors, CanHookManagerProps, Manager, ManagerSetEntries, MultipleErrors } from "../types/index.js"
+import { type CanHookErrors, type CanHookManagerProps, type ChainError, type Manager, type ManagerSetEntries, type MultipleErrors,SHORTCUT_ERROR } from "../types/index.js"
 import { cloneChain } from "../utils/cloneChain.js"
 
 
@@ -59,7 +60,6 @@ export function setManagerProp<
 {
 	// castType is used extensively because of https://github.com/microsoft/TypeScript/issues/50652
 	if (check) {
-		// eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
 		switch (prop) {
 			case "state.chain": {
 				castType<TEntries["state.chain"]["val"]>(val)
@@ -77,7 +77,8 @@ export function setManagerProp<
 
 				const managerClone = { ...manager, [prop as any]: val }
 				const res = isValidManager(managerClone)
-				if (res.isError) return res
+				if (res.isError && res.error.code === SHORTCUT_ERROR.INVALID_MANAGER) unreachable()
+				if (res.isError) return res satisfies Result<any, MultipleErrors<typeof SHORTCUT_ERROR.UNKNOWN_COMMAND | ChainError | typeof SHORTCUT_ERROR.INVALID_MANAGER>> as any
 				break
 			}
 			default:

@@ -3,8 +3,8 @@ import {
 	addTypeTemplate,
 	createResolver,
 	defineNuxtModule,
-	installModule } from "@nuxt/kit"
-import { defu } from "defu"
+	installModule,
+} from "@nuxt/kit"
 
 
 const { resolve } = createResolver(import.meta.url)
@@ -28,11 +28,11 @@ export default defineNuxtModule<ModuleOptions>({
 	defaults: {
 	},
 	async setup(_options, nuxt) {
-		nuxt.options.runtimeConfig.public.witchcraftSpellcraft = defu(
-			nuxt.options.runtimeConfig.public.witchcraftSpellcraft,
-			{
-			}
-		)
+		// nuxt.options.runtimeConfig.public.witchcraftSpellcraft = defu(
+		// 	nuxt.options.runtimeConfig.public.witchcraftSpellcraft,
+		// 	{
+		// 	}
+		// )
 		addTypeTemplate({
 			filename: "types/witchcraft-spellcraft.d.ts",
 
