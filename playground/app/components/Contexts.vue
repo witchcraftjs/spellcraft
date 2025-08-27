@@ -100,6 +100,8 @@
 </template>
 
 <script setup lang="ts">
+import IFaSolidPlus from "~icons/fa-solid/plus"
+import IFaSolidTimes from "~icons/fa-solid/times"
 import { isBlank } from "@alanscodelog/utils/isBlank.js"
 import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler.js"
 import { computed, ref } from "vue"

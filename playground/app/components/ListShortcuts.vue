@@ -178,6 +178,8 @@
 </div>
 </template>
 <script setup lang="ts">
+import IFaSolidPlus from "~icons/fa-solid/plus"
+import IFaSolidTrash from "~icons/fa-solid/trash"
 import { setReadOnly } from "@alanscodelog/utils"
 import { isWhitespace } from "@alanscodelog/utils/isWhitespace.js"
 import { keys, keys as ObjectKeys } from "@alanscodelog/utils/keys.js"

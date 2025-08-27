@@ -36,4 +36,7 @@
 	</div>
 </a>
 </template>
+<script setup lang="ts">
+import IFaBrandsGithub from "~icons/fa-brands/github"
+</script>
 

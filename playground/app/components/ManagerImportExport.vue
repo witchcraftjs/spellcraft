@@ -28,6 +28,8 @@
 
 
 <script setup lang="ts">
+import IFaSolidFileExport from "~icons/fa-solid/file-export"
+import IFaSolidFileImport from "~icons/fa-solid/file-import"
 
 defineProps<{
 	managers: string[]

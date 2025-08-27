@@ -337,6 +337,7 @@ All css variables are set here for maximum flexibility.
 </template>
 
 <script setup lang="ts">
+import IFaSolidLink from "~icons/fa-solid/link"
 import { castType } from "@alanscodelog/utils/castType.js"
 import {
 	attach,

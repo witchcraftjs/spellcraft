@@ -8,15 +8,6 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    IFaBrandsGithub: typeof import('~icons/fa-brands/github')['default']
     IFaSolidCheck: typeof import('~icons/fa-solid/check')['default']
-    IFaSolidClone: typeof import('~icons/fa-solid/clone')['default']
-    IFaSolidFileExport: typeof import('~icons/fa-solid/file-export')['default']
-    IFaSolidFileImport: typeof import('~icons/fa-solid/file-import')['default']
-    IFaSolidLink: typeof import('~icons/fa-solid/link')['default']
-    IFaSolidPlus: typeof import('~icons/fa-solid/plus')['default']
-    IFaSolidSave: typeof import('~icons/fa-solid/save')['default']
-    IFaSolidTimes: typeof import('~icons/fa-solid/times')['default']
-    IFaSolidTrash: typeof import('~icons/fa-solid/trash')['default']
   }
 }
