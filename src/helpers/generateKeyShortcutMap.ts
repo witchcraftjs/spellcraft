@@ -1,4 +1,4 @@
-import { last } from "@alanscodelog/utils/last.js"
+import { last } from "@alanscodelog/utils/last"
 
 import { getKeyFromIdOrVariant } from "./getKeyFromIdOrVariant.js"
 

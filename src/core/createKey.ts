@@ -1,4 +1,4 @@
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { KnownError } from "../helpers/KnownError.js"
 import { type Key, type MultipleErrors, type RawKey,SHORTCUT_ERROR } from "../types/index.js"

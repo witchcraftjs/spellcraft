@@ -70,12 +70,13 @@
 </div>
 </template>
 <script setup lang="ts">
-import IFaSolidPlus from "~icons/fa-solid/plus"
-import IFaSolidSave from "~icons/fa-solid/save"
-import IFaSolidTrash from "~icons/fa-solid/trash"
 import { addCommand as managerAddCommand, createCommand, removeCommand as managerRemoveCommand, setCommandProp } from "@witchcraft/spellcraft"
 import type { Command, Manager } from "@witchcraft/spellcraft/types"
 import { computed, ref } from "vue"
+
+import IFaSolidPlus from "~icons/fa-solid/plus"
+import IFaSolidSave from "~icons/fa-solid/save"
+import IFaSolidTrash from "~icons/fa-solid/trash"
 
 import { notifyIfError } from "../common/notifyIfError.js"
 

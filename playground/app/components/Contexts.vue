@@ -100,13 +100,13 @@
 </template>
 
 <script setup lang="ts">
-import IFaSolidPlus from "~icons/fa-solid/plus"
-import IFaSolidTimes from "~icons/fa-solid/times"
-import { isBlank } from "@alanscodelog/utils/isBlank.js"
-import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler.js"
+import { isBlank } from "@alanscodelog/utils/isBlank"
+import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler"
 import { computed, ref } from "vue"
 
 import type { ContextInfo } from "#witchcraft-spellcraft/types.js"
+import IFaSolidPlus from "~icons/fa-solid/plus"
+import IFaSolidTimes from "~icons/fa-solid/times"
 
 
 const props = defineProps<{

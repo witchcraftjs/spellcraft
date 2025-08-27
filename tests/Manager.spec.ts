@@ -1,5 +1,5 @@
 import { expectType } from "@alanscodelog/utils"
-import { walk } from "@alanscodelog/utils/walk.js"
+import { walk } from "@alanscodelog/utils/walk"
 import { afterEach, beforeEach, describe, expect, it, type Mock, type MockedFunction, vi } from "vitest"
 
 import { manager as baseManager } from "./helpers.keys.js"

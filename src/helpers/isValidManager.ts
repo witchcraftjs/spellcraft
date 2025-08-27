@@ -1,4 +1,4 @@
-import { Err, Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { isValidShortcut } from "./isValidShortcut.js"
 import { KnownError } from "./KnownError.js"

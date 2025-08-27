@@ -1,4 +1,4 @@
-import { isArray } from "@alanscodelog/utils/isArray.js"
+import { isArray } from "@alanscodelog/utils/isArray"
 
 /**
  * Map keys of a chain or chord\* by the given function.

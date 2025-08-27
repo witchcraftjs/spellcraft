@@ -1,4 +1,4 @@
-import { Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { isValidShortcut } from "../helpers/isValidShortcut.js"
 import type { ChainError, Command, Condition, Manager, MultipleErrors, PickManager, RawShortcut, Shortcut,SHORTCUT_ERROR } from "../types/index.js"

@@ -1,7 +1,7 @@
-import { castType } from "@alanscodelog/utils/castType.js"
-import { crop } from "@alanscodelog/utils/crop.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
-import { set } from "@alanscodelog/utils/set.js"
+import { castType } from "@alanscodelog/utils/castType"
+import { crop } from "@alanscodelog/utils/crop"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { set } from "@alanscodelog/utils/set"
 
 import { KnownError } from "../helpers/KnownError.js"
 import type { CanHookErrors, Key, KeySetEntries, Manager, MultipleErrors, OnHookKeyProps } from "../types/index.js"

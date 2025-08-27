@@ -178,19 +178,19 @@
 </div>
 </template>
 <script setup lang="ts">
-import IFaSolidPlus from "~icons/fa-solid/plus"
-import IFaSolidTrash from "~icons/fa-solid/trash"
 import { setReadOnly } from "@alanscodelog/utils"
-import { isWhitespace } from "@alanscodelog/utils/isWhitespace.js"
-import { keys, keys as ObjectKeys } from "@alanscodelog/utils/keys.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
-import type { createManagerEventListeners } from "@witchcraft/spellcraft"
-import { addCommand, addShortcut as managerAddShortcut, attach, createCommand, createShortcut, detach, removeShortcut as managerRemoveShortcut, setManagerProp, setShortcutProp } from "@witchcraft/spellcraft"
-import { equalsShortcut } from "@witchcraft/spellcraft/helpers/equalsShortcut.js"
+import { isWhitespace } from "@alanscodelog/utils/isWhitespace"
+import { keys, keys as ObjectKeys } from "@alanscodelog/utils/keys"
+import { Ok, type Result } from "@alanscodelog/utils/Result"
+import { addCommand, addShortcut as managerAddShortcut, attach, createCommand, createManagerEventListeners,createShortcut, detach, removeShortcut as managerRemoveShortcut, setManagerProp, setShortcutProp } from "@witchcraft/spellcraft"
+import { equalsShortcut } from "@witchcraft/spellcraft/helpers/equalsShortcut"
 import type { Manager, Shortcut } from "@witchcraft/spellcraft/types"
 import { cloneChain } from "@witchcraft/spellcraft/utils"
-import { vResizableCols } from "@witchcraft/ui/directives/vResizableCols.js"
-import { computed, ref, toRaw, toRef, watch, watchEffect } from "vue"
+import { vResizableCols } from "@witchcraft/ui/directives/vResizableCols"
+import { computed, ref, toRaw, toRef } from "vue"
+
+import IFaSolidPlus from "~icons/fa-solid/plus"
+import IFaSolidTrash from "~icons/fa-solid/trash"
 
 import { notifyIfError } from "../common/notifyIfError.js"
 import { overlayHoldListeners } from "../common/overlayAccessibilityListeners.js"

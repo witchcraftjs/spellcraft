@@ -1,4 +1,4 @@
-import { castType } from "@alanscodelog/utils/castType.js"
+import { castType } from "@alanscodelog/utils/castType"
 import {
 	type Context,
 	createContext,
@@ -11,8 +11,8 @@ import {
 	setKeyProp,
 	SHORTCUT_ERROR,
 } from "@witchcraft/spellcraft"
-import { labelWithEvent } from "@witchcraft/spellcraft/helpers/index.js"
-import { createLayout } from "@witchcraft/spellcraft/layouts/createLayout.js"
+import { labelWithEvent } from "@witchcraft/spellcraft/helpers/index"
+import { createLayout } from "@witchcraft/spellcraft/layouts/createLayout"
 
 import { conditionParser } from "./conditionParser.js"
 import { parseShortcutCondition } from "./parseShortcutCondition.js"

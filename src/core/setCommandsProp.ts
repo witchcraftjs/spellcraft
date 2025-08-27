@@ -1,5 +1,5 @@
-import { castType } from "@alanscodelog/utils/castType.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { castType } from "@alanscodelog/utils/castType"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"

@@ -1,8 +1,8 @@
-import { isWhitespace } from "@alanscodelog/utils/isWhitespace.js"
-import { readable } from "@alanscodelog/utils/readable.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
-import { extractTokens } from "@witchcraft/expressit/utils/extractTokens.js"
-import type { Shortcut } from "@witchcraft/spellcraft/types/shortcuts.js"
+import { isWhitespace } from "@alanscodelog/utils/isWhitespace"
+import { readable } from "@alanscodelog/utils/readable"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { extractTokens } from "@witchcraft/expressit/utils/extractTokens"
+import type { Shortcut } from "@witchcraft/spellcraft/types/shortcuts"
 
 import { conditionParser } from "./conditionParser.js"
 

@@ -1,4 +1,4 @@
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { safeSetEmulatedToggleState } from "./safeSetEmulatedToggleState.js"
 

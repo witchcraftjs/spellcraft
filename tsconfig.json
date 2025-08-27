@@ -6,13 +6,6 @@
 		"./.nuxt/tsconfig.json",
 		"@alanscodelog/tsconfigs"
 	],
-	"compilerOptions": {
-		"types": [
-			"node",
-			"unplugin-icons/types/vue3",
-			"vite/client"
-		],
-	},
 	"include": [
 		"src/**/*.ts",
 		"src/**/*.vue",

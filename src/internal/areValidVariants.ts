@@ -1,5 +1,5 @@
-import { crop } from "@alanscodelog/utils/crop.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { crop } from "@alanscodelog/utils/crop"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"

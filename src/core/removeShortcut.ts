@@ -1,4 +1,4 @@
-import { Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { setShortcutsProp } from "./setShortcutsProp.js"
 

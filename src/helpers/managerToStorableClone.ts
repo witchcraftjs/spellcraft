@@ -1,5 +1,5 @@
 import type { DeepPartial } from "@alanscodelog/utils/types"
-import { walk } from "@alanscodelog/utils/walk.js"
+import { walk } from "@alanscodelog/utils/walk"
 
 import { type Manager } from "../types/index.js"
 

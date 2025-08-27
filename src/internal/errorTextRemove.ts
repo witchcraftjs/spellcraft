@@ -1,5 +1,5 @@
-import { crop } from "@alanscodelog/utils/crop.js"
-import { indent } from "@alanscodelog/utils/indent.js"
+import { crop } from "@alanscodelog/utils/crop"
+import { indent } from "@alanscodelog/utils/indent"
 
 
 export function errorTextRemove(type: string, identifier: string, entries: string): string {

@@ -1,4 +1,4 @@
-import { setReadOnly } from "@alanscodelog/utils/setReadOnly.js"
+import { setReadOnly } from "@alanscodelog/utils/setReadOnly"
 
 import type { RawKey } from "../types/keys.js"
 

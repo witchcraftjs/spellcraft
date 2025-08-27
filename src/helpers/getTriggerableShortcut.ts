@@ -1,6 +1,6 @@
-import { crop } from "@alanscodelog/utils/crop.js"
-import { indent } from "@alanscodelog/utils/indent.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { crop } from "@alanscodelog/utils/crop"
+import { indent } from "@alanscodelog/utils/indent"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { KnownError } from "./KnownError.js"
 import { shortcutIsTriggerableBy } from "./shortcutIsTriggerableBy.js"

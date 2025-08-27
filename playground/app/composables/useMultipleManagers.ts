@@ -1,7 +1,7 @@
-import { browserSaveFile } from "@alanscodelog/utils/browserSaveFile.js"
-import { keys as objectKeys } from "@alanscodelog/utils/keys.js"
-import { Err,type Result } from "@alanscodelog/utils/Result.js"
-import { setReadOnly } from "@alanscodelog/utils/setReadOnly.js"
+import { browserSaveFile } from "@alanscodelog/utils/browserSaveFile"
+import { keys as objectKeys } from "@alanscodelog/utils/keys"
+import { Err,type Result } from "@alanscodelog/utils/Result"
+import { setReadOnly } from "@alanscodelog/utils/setReadOnly"
 import {
 	type Command,
 	type CommandExecute,

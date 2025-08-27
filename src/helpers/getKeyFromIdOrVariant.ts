@@ -1,5 +1,5 @@
-import { isArray } from "@alanscodelog/utils/isArray.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { isArray } from "@alanscodelog/utils/isArray"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { KnownError } from "./KnownError.js"
 

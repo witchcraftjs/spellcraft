@@ -1,4 +1,4 @@
-import { multisplice } from "@alanscodelog/utils/multisplice.js"
+import { multisplice } from "@alanscodelog/utils/multisplice"
 
 import { addToChain } from "./addToChain.js"
 import { getModifierState } from "./getModifierState.js"

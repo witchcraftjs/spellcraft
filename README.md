@@ -40,14 +40,14 @@ This is a simple example of how you can quickly setup a manager.
 // especially if using a bundler like vite which does not tree-shake
 // in dev mode. It will be faster.
 
-import { createManager } from "@witchcraft/spellcraft/createManager.js"
-import { createKeys } from "@witchcraft/spellcraft/createKeys.js"
-import { createContext } from "@witchcraft/spellcraft/createContext.js"
+import { createManager } from "@witchcraft/spellcraft/createManager"
+import { createKeys } from "@witchcraft/spellcraft/createKeys"
+import { createContext } from "@witchcraft/spellcraft/createContext"
 import {type Context, ERROR} from "@witchcraft/spellcraft/types"
-import { createCommand } from "@witchcraft/spellcraft/createCommand.js"
-import { createShortcut } from "@witchcraft/spellcraft/createShortcut.js"
-import { addCommand } from "@witchcraft/spellcraft/addCommand.js"
-import { addShortcut } from "@witchcraft/spellcraft/addShortcut.js"
+import { createCommand } from "@witchcraft/spellcraft/createCommand"
+import { createShortcut } from "@witchcraft/spellcraft/createShortcut"
+import { addCommand } from "@witchcraft/spellcraft/addCommand"
+import { addShortcut } from "@witchcraft/spellcraft/addShortcut"
 
 const manager = createManager({
 	name: "default",
@@ -173,7 +173,7 @@ const options = createManagerOptions({
 
 Then we need to create a layout. This is a list of keys in their raw form (they can be missing some properties), that describes the position of the keys and their width/height. `createLayout` is provided to help generate variations of the common ansi/iso layouts. We can then create real keys from these.
 ```ts
-import { createLayout } from "@witchcraft/spellcraft/layouts/createLayout.js"
+import { createLayout } from "@witchcraft/spellcraft/layouts/createLayout"
 
 const layout = createLayout("ansi", {
 	numpad: false // don't add numbpad keys
@@ -190,7 +190,7 @@ You can also build completely custom layouts, the `calculateAndSetPositionAndSiz
 **Note: Key ids must be valid KeyboardEvent.code values, unless they are toggles, or have a list of variants. See `Key` docs for more info.**
 
  ```ts
-import { calculateAndSetPositionAndSize } from "@witchcraft/spellcraft/helpers/calculateAndSetPositionAndWidth.js"
+import { calculateAndSetPositionAndSize } from "@witchcraft/spellcraft/helpers/calculateAndSetPositionAndWidth"
  
 const firstRow = calculateAndSetPositionAndSize([
 	{ id: "Escape" as const, label: "Esc" }, // {x: 0, width: 1, height: 1}
@@ -215,7 +215,7 @@ Rotation is not currently supported, but it's easy to add. You can extend the `B
 
 ```ts
 // global.d.ts
-declare module "@witchcraft/spellcraft/types/index.js" {
+declare module "@witchcraft/spellcraft/types/index" {
 	export interface BaseKey {
 		yourProperty:string
 	}
@@ -226,7 +226,7 @@ export { }
 Next you need to create a `Keys` object which describes a group of `Key`s. When keys are added/removed with `add/removeKey`, they will take care of adding/removing keys properly from the `Keys` since keys also need to be added to additional properties of `Keys` such as `toggles`, `variants`, etc. properties. These are used to speed up lookups and can be useful for searching for keys and or applying styles (e.g. `if (toggles[id]) // id is toggle`).
 
 ```ts
-import { createKeys } from "@witchcraft/spellcraft/createKeys.js"
+import { createKeys } from "@witchcraft/spellcraft/createKeys"
 
 // using the keysList and options we created above
 const keys = createKeys(keysList, options).unwrap()
@@ -239,7 +239,7 @@ Command creation cannot error, so there is no unwrap.
 `command.execute` is of type `CommandExecute` if you need to type your command execute function separately.
 
 ```ts
-import { createCommand } from "@witchcraft/spellcraft/createCommand.js"
+import { createCommand } from "@witchcraft/spellcraft/createCommand"
 
 const command = createCommand(
 	"test",
@@ -270,7 +270,7 @@ To extend `Condition` and add properties to it, you can extend the `Condition` i
 ```ts
 // global.d.ts
 import type { ConditionNode, ExpressionNode, GroupNode } from "@witchcraft/expressit/types"
-declare module "@witchcraft/spellcraft/types/index.js" {
+declare module "@witchcraft/spellcraft/types/index" {
 	export interface Condition {
 		ast?: ExpressionNode | ConditionNode | GroupNode
 	}
@@ -567,7 +567,7 @@ function addToSelected(item) {
 # How to type the context?
 
 ```ts [global.ts]
-declare module "@witchcraft/spellcraft/types.js" {
+declare module "@witchcraft/spellcraft/types" {
 // or for nuxt
 // declare module "#witchcraft/spellcraft/types.js" {
 	export interface Register {

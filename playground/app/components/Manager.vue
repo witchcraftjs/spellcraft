@@ -71,18 +71,18 @@
 </template>
 
 <script setup lang="ts">
-import { castType } from "@alanscodelog/utils/castType.js"
-import { last } from "@alanscodelog/utils/last.js"
+import { castType } from "@alanscodelog/utils/castType"
+import { last } from "@alanscodelog/utils/last"
 import { type Manager } from "@witchcraft/spellcraft"
 import {
 	attach,
 	createManagerEventListeners,
 	detach,
 } from "@witchcraft/spellcraft"
-import { getKeyFromIdOrVariant } from "@witchcraft/spellcraft/helpers/getKeyFromIdOrVariant.js"
-import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain.js"
+import { getKeyFromIdOrVariant } from "@witchcraft/spellcraft/helpers/getKeyFromIdOrVariant"
+import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain"
 // import { overlayHoldListeners } from "../common/overlayAccessibilityListeners.js"
-import type { ContextInfo } from "@witchcraft/spellcraft/types/index.js"
+import type { ContextInfo } from "@witchcraft/spellcraft/types/index"
 import { onMounted, onUnmounted, reactive, type Ref, ref, toRefs, watch, watchEffect } from "vue"
 
 import KContexts from "./Contexts.vue"

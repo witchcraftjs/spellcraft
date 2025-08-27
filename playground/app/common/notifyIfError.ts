@@ -1,5 +1,5 @@
-import type { Result } from "@alanscodelog/utils/Result.js"
-import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler.js"
+import type { Result } from "@alanscodelog/utils/Result"
+import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler"
 
 
 export const notifyIfError = <T extends Result<any, Error>>(res: T): T => {

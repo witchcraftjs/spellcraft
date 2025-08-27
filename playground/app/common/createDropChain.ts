@@ -1,4 +1,4 @@
-import { last } from "@alanscodelog/utils/last.js"
+import { last } from "@alanscodelog/utils/last"
 import { type Manager } from "@witchcraft/spellcraft"
 import { cloneChain } from "@witchcraft/spellcraft/utils"
 

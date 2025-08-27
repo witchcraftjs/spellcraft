@@ -1,4 +1,4 @@
-import { walk } from "@alanscodelog/utils/walk.js"
+import { walk } from "@alanscodelog/utils/walk"
 
 import { createCommands } from "../src/core/createCommands.js"
 import { createKey } from "../src/core/createKey.js"

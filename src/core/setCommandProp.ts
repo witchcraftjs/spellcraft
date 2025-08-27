@@ -1,7 +1,7 @@
-import { castType } from "@alanscodelog/utils/castType.js"
-import { crop } from "@alanscodelog/utils/crop.js"
-import { indent } from "@alanscodelog/utils/indent.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { castType } from "@alanscodelog/utils/castType"
+import { crop } from "@alanscodelog/utils/crop"
+import { indent } from "@alanscodelog/utils/indent"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { setCommandsProp } from "./setCommandsProp.js"
 import { setShortcutProp } from "./setShortcutProp.js"

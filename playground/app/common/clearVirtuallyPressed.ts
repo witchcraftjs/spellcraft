@@ -1,5 +1,5 @@
 import type { Manager } from "@witchcraft/spellcraft"
-import { virtualRelease } from "@witchcraft/spellcraft/helpers/virtualRelease.js"
+import { virtualRelease } from "@witchcraft/spellcraft/helpers/virtualRelease"
 
 
 export function clearVirtuallyPressed(

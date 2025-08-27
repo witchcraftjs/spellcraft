@@ -1,4 +1,4 @@
-import { keys as objectKeys } from "@alanscodelog/utils/keys.js"
+import { keys as objectKeys } from "@alanscodelog/utils/keys"
 import { type MakeRequired } from "@alanscodelog/utils/types"
 import type { EventListenerTypes } from "@witchcraft/spellcraft/types"
 

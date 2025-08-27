@@ -1,6 +1,6 @@
-import { keys } from "@alanscodelog/utils/keys.js"
-import { unreachable } from "@alanscodelog/utils/unreachable.js"
-import { extractTokens } from "@witchcraft/expressit/utils/extractTokens.js"
+import { keys } from "@alanscodelog/utils/keys"
+import { unreachable } from "@alanscodelog/utils/unreachable"
+import { extractTokens } from "@witchcraft/expressit/utils/extractTokens"
 import { type ComputedRef, type Ref, watch } from "vue"
 
 import type { Manager } from "../../types/manager.js"

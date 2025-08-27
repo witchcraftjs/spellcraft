@@ -337,8 +337,7 @@ All css variables are set here for maximum flexibility.
 </template>
 
 <script setup lang="ts">
-import IFaSolidLink from "~icons/fa-solid/link"
-import { castType } from "@alanscodelog/utils/castType.js"
+import { castType } from "@alanscodelog/utils/castType"
 import {
 	attach,
 	type createManagerEventListeners,
@@ -363,13 +362,14 @@ import {
 	cloneChain,
 	equalsKey,
 } from "@witchcraft/spellcraft/utils"
-import { equalsKeys } from "@witchcraft/spellcraft/utils/equalsKeys.js"
-import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler.js"
-import { useScrollNearContainerEdges } from "@witchcraft/ui/composables/useScrollNearContainerEdges.js"
+import { equalsKeys } from "@witchcraft/spellcraft/utils/equalsKeys"
+import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler"
+import { useScrollNearContainerEdges } from "@witchcraft/ui/composables/useScrollNearContainerEdges"
 import { computed,onBeforeUnmount,onMounted, type Ref, ref, shallowRef, toRefs } from "vue"
 
 import { usePointerCoords } from "#witchcraft-spellcraft/composables/usePointerCoords.js"
 import { useShortcutManagerKeysLayout } from "#witchcraft-spellcraft/composables/useShortcutManagerKeysLayout.js"
+import IFaSolidLink from "~icons/fa-solid/link"
 
 import { clearVirtuallyPressed } from "../common/clearVirtuallyPressed.js"
 import { createDropChain } from "../common/createDropChain.js"

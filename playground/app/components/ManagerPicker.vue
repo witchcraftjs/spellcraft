@@ -129,14 +129,15 @@
 </template>
 
 <script setup lang="ts">
+import { isBlank } from "@alanscodelog/utils/isBlank"
+import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler"
+import { vExtractRootEl } from "@witchcraft/ui/directives/vExtractRootEl"
+import { computed, inject, ref, toRef, watch, watchEffect } from "vue"
+
 import IFaSolidClone from "~icons/fa-solid/clone"
 import IFaSolidFileExport from "~icons/fa-solid/file-export"
 import IFaSolidPlus from "~icons/fa-solid/plus"
 import IFaSolidTrash from "~icons/fa-solid/trash"
-import { isBlank } from "@alanscodelog/utils/isBlank.js"
-import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler.js"
-import { vExtractRootEl } from "@witchcraft/ui/directives/vExtractRootEl.js"
-import { computed, inject, ref, toRef, watch, watchEffect } from "vue"
 
 const props = defineProps<{
 	managers: string[]

@@ -1,7 +1,7 @@
-import { castType } from "@alanscodelog/utils/castType.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
-import { set } from "@alanscodelog/utils/set.js"
-import { unreachable } from "@alanscodelog/utils/unreachable.js"
+import { castType } from "@alanscodelog/utils/castType"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { set } from "@alanscodelog/utils/set"
+import { unreachable } from "@alanscodelog/utils/unreachable"
 
 import { isValidManager } from "../helpers/isValidManager.js"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

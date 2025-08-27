@@ -1,4 +1,4 @@
-import { type Result } from "@alanscodelog/utils/Result.js"
+import { type Result } from "@alanscodelog/utils/Result"
 import { type KnownError } from "@witchcraft/spellcraft/helpers"
 import {
 	type Manager,

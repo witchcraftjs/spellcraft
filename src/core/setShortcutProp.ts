@@ -1,5 +1,5 @@
-import { castType } from "@alanscodelog/utils/castType.js"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result.js"
+import { castType } from "@alanscodelog/utils/castType"
+import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { addShortcut } from "./addShortcut.js"
 import { removeShortcut } from "./removeShortcut.js"

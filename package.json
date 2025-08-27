@@ -14,48 +14,24 @@
 			"import": "./dist/core/index.js"
 		},
 		"./*": {
-			"types": "./dist/*",
-			"import": "./dist/*"
+			"types": "./dist/*.js",
+			"import": "./dist/*.js"
 		},
 		"./utils": {
 			"types": "./dist/utils/index.d.ts",
 			"import": "./dist/utils/index.js"
 		},
-		"./utils/*": {
-			"types": "./dist/utils/*",
-			"import": "./dist/utils/*"
-		},
 		"./helpers": {
 			"types": "./dist/helpers/index.d.ts",
 			"import": "./dist/helpers/index.js"
-		},
-		"./helpers/*": {
-			"types": "./dist/helpers/*",
-			"import": "./dist/helpers/*"
-		},
-		"./layouts/*": {
-			"types": "./dist/layouts/*",
-			"import": "./dist/layouts/*"
 		},
 		"./types": {
 			"types": "./dist/types/index.d.ts",
 			"import": "./dist/types/index.js"
 		},
-		"./types/*": {
-			"types": "./dist/types/*",
-			"import": "./dist/types/*"
-		},
-		"./internal/*": {
-			"types": "./dist/internal/*",
-			"import": "./dist/internal/*"
-		},
 		"./core": {
 			"types": "./dist/core/index.d.ts",
 			"import": "./dist/core/index.js"
-		},
-		"./core/*": {
-			"types": "./dist/core/*",
-			"import": "./dist/core/*"
 		},
 		"./nuxt": {
 			"types": "./dist/types.d.mts",
@@ -74,79 +50,72 @@
 		"test:inspect-errors": "cross-env INSPECT_ERRORS=true npm run test",
 		"coverage": "vitest --exclude '.direnv/**/*' --coverage",
 		"coverage:dev": "vitest --exclude '.direnv/**/*'  --watch --coverage",
-		"doc": "typedoc --options typedoc.config.cjs",
-		"doc:watch": "onchange -i \"src/**/*.ts\" \"typedoc.config.cjs\" -- pnpm doc",
+		"doc": "typedoc",
+		"doc:watch": "onchange -i \"src/**/*.ts\" \"typedoc.config.js\" -- pnpm doc",
 		"doc:serve": "http-server docs --port=5001",
 		"doc:dev": "concurrently \"pnpm doc:watch\" \"pnpm doc:serve\"",
-		"doc:check-invalid": "typedoc --options typedoc.config.cjs --listInvalidSymbolLinks",
+		"doc:check-invalid": "typedoc --listInvalidSymbolLinks",
 		"lint:eslint": "eslint \"{src,test,playground/app}/**/*.{js,ts,vue,cjs}\" \"*.{js,ts}\" --max-warnings=2 --report-unused-disable-directives",
 		"lint:types": "vue-tsc --noEmit && echo 'todo cd playground && vue-tsc --noEmit'",
 		"lint:commits": "commitlint --from-last-tag --to HEAD --verbose",
 		"lint:imports": "madge --circular --extensions ts ./src",
 		"lint": "pnpm lint:types && pnpm lint:eslint && pnpm lint:imports",
-		"actions:debug": "act -r -v -j build",
+		"actions:debug": "act -r -v",
 		"gen:exports": "indexit update -o '${path}.js'"
 	},
-	"dependencies": {
-		"@alanscodelog/utils": "^5.1.0"
-	},
 	"peerDependencies": {
-		"@witchcraft/expressit": "^0.3.0",
-		"defu": "^6.1.4",
-		"vue": "^3.5.12"
+		"@witchcraft/expressit": "^0.4.0",
+		"@witchcraft/ui": "^0.2.3"
 	},
 	"peerDependenciesMeta": {
 		"@witchcraft/ui": {
-			"optional": true
-		},
-		"vue": {
-			"optional": true
-		},
-		"defu": {
 			"optional": true
 		},
 		"@witchcraft/expressit": {
 			"optional": true
 		}
 	},
+	"dependencies": {
+		"@alanscodelog/utils": "^6.0.2",
+		"@witchcraft/expressit": "^0.4.1",
+		"@witchcraft/ui": "^0.2.4",
+		"vue": "^3.5.21"
+	},
 	"devDependencies": {
-		"@alanscodelog/commitlint-config": "^3.0.1",
-		"@alanscodelog/eslint-config": "^5.0.0",
+		"@alanscodelog/commitlint-config": "^3.1.2",
+		"@alanscodelog/eslint-config": "^6.3.1",
 		"@alanscodelog/semantic-release-config": "^5.0.4",
-		"@alanscodelog/tsconfigs": "^6.0.0",
-		"@alanscodelog/vite-config": "^0.0.5",
-		"@commitlint/cli": "^19.3.0",
-		"@iconify/json": "^2.2.323",
-		"@nuxt/eslint-config": "^1.3.0",
-		"@nuxt/kit": "^4.0.1",
-		"@nuxt/module-builder": "^1.0.1",
-		"@nuxt/schema": "^4.0.1",
-		"@nuxt/types": "^2.17.3",
-		"@types/node": "^24.1.0",
-		"@vitejs/plugin-vue": "^6.0.0",
+		"@alanscodelog/tsconfigs": "^6.2.0",
+		"@alanscodelog/vite-config": "^0.0.6",
+		"@commitlint/cli": "^19.8.1",
+		"@iconify/json": "^2.2.385",
+		"@nuxt/eslint-config": "^1.9.0",
+		"@nuxt/kit": "^4.1.2",
+		"@nuxt/module-builder": "^1.0.2",
+		"@nuxt/schema": "^4.1.2",
+		"@nuxt/types": "^2.18.1",
+		"@types/node": "^24.5.2",
+		"@vitejs/plugin-vue": "^6.0.1",
 		"@vitest/coverage-c8": "^0.33.0",
-		"@witchcraft/ui": "~0.1.0",
-		"concurrently": "^9.1.2",
+		"concurrently": "^9.2.1",
 		"cross-env": "^10.0.0",
 		"defu": "^6.1.4",
-		"fast-glob": "^3.3.2",
+		"fast-glob": "^3.3.3",
 		"http-server": "^14.1.1",
-		"husky": "^9.0.11",
+		"husky": "^9.1.7",
 		"indexit": "2.1.0-beta.3",
 		"madge": "^8.0.0",
-		"nuxt": "^4.0.1",
+		"nuxt": "^4.1.2",
 		"onchange": "^7.1.0",
-		"semantic-release": "^24.2.3",
-		"tailwindcss": "^4.1.2",
-		"typedoc": "0.28.7",
-		"typescript": "~5.8.2",
-		"unbuild": "^3.5.0",
-		"unplugin-icons": "^22.1.0",
-		"vite": "^7.0.6",
-		"vite-plugin-externalize-deps": "^0.9.0",
-		"vite-tsconfig-paths": "^5.0.1",
-		"vitest": "^3.1.1",
-		"vue-tsc": "^3.0.4"
+		"semantic-release": "^24.2.8",
+		"tailwindcss": "^4.1.13",
+		"typedoc": "0.28.13",
+		"typescript": "^5.9.2",
+		"unbuild": "^3.6.1",
+		"unplugin-icons": "^22.3.0",
+		"vite-tsconfig-paths": "^5.1.4",
+		"vitest": "^3.2.4",
+		"vue-tsc": "^3.0.7"
 	},
 	"author": "Alan <alanscodelog@gmail.com>",
 	"repository": "https://github.com/witchcraftjs/spellcraft",
@@ -181,5 +150,7 @@
 	"engines": {
 		"node": ">=20.0.0"
 	},
-	"private": true
+	"publishConfig": {
+		"access": "public"
+	}
 }

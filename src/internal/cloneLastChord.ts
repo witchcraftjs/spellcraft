@@ -1,4 +1,4 @@
-import { last } from "@alanscodelog/utils/last.js"
+import { last } from "@alanscodelog/utils/last"
 
 /**
  * A copy of the last chord in the chain if it exists.

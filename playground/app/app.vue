@@ -67,7 +67,7 @@ import {
 	type Manager,
 	// setManagerProp,
 } from "@witchcraft/spellcraft"
-import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain.js"
+import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain"
 import { ref } from "vue"
 
 import { clearVirtuallyPressed } from "./common/clearVirtuallyPressed.js"

@@ -1,5 +1,5 @@
 import { type EnumLike } from "@alanscodelog/utils"
-import { enumFromArray } from "@alanscodelog/utils/enumFromArray.js"
+import { enumFromArray } from "@alanscodelog/utils/enumFromArray"
 
 import type { AnyInputEvent, Command, Commands, Key, Keys, Shortcut, Shortcuts } from "./index.js"
 

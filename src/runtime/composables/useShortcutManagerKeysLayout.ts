@@ -1,4 +1,4 @@
-import { useGlobalResizeObserver } from "@witchcraft/ui/composables/useGlobalResizeObserver.js"
+import { useGlobalResizeObserver } from "@witchcraft/ui/composables/useGlobalResizeObserver"
 import { computed, reactive, type Ref, ref, watch } from "vue"
 
 import type { Keys } from "../../types/keys.js"

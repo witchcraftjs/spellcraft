@@ -1,6 +1,6 @@
-import { castType } from "@alanscodelog/utils/castType.js"
-import { isArray } from "@alanscodelog/utils/isArray.js"
-import { Ok,type Result } from "@alanscodelog/utils/Result.js"
+import { castType } from "@alanscodelog/utils/castType"
+import { isArray } from "@alanscodelog/utils/isArray"
+import { Ok,type Result } from "@alanscodelog/utils/Result"
 import type { RecordFromArray } from "@alanscodelog/utils/types"
 
 import { createCommand } from "./createCommand.js"
