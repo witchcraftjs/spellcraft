@@ -1,11 +1,9 @@
-### 🚧 BETA RELEASE 🚧
-
 [![NPM Version (with latest tag)](https://img.shields.io/npm/v/%40witchcraft%2Fspellcraft/latest)](https://www.npmjs.com/package/@witchcraft/spellcraft/v/latest)
 <!-- [![NPM Version (with beta tag)](https://img.shields.io/npm/v/%40witchcraft%2Fspellcraft/beta)](https://www.npmjs.com/package/@witchcraft/spellcraft/v/beta) -->
 [![Docs](https://github.com/witchcraftjs/spellcraft/workflows/Docs/badge.svg)](https://github.com/witchcraftjs/spellcraft/actions/workflows/docs.yml)
 [![Release](https://github.com/witchcraftjs/spellcraft/actions/workflows/release.yml/badge.svg)](https://github.com/witchcraftjs/spellcraft/actions/workflows/release.yml)
 
-# Spellcraft
+# Spellcraft 🪄
 
 A shortcut manager library for handling ALL the shortcut needs of an application.
 
@@ -43,7 +41,8 @@ This is a simple example of how you can quickly setup a manager.
 import { createManager } from "@witchcraft/spellcraft/createManager"
 import { createKeys } from "@witchcraft/spellcraft/createKeys"
 import { createContext } from "@witchcraft/spellcraft/createContext"
-import {type Context, ERROR} from "@witchcraft/spellcraft/types"
+import { ERROR } from "@witchcraft/spellcraft/types"
+import type { Context } from "@witchcraft/spellcraft/types"
 import { createCommand } from "@witchcraft/spellcraft/createCommand"
 import { createShortcut } from "@witchcraft/spellcraft/createShortcut"
 import { addCommand } from "@witchcraft/spellcraft/addCommand"

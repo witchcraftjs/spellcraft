@@ -13,10 +13,6 @@
 			"types": "./dist/core/index.d.ts",
 			"import": "./dist/core/index.js"
 		},
-		"./*": {
-			"types": "./dist/*.js",
-			"import": "./dist/*.js"
-		},
 		"./utils": {
 			"types": "./dist/utils/index.d.ts",
 			"import": "./dist/utils/index.js"
@@ -36,6 +32,10 @@
 		"./nuxt": {
 			"types": "./dist/types.d.mts",
 			"import": "./dist/module.mjs"
+		},
+		"./*": {
+			"types": "./dist/*.js",
+			"import": "./dist/*.js"
 		}
 	},
 	"scripts": {

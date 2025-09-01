@@ -26,11 +26,20 @@ jobs:
       with:
         USE_LOCKFILE: ${{ env.USE_LOCKFILE }}
 
+      # this is a special case
+      # builds needs to be avail for the playground
+      # when it links since we use the package directly in it
+    - run: pnpm nuxt prepare && pnpm build:only
+
+    - run: pnpm i --frozen-lockfile
+      working-directory: playground 
+
+    - run: cat node_modules/@witchcraft/spellcraft/package.json 
+      working-directory: playground 
+
     - name: Build 
       uses: ./.github/actions/composite-build
       if: "env.ENABLE_DOCS == 'true'"
-      with:
-        USE_LOCKFILE: ${{ env.USE_LOCKFILE }}
 
     - run: pnpm doc
       if: "env.ENABLE_DOCS == 'true'"
