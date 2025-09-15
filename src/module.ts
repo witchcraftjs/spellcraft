@@ -2,9 +2,10 @@ import {
 	addImportsDir,
 	addTypeTemplate,
 	createResolver,
-	defineNuxtModule,
-	installModule,
+	defineNuxtModule
 } from "@nuxt/kit"
+
+import pkg from "../package.json" with { type: "json" }
 
 
 const { resolve } = createResolver(import.meta.url)
@@ -23,9 +24,14 @@ export interface ModuleOptions {
 export default defineNuxtModule<ModuleOptions>({
 	meta: {
 		name: "witchcraftSpellcraft",
-		configKey: "witchcraftSpellcraft",
+		configKey: "witchcraftSpellcraft"
 	},
 	defaults: {
+	},
+	moduleDependencies: {
+		"@witchcraft/ui/nuxt": {
+			version: pkg.dependencies["@witchcraft/ui"]
+		}
 	},
 	async setup(_options, nuxt) {
 		// nuxt.options.runtimeConfig.public.witchcraftSpellcraft = defu(
@@ -45,14 +51,12 @@ export default defineNuxtModule<ModuleOptions>({
 						keyboard: NavigatorWKeyboard["keyboard"]
 					}
 				}
-			`,
+			`
 		})
-
-		await installModule("@witchcraft/ui/nuxt", (nuxt.options as any).witchcraftUi)
 
 		addImportsDir(resolve("runtime/composables"))
 		addImportsDir(resolve("runtime/utils"))
-				
+
 		nuxt.options.alias["#witchcraft-spellcraft"] = resolve("runtime")
-	},
+	}
 })
