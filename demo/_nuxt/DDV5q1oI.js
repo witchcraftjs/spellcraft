@@ -1,0 +1,34 @@
+import{r as q,j as g,P as w,R as m,aJ as B,x as n,v as o,Q as K,y as b,ae as f,af as y,$ as c,V as j,aH as x,W as v,Z as $,z}from"#entry";const S={key:0,class:"table--header"},O={class:"table--row"},A={class:"table--body"},N=Object.assign({name:"LibTable"},{__name:"WTable",props:{resizable:{type:Object,required:!1,default:()=>({})},values:{type:Array,required:!1,default:()=>[]},itemKey:{type:[String,Number,Symbol,Function],required:!1,default:""},cols:{type:Array,required:!1,default:()=>[]},rounded:{type:Boolean,required:!1,default:!0},border:{type:Boolean,required:!1,default:!0},cellBorder:{type:Boolean,required:!1,default:!0},header:{type:Boolean,required:!1,default:!0},colConfig:{type:Object,required:!1,default:()=>({})}},setup(t){const r=t,u=q([]),k=g(()=>({colCount:r.cols.length,widths:u,selector:".cell",...r.resizable})),C=(l,a,e)=>{const s={bl:!e&&l===r.values.length-1&&a===0,br:!e&&l===r.values.length-1&&a===r.cols.length-1,tr:(e||!r.header)&&l===0&&a===r.cols.length-1,tl:(e||!r.header)&&l===0&&a===0,"first-row":(e||!r.header)&&l===0,"last-row":l===r.values.length-1,"first-col":a===0,"last-col":a===r.cols.length-1};return x(s).filter(d=>s[d])},i=g(()=>Object.fromEntries([...Array(r.values.length+1).keys()].map(l=>[...Array(r.cols.length).keys()].map(a=>[`${l-1}-${a}`,C(l<=0?0:l-1,a,l===0).join(" ")])).flat()));return(l,a)=>w((n(),o("table",{class:c(m(j)(`table
+		table-fixed
+		border-separate
+		border-spacing-0
+		overflow-x-scroll
+		scrollbar-hidden
+		[&_.grip]:w-[5px]
+		relative
+		w-full
+		box-content
+		[&_thead]:font-bold
+		[&_td]:p-1
+		[&_td]:overflow-x-hidden
+		[&.resizable-cols-error]:cursor-not-allowed
+		[&.resizable-cols-error]:user-select-none
+		`,t.cellBorder&&`
+			[&_td]:border-neutral-500
+			[&_td:not(.last-row)]:border-b
+			[&_td:not(.first-col)]:border-l
+		`,t.border&&`
+			[&_thead_td]:bg-neutral-200
+			[&_td]:border-neutral-500
+			dark:[&_thead_td]:bg-neutral-800
+			dark:[&_td]:border-neutral-500
+			[&_td.first-row]:border-t
+			[&_td.last-row]:border-b
+			[&_td.last-col]:border-r
+			[&_td.first-col]:border-l
+		`,t.rounded&&`
+			[&_td.br]:rounded-br-sm
+			[&_td.bl]:rounded-bl-sm
+			[&_td.tr]:rounded-tr-sm
+			[&_td.tl]:rounded-tl-sm
+		`,l.$attrs.class))},[t.header?(n(),o("thead",S,[b("tr",O,[(n(!0),o(f,null,y(t.cols,(e,s)=>v(l.$slots,`header-${e.toString()}`,{key:e,class:c([i.value[`-1-${s}`],"cell table--header-cell",t.colConfig[e]?.resizable===!1?"no-resize":""].join(" ")),style:$(`width:${u.value.length>0?u.value[s]:""}; `),colKey:e},()=>[b("td",{class:c([i.value[`-1-${s}`],"cell table--header-cell",t.colConfig[e]?.resizable===!1?"no-resize":""].join(" ")),style:$(`width:${u.value.length>0?u.value[s]:""}; `)},z(t.colConfig[e]?.name??e),7)])),128))])])):K("",!0),b("tbody",A,[(n(!0),o(f,null,y(t.values,(e,s)=>(n(),o("tr",{key:typeof t.itemKey=="function"?t.itemKey(e):e[t.itemKey],class:"table--row"},[(n(!0),o(f,null,y(t.cols,(d,h)=>v(l.$slots,d,{key:(typeof t.itemKey=="function"?t.itemKey(e):e[t.itemKey])+d.toString(),item:e,value:e[d],class:c(i.value[`${s}-${h}`]+"table--cell cell")},()=>[b("td",{class:c(i.value[`${s}-${h}`]+"table--cell cell")},z(e[d]),3)])),128))]))),128))])],2)),[[m(B),k.value]])}});export{N as default};
