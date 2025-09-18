@@ -1,7 +1,7 @@
 {
 	"name": "@witchcraft/spellcraft",
 	"description": "A shortcut manager library for handling ALL the shortcut needs of an application.",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"type": "module",
 	"main": "./dist/core/index.js",
 	"sideEffects": false,
