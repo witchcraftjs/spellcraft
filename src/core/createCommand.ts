@@ -3,7 +3,7 @@ import type { Command, CommandExecute, RawCommand } from "../types/index.js"
 
 export function createCommand<
 	TName extends string = string,
-	TCommand extends RawCommand<TName> = RawCommand<TName>,
+	TCommand extends RawCommand<TName> = RawCommand<TName>
 >(
 	name: TName,
 	// we only type the execute here so the user gets type safety but doesn't
@@ -18,7 +18,7 @@ export function createCommand<
 		name,
 		execute: rawCommand.execute as any,
 		description: rawCommand.description ?? "",
-		condition: rawCommand.condition ?? { type: "condition", text: "" },
+		condition: rawCommand.condition ?? { type: "condition", text: "" }
 	}
 	return command as any
 }

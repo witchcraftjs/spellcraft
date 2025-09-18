@@ -25,7 +25,7 @@ import { SHORTCUT_ERROR } from "../types/index.js"
 export function updateNativeKeysState(
 	manager: Manager,
 	e: AnyInputEvent,
-	keyIds: string[] = [],
+	keyIds: string[] = []
 ): void {
 	const s = manager.options.stringifier
 	for (const id of manager.keys.nativeToggleKeys) {
@@ -36,7 +36,7 @@ export function updateNativeKeysState(
 		// this does not guarantee the key code is valid
 		// it just returns false even for made up keys
 		const modifierState = getModifierState(key, e, manager)
-		
+
 
 		if (modifierState === null) continue
 		if (modifierState) {

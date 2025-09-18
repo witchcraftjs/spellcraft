@@ -29,10 +29,10 @@ import { cloneChain } from "../utils/cloneChain.js"
 export function safeSetManagerChain(
 	manager: Manager,
 	chain: string[][],
-	{ preserveModifiers = true }: { preserveModifiers?: boolean } = {},
+	{ preserveModifiers = true }: { preserveModifiers?: boolean } = {}
 ): Result<string[][], MultipleErrors<
-		ManagerSetEntries["state.chain"]["error"]
-	>> {
+	ManagerSetEntries["state.chain"]["error"]
+>> {
 	const newChain = cloneChain(chain)
 	if (getPressedNonModifierKeys(manager).length > 0) {
 		setManagerProp(manager, "state.isAwaitingKeyup", true, { check: false })
@@ -45,7 +45,7 @@ export function safeSetManagerChain(
 			newChain.push(pressedModifiers)
 		}
 	}
-		
+
 
 	const can = setManagerProp(manager, "state.chain", newChain, { check: "only" })
 	if (can.isError) return can as any

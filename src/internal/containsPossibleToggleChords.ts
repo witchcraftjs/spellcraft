@@ -1,9 +1,9 @@
 import { crop } from "@alanscodelog/utils/crop"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
-import { type Manager, type PickManager,SHORTCUT_ERROR } from "../types/index.js"
+import { type Manager, type PickManager, SHORTCUT_ERROR } from "../types/index.js"
 
 /**
  * If you have toggle keys in chords, their are "chains" of the same toggle key that would be physically impossible. For example: `toggle(on) toggle(on)`.
@@ -16,7 +16,7 @@ import { type Manager, type PickManager,SHORTCUT_ERROR } from "../types/index.js
  */
 export function containsPossibleToggleChords(
 	chain: string[][],
-	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier">,
+	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier">
 ): Result<true, KnownError<typeof SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE>> {
 	const keys = manager.keys
 	const s = manager.options.stringifier
@@ -39,8 +39,8 @@ export function containsPossibleToggleChords(
 				const prev = getKeyFromIdOrVariant(prevId, keys).unwrap()[0]
 				const curr = getKeyFromIdOrVariant(currId, keys).unwrap()[0]
 				return (prev.id === curr.id || prev.variants?.includes(curr.id) || curr.variants?.includes(prev.id))
-				? [prevId, j]
-				: undefined
+					? [prevId, j]
+					: undefined
 			}).filter(key => key !== undefined) as [string, number][]
 			prevWithSameRootsIds.push([currId, num + k])
 			let canBeOn = true

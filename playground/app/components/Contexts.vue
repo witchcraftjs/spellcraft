@@ -1,5 +1,6 @@
 <template>
-<div class="
+<div
+	class="
 		contexts
 		w-full
 		flex
@@ -33,7 +34,9 @@
 			auto-title-from-aria
 			@click="deactivateAll"
 		>
-			<template #icon> <WIcon> <i-fa-solid-times/> </WIcon> </template>
+			<template #icon>
+				<WIcon> <i-fa-solid-times/> </WIcon>
+			</template>
 		</WButton>
 		<div class="flex-1 grow-[9000] flex flex-wrap justify-center gap-2 basis-[400px]">
 			<div
@@ -54,7 +57,7 @@
 				tabindex="0"
 				:aria-label="'Toggle Context'"
 				:title="'Toggle Context'"
-				v-for="[name,isActive] in Object.entries(context.isActive)"
+				v-for="[name, isActive] in Object.entries(context.isActive)"
 				:key="name"
 				@click="emit(isActive ? 'deactivate' : 'activate' as any /* wat */, name)"
 			>
@@ -65,9 +68,11 @@
 					auto-title-from-aria
 					class="p-0 disabled:cursor-not-allowed"
 					:disabled="context.count[name] > 0"
-					@click="emit( 'remove', name )"
+					@click="emit('remove', name)"
 				>
-					<template #icon> <WIcon> <i-fa-solid-times/> </WIcon> </template>
+					<template #icon>
+						<WIcon> <i-fa-solid-times/> </WIcon>
+					</template>
 				</WButton>
 			</div>
 		</div>
@@ -90,7 +95,9 @@
 						:disabled="isBlank(tempValue)"
 						@click="addContext"
 					>
-						<template #icon> <WIcon> <i-fa-solid-plus/> </WIcon> </template>
+						<template #icon>
+							<WIcon> <i-fa-solid-plus/> </WIcon>
+						</template>
 					</WButton>
 				</template>
 			</WInputDeprecated>
@@ -114,9 +121,9 @@ const props = defineProps<{
 }>()
 const emit = defineEmits<{
 	add: [val: string]
-	activate: [val:string]
-	deactivate: [val:string]
-	remove: [val:string]
+	activate: [val: string]
+	deactivate: [val: string]
+	remove: [val: string]
 }>()
 
 const notificationHandler = useNotificationHandler()
@@ -127,14 +134,14 @@ const addContext = (): void => {
 		tempValue.value = ""
 	} else {
 		void notificationHandler?.notify({
-			message: "Context cannot be empty value.",
+			message: "Context cannot be empty value."
 		})
 	}
 }
 
 const activeContext = computed(() => [...Object.entries(props.context.isActive)]
 	.filter(([_, isActive]) => isActive)
-	.map(([context]) => context),
+	.map(([context]) => context)
 )
 
 const deactivateAll = (): void => {
@@ -142,6 +149,5 @@ const deactivateAll = (): void => {
 		emit("deactivate", context)
 	}
 }
-
 </script>
 

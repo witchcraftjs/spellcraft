@@ -10,7 +10,7 @@ import type { RawKey } from "../types/keys.js"
  * This is for *RAW* keys, so it mutates the key directly without going through {@link setKeyProp}
  */
 export function calculateAndSetPositionAndSize<
-	T extends RawKey,
+	T extends RawKey
 >(row: T[]): (T & { x: number, width: number, height: 1 })[] {
 	let x = 0
 	for (const key of row) {

@@ -1,6 +1,7 @@
 <template>
 <div>
-	<div :class="`
+	<div
+		:class="`
 		rounded-sm
 		border
 		border-neutral-600
@@ -22,53 +23,66 @@
 			@submit="addCommand(newCommand)"
 		/>
 		<div class="items-center px-1">
-			<WButton :border="false"
+			<WButton
+				:border="false"
 				aria-label="Add Command"
 				auto-title-from-aria
 				@click="addCommand(newCommand)"
 			>
-				<template #icon> <WIcon> <i-fa-solid-plus/> </WIcon> </template>
+				<template #icon>
+					<WIcon> <i-fa-solid-plus/> </WIcon>
+				</template>
 			</WButton>
 		</div>
 
 		<!-- existing -->
-		<template v-for="command of commands" :key="command.name">
+		<template
+			v-for="command of commands"
+			:key="command.name"
+		>
 			<div class="grid grid-cols-[minmax(0,1fr),min-content]">
 				<!-- @vue-expect-error todo -->
 				<WInputDeprecated
 					:border="false"
 					:model-value="temporaryCommand.command === command ? temporaryCommand.name : command.name"
-					
+
 					@focus="setTemporary(command)"
 					@blur="handleBlur(command)"
 					@update:model-value="updateCommandName(command, $event)"
 					@submit="notifyIfError(setCommandProp(command, 'name', $event, manager))"
 				/>
-				<WButton v-if="temporaryCommand.command === command && temporaryCommand.name !== command.name"
+				<WButton
+					v-if="temporaryCommand.command === command && temporaryCommand.name !== command.name"
 					:border="false"
 					aria-label="Save Command"
 					auto-title-from-aria
 					@mousedown="saveOnBlur = true"
 					@mouseup="saveOnBlur = false"
-				
+
 					@click="saveCommandName(command)"
 				>
-					<template #icon> <WIcon> <i-fa-solid-save/> </WIcon> </template>
+					<template #icon>
+						<WIcon> <i-fa-solid-save/> </WIcon>
+					</template>
 				</WButton>
 			</div>
 			<div class="items-center px-1">
-				<WButton :border="false"
+				<WButton
+					:border="false"
 					aria-label="Delete Command"
 					auto-title-from-aria
 					@click="notifyIfError(managerRemoveCommand(command, manager))"
 				>
-					<template #icon> <WIcon> <i-fa-solid-trash/> </WIcon> </template>
+					<template #icon>
+						<WIcon> <i-fa-solid-trash/> </WIcon>
+					</template>
 				</WButton>
 			</div>
 		</template>
 	</div>
 </div>
 </template>
+
 <script setup lang="ts">
 import { addCommand as managerAddCommand, createCommand, removeCommand as managerRemoveCommand, setCommandProp } from "@witchcraft/spellcraft"
 import type { Command, Manager } from "@witchcraft/spellcraft/types"
@@ -93,7 +107,7 @@ const temporaryCommand = ref<{
 	name: string
 }>({
 	command: undefined,
-	name: "",
+	name: ""
 })
 
 function addCommand(command: Command): void {
@@ -105,13 +119,13 @@ function addCommand(command: Command): void {
 function clearTemporary() {
 	temporaryCommand.value = {
 		command: undefined,
-		name: "",
+		name: ""
 	}
 }
 function setTemporary(command: Command) {
 	temporaryCommand.value = {
 		command,
-		name: command.name,
+		name: command.name
 	}
 }
 function updateCommandName(command: Command, val: string) {

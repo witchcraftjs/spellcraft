@@ -11,24 +11,24 @@ import { equalsKeys } from "../utils/equalsKeys.js"
 export function equalsShortcut<TShortcut extends Shortcut>(
 	shortcutA: TShortcut,
 	shortcutB: Shortcut,
-	manager: Pick<Manager, "keys" | "commands" > & PickManager<"options", | "evaluateCondition" | "conditionEquals" >,
+	manager: Pick<Manager, "keys" | "commands"> & PickManager<"options", | "evaluateCondition" | "conditionEquals">,
 	{ ignoreCommand = false }: { ignoreCommand?: boolean } = {}
 ): shortcutB is TShortcut {
 	if (shortcutA.forceUnequal || shortcutB.forceUnequal) return false
 	if (shortcutA === shortcutB) return true
 	return (
 		equalsKeys(shortcutA.chain, shortcutB.chain, manager.keys, undefined, { allowVariants: true })
-				&& manager.options.conditionEquals(shortcutA.condition, shortcutB.condition)
-				&& (ignoreCommand
-					|| (
-						shortcutA.command === shortcutB.command
-						&& shortcutA.command === undefined
-					)
-					|| (shortcutA.command !== undefined
-						&& shortcutB.command !== undefined
-						&& equalsCommand(manager.commands.entries[shortcutA.command], manager.commands.entries[shortcutB.command], manager)
-					)
-				)
+		&& manager.options.conditionEquals(shortcutA.condition, shortcutB.condition)
+		&& (ignoreCommand
+			|| (
+				shortcutA.command === shortcutB.command
+				&& shortcutA.command === undefined
+			)
+			|| (shortcutA.command !== undefined
+				&& shortcutB.command !== undefined
+				&& equalsCommand(manager.commands.entries[shortcutA.command], manager.commands.entries[shortcutB.command], manager)
+			)
+		)
 	)
 }
 

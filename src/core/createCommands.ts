@@ -12,24 +12,23 @@ import type { CanHookErrors, Command, Commands, CommandsSetEntries, Manager, Mul
 export function createCommands<
 	THooks extends Manager["hooks"],
 	TEntries extends Record<string, Command>,
-	TCheck extends boolean | "only" = true,
-	
+	TCheck extends boolean | "only" = true
+
 >(
 	commandsList: Command[],
 	manager: PickManager<"options", "stringifier"> & { hooks?: THooks } = {
-		options: { stringifier: defaultStringifier },
+		options: { stringifier: defaultStringifier }
 	},
 	{ check = true as TCheck }: { check?: TCheck } = {}
 ): Result<
-		TCheck extends "only" ? true : Commands<TEntries>,
-		MultipleErrors<
-			CommandsSetEntries["entries@add"]["error"]
-		> | CanHookErrors<THooks extends never ? never : THooks, "canSetCommandsProp" >
-	>
-{
+	TCheck extends "only" ? true : Commands<TEntries>,
+	MultipleErrors<
+		CommandsSetEntries["entries@add"]["error"]
+	> | CanHookErrors<THooks extends never ? never : THooks, "canSetCommandsProp">
+> {
 	const commands: Commands = {
 		type: "commands",
-		entries: {},
+		entries: {}
 	}
 	const managerClone = { ...manager, commands }
 	if (check) {
@@ -41,6 +40,6 @@ export function createCommands<
 	}
 	if (check === "only") return Ok(true) satisfies Result<true, never> as any
 
-	return Ok(commands)satisfies Result<Commands, never> as any
+	return Ok(commands) satisfies Result<Commands, never> as any
 }
 

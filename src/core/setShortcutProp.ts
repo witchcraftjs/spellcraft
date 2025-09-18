@@ -1,5 +1,5 @@
 import { castType } from "@alanscodelog/utils/castType"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { addShortcut } from "./addShortcut.js"
 import { removeShortcut } from "./removeShortcut.js"
@@ -22,7 +22,7 @@ export function setShortcutProp<
 	TProp extends keyof ShortcutSetEntries,
 	TEntry extends TEntries[TProp],
 	THooks extends Manager["hooks"],
-	TCheck extends boolean | "only" = true,
+	TCheck extends boolean | "only" = true
 >(
 	/** Shortcut is mutated if check is not "only". */
 	shortcut: Shortcut,
@@ -31,14 +31,13 @@ export function setShortcutProp<
 	manager: (TEntry["manager"] extends never ? unknown : TEntry["manager"]) & { hooks?: THooks },
 	{ check = true as TCheck }: { check?: TCheck } = {}
 ):
-	Result<
-		TCheck extends "only" ? true : Shortcut,
-		MultipleErrors<
-			TEntry["error"]
-		>
-		| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetShortcutProp">
+Result<
+	TCheck extends "only" ? true : Shortcut,
+	MultipleErrors<
+		TEntry["error"]
 	>
-{
+	| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetShortcutProp">
+> {
 	if (check) {
 		switch (prop) {
 			case "chain": {
@@ -48,7 +47,7 @@ export function setShortcutProp<
 				const res = isValidChain(val, manager)
 				if (res.isError) return res
 
-				const shortcutsShallowClone: Shortcuts = { ...manager.shortcuts, entries: [...manager.shortcuts.entries]}
+				const shortcutsShallowClone: Shortcuts = { ...manager.shortcuts, entries: [...manager.shortcuts.entries] }
 				const managerClone = { ...manager, shortcuts: shortcutsShallowClone } as any as Manager
 				// todo better way
 				const resRemove = removeShortcut(shortcut, managerClone)

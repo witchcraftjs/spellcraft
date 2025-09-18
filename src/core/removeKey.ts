@@ -7,18 +7,17 @@ import type { CanHookErrors, Key, KeysSetEntries, Manager, MultipleErrors } from
 
 export function removeKey<
 	THooks extends Manager["hooks"],
-	TCheck extends boolean | "only" = true,
+	TCheck extends boolean | "only" = true
 >(
 	key: Key,
 	manager: KeysSetEntries["entries@remove"]["manager"] & { hooks?: THooks },
 	opts: { check?: TCheck } = {}
 ): Result<
-		TCheck extends "only" ? true : Key,
-		MultipleErrors<
-			KeysSetEntries["entries@remove"]["error"]
-		> | CanHookErrors<THooks extends never ? never : THooks, "canSetKeysProp">
-	>
-{
+	TCheck extends "only" ? true : Key,
+	MultipleErrors<
+		KeysSetEntries["entries@remove"]["error"]
+	> | CanHookErrors<THooks extends never ? never : THooks, "canSetKeysProp">
+> {
 	const res = setKeysProp("entries@remove", key, manager, opts)
 	if (res.isError) return res
 	return Ok(key) satisfies Result<Key, never> as any

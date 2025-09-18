@@ -9,7 +9,7 @@ import {
 	type Manager,
 	type PickManager,
 	setKeyProp,
-	SHORTCUT_ERROR,
+	SHORTCUT_ERROR
 } from "@witchcraft/spellcraft"
 import { labelWithEvent } from "@witchcraft/spellcraft/helpers/index"
 import { createLayout } from "@witchcraft/spellcraft/layouts/createLayout"
@@ -21,7 +21,7 @@ import type { ContextInfo } from "#witchcraft-spellcraft/types.js"
 
 export function createDefaultManager(
 	raw: Partial<Omit<Manager, "options" | "hooks" | "listener" | "state">> & {
-		options: PickManager<"options", "enableShortcuts" | "enableListeners" | "updateStateOnAllEvents" >
+		options: PickManager<"options", "enableShortcuts" | "enableListeners" | "updateStateOnAllEvents">
 	} = {} as any,
 	extraProps: any = {}
 ): Manager | Error {
@@ -51,7 +51,7 @@ export function createDefaultManager(
 		// context will get overlayed later by useMultipleManagers
 		context: createContext<Context<ContextInfo>>({
 			count: {},
-			isActive: {},
+			isActive: {}
 		}),
 		options: {
 			...raw.options,
@@ -66,9 +66,9 @@ export function createDefaultManager(
 					// eslint-disable-next-line no-console
 					console.log(error, e)
 				}
-			},
+			}
 		},
-		// eslint-disable-next-line @typescript-eslint/no-shadow
+
 		listener: ({ event, manager, keys }) => {
 			if (!event) return
 			labelWithEvent(event, keys, manager, {
@@ -87,12 +87,12 @@ export function createDefaultManager(
 					}
 
 					return true
-				},
+				}
 			})
 			if (
 				manager.state.isRecording
-			&& !(event instanceof MouseEvent)
-			&& "preventDefault" in event
+				&& !(event instanceof MouseEvent)
+				&& "preventDefault" in event
 			) {
 				event.preventDefault()
 			}
@@ -114,8 +114,8 @@ export function createDefaultManager(
 					}
 				}
 				return true
-			},
-		} satisfies Partial<Hooks>,
+			}
+		} satisfies Partial<Hooks>
 	})
 	if (manager.isError) {
 		return manager.error
@@ -124,7 +124,7 @@ export function createDefaultManager(
 	if (extraProps) {
 		manager.value = { ...extraProps, ...manager.value }
 	}
-	
+
 	const labeledByKeyboardLayoutMap = useLabeledByKeyboardLayoutMap(manager.value)
 	return manager.value
 }

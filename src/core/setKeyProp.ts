@@ -1,6 +1,6 @@
 import { castType } from "@alanscodelog/utils/castType"
 import { crop } from "@alanscodelog/utils/crop"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 import { set } from "@alanscodelog/utils/set"
 
 import { KnownError } from "../helpers/KnownError.js"
@@ -17,11 +17,11 @@ const canHookable: OnHookKeyProps[] = ["x", "y", "width", "height", "label", "en
  * Note that while the manager argument is always required, for unmanaged properties you can pass {} and for most others you can pass a partial manager if needed. This is because it's very difficult to keep the heavy per prop types and allow the manager to be optional in these cases.
  */
 export function setKeyProp<
-	TEntries extends KeySetEntries ,
+	TEntries extends KeySetEntries,
 	TProp extends keyof KeySetEntries,
 	TEntry extends TEntries[TProp],
 	THooks extends Manager["hooks"],
-	TCheck extends boolean | "only" = true,
+	TCheck extends boolean | "only" = true
 >(
 	/** Key is mutated if check is not "only". */
 	key: Key,
@@ -29,13 +29,13 @@ export function setKeyProp<
 	val: TEntry["val"],
 	manager: (TEntry["manager"] extends never ? unknown : TEntry["manager"]) & { hooks?: THooks },
 	{
-		check = true as TCheck,
+		check = true as TCheck
 	}: { check?: TCheck } = {}
 ): Result<
 	TCheck extends "only" ? true : Key,
 	MultipleErrors<TEntry["error"]>
 	| CanHookErrors<THooks extends never ? never : THooks, "canSetKeyProp">
-	> {
+> {
 	if (check) {
 		switch (prop) {
 			case "toggleOnPressed":
@@ -54,7 +54,7 @@ export function setKeyProp<
 			}
 			default: break
 		}
-		
+
 		if (manager?.hooks && "canSetKeyProp" in manager.hooks && canHookable.includes(prop as any)) {
 			const canHook = manager.hooks.canSetKeyProp?.(key, prop as any, val as any)
 			if (canHook instanceof Error) {
@@ -62,7 +62,7 @@ export function setKeyProp<
 			}
 		}
 	}
-	
+
 	if (check === "only") {
 		return Ok(true) satisfies Result<true, never> as any
 	}
@@ -74,7 +74,7 @@ export function setKeyProp<
 	}
 
 	manager?.hooks?.onSetKeyProp?.(key, prop, val)
-	
+
 	return Ok(key) satisfies Result<Key, never> as any
 }
 

@@ -1,4 +1,4 @@
-import { type Ref,ref } from "vue"
+import { type Ref, ref } from "vue"
 
 import { getKeyboardLayoutMap } from "../../helpers/getKeyboardLayoutMap.js"
 import { labelWithKeyboardMap } from "../../helpers/labelWithKeyboardMap.js"

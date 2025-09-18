@@ -16,7 +16,7 @@ export const chainContainsSubset = (
 	{
 		onlySubset = false,
 		onlyPressable = false,
-		allowVariants = true,
+		allowVariants = true
 	}: {
 		/**
 		 * If true, will return false if the last chord of the chainSubset is exactly equal.
@@ -36,7 +36,7 @@ export const chainContainsSubset = (
 		 * ```
 		 */
 		onlySubset?: boolean
-		/** If true, will return false if the shortcut is not one key press away.*/
+		/** If true, will return false if the shortcut is not one key press away. */
 		onlyPressable?: boolean
 		allowVariants?: boolean
 	} = { }
@@ -53,7 +53,7 @@ export const chainContainsSubset = (
 
 
 	const index = chainSubset.length === 0 ? 0 : chainSubset.length - 1
-	
+
 	const precedingChords = chainSubset.slice(0, index)
 	const precedingChordsEqual = index === 0 || equalsKeys(chain, precedingChords, keys, precedingChords.length, opts)
 	if (!precedingChordsEqual) return false
@@ -89,9 +89,9 @@ export const chainContainsSubset = (
 
 	if (onlySubset && modKeysDiff === 0 && nonModKeysDiff === 0) return false
 	if (onlyPressable && !(
-		(modKeysDiff === 0 && nonModKeysDiff === 1) ||
-		(modKeysDiff === 1 && nonModKeysDiff === 0)
-	)) {return false}
-	
+		(modKeysDiff === 0 && nonModKeysDiff === 1)
+		|| (modKeysDiff === 1 && nonModKeysDiff === 0)
+	)) { return false }
+
 	return true
 }

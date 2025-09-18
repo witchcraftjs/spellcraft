@@ -1,5 +1,5 @@
 export class EmulatedEvent<
-	TType extends "keydown" | "keyup" | "mousedown" | "mouseup" | "wheel" | "mouseenter" = "keydown" | "keyup" | "mousedown" | "mouseup" | "wheel" | "mouseenter",
+	TType extends "keydown" | "keyup" | "mousedown" | "mouseup" | "wheel" | "mouseenter" = "keydown" | "keyup" | "mousedown" | "mouseup" | "wheel" | "mouseenter"
 > {
 	code!: TType extends "keydown" | "keyup" ? string : never
 

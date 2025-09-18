@@ -1,14 +1,14 @@
 import { castType } from "@alanscodelog/utils/castType"
 import { crop } from "@alanscodelog/utils/crop"
 import { indent } from "@alanscodelog/utils/indent"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { setCommandsProp } from "./setCommandsProp.js"
 import { setShortcutProp } from "./setShortcutProp.js"
 
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
-import { type CanHookCommandProps, type CanHookErrors, type Command, type CommandSetEntries, type Manager,type MultipleErrors,SHORTCUT_ERROR } from "../types/index.js"
+import { type CanHookCommandProps, type CanHookErrors, type Command, type CommandSetEntries, type Manager, type MultipleErrors, SHORTCUT_ERROR } from "../types/index.js"
 
 
 const canHookable: CanHookCommandProps[] = ["condition", "execute"]
@@ -22,11 +22,11 @@ const canHookable: CanHookCommandProps[] = ["condition", "execute"]
  *
  */
 export function setCommandProp<
-	TEntries extends CommandSetEntries ,
-	TProp extends keyof CommandSetEntries ,
-	TEntry extends TEntries[TProp] ,
+	TEntries extends CommandSetEntries,
+	TProp extends keyof CommandSetEntries,
+	TEntry extends TEntries[TProp],
 	THooks extends Manager["hooks"],
-	TCheck extends boolean | "only" = true,
+	TCheck extends boolean | "only" = true
 >(
 	/** Command is mutated if check is not "only". */
 	command: Command,
@@ -34,13 +34,13 @@ export function setCommandProp<
 	val: TEntry["val"],
 	manager: (TEntry["manager"] extends never ? unknown : TEntry["manager"]) & { hooks?: THooks },
 	{
-		check = true as TCheck,
+		check = true as TCheck
 	}: { check?: TCheck } = {}
 ): Result<
 	TCheck extends "only" ? true : Command,
 	MultipleErrors<TEntry["error"]>
-		| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetCommandProp">
-	> {
+	| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetCommandProp">
+> {
 	if (check) {
 		switch (prop) {
 			case "name": {
@@ -61,7 +61,7 @@ export function setCommandProp<
 					))
 				}
 				// note that the old command being missing is NOT an error, see Command.name
-				
+
 				// we artificially add the command so we don't get errors that it's unknown
 				const managerClone = {
 					...manager,
@@ -69,9 +69,9 @@ export function setCommandProp<
 						...manager.commands,
 						entries: {
 							...manager.commands.entries,
-							[val]: { ...command, name: val },
-						},
-					},
+							[val]: { ...command, name: val }
+						}
+					}
 				}
 
 				const shortcutErrors = []
@@ -97,7 +97,7 @@ export function setCommandProp<
 
 			default: break
 		}
-	
+
 		if (manager?.hooks && "canSetCommandProp" in manager.hooks && canHookable.includes(prop as any)) {
 			const canHook = manager.hooks.canSetCommandProp?.(command, prop as any, val)
 			if (canHook instanceof Error) {
@@ -105,7 +105,7 @@ export function setCommandProp<
 			}
 		}
 	}
-	
+
 	if (check === "only") {
 		return Ok(true) satisfies Result<true, never> as any
 	}
@@ -115,7 +115,7 @@ export function setCommandProp<
 		castType<TEntries["name"]["manager"]>(manager)
 		castType<TEntries["name"]["val"]>(val)
 
-		
+
 		setCommandsProp("entries@add", { ...command, name: val }, manager).unwrap()
 		const old = command.name
 		const oldCommand = manager.commands.entries[old]
@@ -134,7 +134,7 @@ export function setCommandProp<
 	if (manager?.hooks && "onSetCommandProp" in manager.hooks!) {
 		manager?.hooks?.onSetCommandProp?.(command, prop as any, val)
 	}
-	
+
 	return Ok(command) satisfies Result<Command, never> as any
 }
 

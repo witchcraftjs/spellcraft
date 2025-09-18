@@ -4,7 +4,7 @@ import { areValidKeys } from "./areValidKeys.js"
 import { containsPossibleToggleChords } from "./containsPossibleToggleChords.js"
 import { isValidChord } from "./isValidChord.js"
 
-import { type ChainError, type Manager, type MultipleErrors, type PickManager } from "../types/index.js"
+import type { ChainError, Manager, MultipleErrors, PickManager } from "../types/index.js"
 
 
 /**
@@ -16,10 +16,10 @@ import { type ChainError, type Manager, type MultipleErrors, type PickManager } 
  */
 export function isValidChain(
 	chain: string[][],
-	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier" | "sorter">,
+	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier" | "sorter">
 ): Result<true,
-		MultipleErrors< ChainError >
-	> {
+	MultipleErrors<ChainError>
+> {
 	const sorter = manager.options.sorter
 
 	if ((chain.length === 0) || (chain.length === 1 && chain[0].length === 0)) {

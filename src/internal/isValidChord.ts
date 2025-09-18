@@ -1,11 +1,11 @@
 import { crop } from "@alanscodelog/utils/crop"
 import { findDuplicates } from "@alanscodelog/utils/findDuplicates"
 import { indent } from "@alanscodelog/utils/indent"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
-import { type Manager, type PickManager,SHORTCUT_ERROR } from "../types/index.js"
+import { type Manager, type PickManager, SHORTCUT_ERROR } from "../types/index.js"
 import { isTriggerKey } from "../utils/isTriggerKey.js"
 import { isWheelKey } from "../utils/isWheelKey.js"
 
@@ -21,7 +21,7 @@ export function isValidChord(
 	chain: string[][],
 	chord: string[],
 	i: number,
-	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier" | "sorter">,
+	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier" | "sorter">
 ): Result<true, KnownError<typeof SHORTCUT_ERROR.CHORD_W_DUPLICATE_KEY | typeof SHORTCUT_ERROR.CHORD_W_ONLY_MODIFIERS | typeof SHORTCUT_ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS | typeof SHORTCUT_ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS>> {
 	const keys = manager.keys
 	const s = manager.options.stringifier

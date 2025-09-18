@@ -45,7 +45,7 @@ export function useShortcutManagerContextCount(manager: Ref<Manager> | ComputedR
 		}
 	}, { deep: true, immediate: true })
 	// we're using unreachable, because the checks should already be in the ui
-	
+
 	function addContext(ctx: string): void {
 		if (!context.value.isActive[ctx]) {
 			context.value.isActive[ctx] = true
@@ -76,6 +76,6 @@ export function useShortcutManagerContextCount(manager: Ref<Manager> | ComputedR
 		addContext,
 		removeContext,
 		activateContext,
-		deactivateContext,
+		deactivateContext
 	}
 }

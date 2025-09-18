@@ -1,6 +1,6 @@
 import { crop } from "@alanscodelog/utils/crop"
 import { indent } from "@alanscodelog/utils/indent"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { KnownError } from "../helpers/KnownError.js"
 import type { Manager, MultipleErrors, PickManager, Shortcut } from "../types/index.js"
@@ -12,7 +12,7 @@ import { SHORTCUT_ERROR } from "../types/index.js"
 
 export function isValidCommand(
 	commandName: string | undefined,
-	manager: Pick<Manager, "commands"> & Partial<Pick<Manager, "keys">> & PickManager<"options", "stringifier" >,
+	manager: Pick<Manager, "commands"> & Partial<Pick<Manager, "keys">> & PickManager<"options", "stringifier">,
 	/**
 	 * Shortcut will only be added to error if the manager contains keys.
 	 * Otherwise it will be ignored.

@@ -1,5 +1,5 @@
 import { castType } from "@alanscodelog/utils/castType"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { calculateLayoutSize } from "../helpers/calculateLayoutSize.js"
 import { KnownError } from "../helpers/KnownError.js"
@@ -7,7 +7,7 @@ import { areValidVariants } from "../internal/areValidVariants.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
 import { errorTextInUse } from "../internal/errorTextInUse.js"
 import { errorTextRemove } from "../internal/errorTextRemove.js"
-import { type CanHookErrors, type CanHookKeysProps, type Key, type Keys, type KeysSetEntries, type Manager,type MultipleErrors,SHORTCUT_ERROR } from "../types/index.js"
+import { type CanHookErrors, type CanHookKeysProps, type Key, type Keys, type KeysSetEntries, type Manager, type MultipleErrors, SHORTCUT_ERROR } from "../types/index.js"
 import { containsKey } from "../utils/containsKey.js"
 
 
@@ -17,23 +17,23 @@ const canHookable: CanHookKeysProps[] = ["entries@add", "entries@remove"]
  * Sets a settable {@link Keys} property.
  */
 export function setKeysProp<
-	TEntries extends KeysSetEntries ,
+	TEntries extends KeysSetEntries,
 	TProp extends keyof KeysSetEntries,
-	TEntry extends TEntries[TProp] ,
+	TEntry extends TEntries[TProp],
 	THooks extends Manager["hooks"],
-	TCheck extends boolean | "only" = true,
+	TCheck extends boolean | "only" = true
 >(
 	prop: TProp,
 	val: TEntry["val"],
 	manager: TEntry["manager"] & { hooks?: THooks },
 	{
-		check = true as TCheck,
+		check = true as TCheck
 	}: { check?: TCheck } = {}
 ): Result<
 	TCheck extends "only" ? true : Key,
 	MultipleErrors<TEntry["error"]>
-		| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetKeysProp">
-	> {
+	| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetKeysProp">
+> {
 	const keys = manager.keys
 	if (check) {
 		switch (prop) {
@@ -105,7 +105,7 @@ export function setKeysProp<
 			}
 		}
 	}
-	
+
 	if (check === "only") {
 		return Ok(true) satisfies Result<true, never> as any
 	}
@@ -120,13 +120,13 @@ export function setKeysProp<
 			if (key.isToggle === "native") {
 				setKeysProp("nativeToggleKeys", [
 					...keys.nativeToggleKeys,
-					key.id,
+					key.id
 				], manager).unwrap()
 			}
 			if (key.isModifier === "native") {
 				setKeysProp("nativeModifierKeys", [
 					...keys.nativeModifierKeys,
-					key.id,
+					key.id
 				], manager).unwrap()
 			}
 			if (key.isToggle) {
@@ -152,7 +152,7 @@ export function setKeysProp<
 			if (key.isModifier === "native") {
 				setKeysProp("nativeModifierKeys", keys.nativeToggleKeys.filter(k => k !== key.id), manager).unwrap()
 			}
-			
+
 			if (key.isToggle) {
 				setKeysProp(`toggles@remove@${key.toggleOnId}`, key, manager).unwrap()
 				setKeysProp(`toggles@remove@${key.toggleOffId}`, key, manager).unwrap()
@@ -199,7 +199,7 @@ export function setKeysProp<
 	}
 
 	manager.hooks?.onSetKeysProp?.(keys, prop as any, val as any)
-	
+
 	return Ok(keys) satisfies Result<Keys, never> as any
 }
 

@@ -17,7 +17,7 @@ export default defineBuildConfig({
 			input: `./src/${folder}`,
 			outDir: `./dist/${folder}`,
 			ext: "js",
-			format: "esm",
+			format: "esm"
 		}))
-	],
+	]
 })

@@ -1,4 +1,4 @@
-import { type Ref,ref } from "vue"
+import { type Ref, ref } from "vue"
 
 import type { ManagerListener } from "../../types/index.js"
 

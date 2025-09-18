@@ -9,7 +9,7 @@ import type { EventListenerTypes, EventTypes, Manager } from "../types/index.js"
 export function createManagerEventListeners<T extends EventTypes, TTypes extends T[]>(
 	manager: Manager,
 	types: TTypes = ["keydown", "keyup", "keypress", "wheel", "mousedown", "mouseup", "mouseenter"] as TTypes,
-	{ debug }: { debug?: true | ((type: EventTypes, e: KeyboardEvent | MouseEvent) => void) } = {},
+	{ debug }: { debug?: true | ((type: EventTypes, e: KeyboardEvent | MouseEvent) => void) } = {}
 ): EventListenerTypes<TTypes[number]> {
 	// eslint-disable-next-line no-console
 	const debugFn = debug === true ? console.log : undefined
@@ -31,7 +31,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 					setKeysState(ids, manager, true)
 					updateNativeKeysState(manager, e, ids)
 					const res = addToChain(manager, ids, e)
-					if (res.isError) {manager.options.cb(manager, res.error, e)}
+					if (res.isError) { manager.options.cb(manager, res.error, e) }
 				}
 				break
 			}
@@ -45,13 +45,13 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 						manager.options.cb(manager, keyIds.error, e)
 						return
 					}
-						
+
 					const ids = keyIds.value
 					manager.listener?.({ event: e, isKeydown: false, keys: ids, manager })
 					setKeysState(ids, manager, false)
 					updateNativeKeysState(manager, e, ids)
 					const res = removeFromChain(manager, ids, e)
-					if (res.isError) {manager.options.cb(manager, res.error, e)}
+					if (res.isError) { manager.options.cb(manager, res.error, e) }
 				}
 				break
 			}
@@ -75,7 +75,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 					manager.listener?.({ event: e, isKeydown: false, keys: ids, manager })
 					setKeysState(ids, manager, false)
 					const res = removeFromChain(manager, ids, e)
-					if (res.isError) {manager.options.cb(manager, res.error, e)}
+					if (res.isError) { manager.options.cb(manager, res.error, e) }
 				}
 				break
 			}
@@ -96,7 +96,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 
 					updateNativeKeysState(manager, e, ids)
 					const res = addToChain(manager, ids, e)
-					if (res.isError) {manager.options.cb(manager, res.error, e)}
+					if (res.isError) { manager.options.cb(manager, res.error, e) }
 				}
 
 				break
@@ -117,7 +117,7 @@ export function createManagerEventListeners<T extends EventTypes, TTypes extends
 					setKeysState(ids, manager, false)
 					updateNativeKeysState(manager, e, ids)
 					const res = removeFromChain(manager, ids, e)
-					if (res.isError) {manager.options.cb(manager, res.error, e)}
+					if (res.isError) { manager.options.cb(manager, res.error, e) }
 				}
 
 				break

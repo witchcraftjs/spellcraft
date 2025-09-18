@@ -43,12 +43,15 @@ All css variables are set here for maximum flexibility.
 		--height:${height}px;
 	`"
 >
-	<div class="flex justify-between after:content-vertical-holder" @mouseenter="isDragging ? setManagerProp(manager, 'state.chain' , []) : undefined">
+	<div
+		class="flex justify-between after:content-vertical-holder"
+		@mouseenter="isDragging ? setManagerProp(manager, 'state.chain', []) : undefined"
+	>
 		<div
 			class="flex-1"
 			tabindex="0"
-			@click="safeSetManagerChain(manager,[]);clearVirtuallyPressed(virtuallyPressedKeys, manager)"
-			@keydown.space.prevent="safeSetManagerChain(manager,[]);clearVirtuallyPressed(virtuallyPressedKeys, manager)"
+			@click="safeSetManagerChain(manager, []);clearVirtuallyPressed(virtuallyPressedKeys, manager)"
+			@keydown.space.prevent="safeSetManagerChain(manager, []);clearVirtuallyPressed(virtuallyPressedKeys, manager)"
 		>
 			{{ manager.options.stringifier.stringify(manager.state.chain, manager) }}
 			{{
@@ -73,7 +76,8 @@ All css variables are set here for maximum flexibility.
 	It should not have any margins or borders since the drag calculations do not include them.
 	It can allow any overscroll and be set to any size.
 	-->
-	<div :class="twMerge(`
+	<div
+		:class="twMerge(`
 		container-scroll
 		overscroll-contain
 		overflow-scroll
@@ -87,11 +91,12 @@ All css variables are set here for maximum flexibility.
 		This is the container that is hooked up to the manager which sets it's height (using the var set in the upper most container).
 		It can set a min width to force it's parent to scroll.
 		-->
-		<div :class="twMerge( `
+		<div
+			:class="twMerge(`
 		container-keyboard-size
 		min-w-[1200px]
 		h-[var(--height)]
-	` )"
+	`)"
 			ref="keyboardEl"
 		>
 			<div
@@ -105,7 +110,7 @@ All css variables are set here for maximum flexibility.
 					(key.pressed || key.toggleOnPressed) && `
 					pressed
 				`,
-					...key.classes,
+					...key.classes
 				)"
 				:style="`
 				width:${key.width * keyW}px;
@@ -122,7 +127,8 @@ All css variables are set here for maximum flexibility.
 				@mouseleave="closeKey"
 				@keydown.space="toggleKeyState(key); $event.preventDefault(); $event.stopImmediatePropagation()"
 			>
-				<div :id="'key-'+key.id"
+				<div
+					:id="'key-'+key.id"
 					:class="twMerge(`
 						key
 						no-touch-action
@@ -176,7 +182,7 @@ All css variables are set here for maximum flexibility.
 							bg-accent-300
 							dark:bg-accent-900
 						`,
-						candidateKey && equalsKey(candidateKey.id,key.id, manager.keys) && canDrop !== true && `
+						candidateKey && equalsKey(candidateKey.id, key.id, manager.keys) && canDrop !== true && `
 							border-red-600
 							dark:border-red-800
 							bg-red-200
@@ -185,7 +191,8 @@ All css variables are set here for maximum flexibility.
 					)"
 					:title="key.label"
 				>
-					<div :class="twMerge(`
+					<div
+						:class="twMerge(`
 						label
 						px-1
 					`)"
@@ -195,7 +202,8 @@ All css variables are set here for maximum flexibility.
 						</div>
 					</div>
 					<!-- The padding needs to be on the shortcuts container and not the parent so that on hover we can still have the background with padding. -->
-					<div :class="twMerge(`
+					<div
+						:class="twMerge(`
 							shortcuts
 							truncate
 							flex flex-col
@@ -206,7 +214,7 @@ All css variables are set here for maximum flexibility.
 							pb-[1px]
 						`,
 
-						canOpen[key.id] && !isDragging && `
+							canOpen[key.id] && !isDragging && `
 							z-[2]
 							m-[-3px]
 							mt-[-3.5px]
@@ -220,7 +228,7 @@ All css variables are set here for maximum flexibility.
 							border-[1px]
 							border-neutral-300
 							dark:border-neutral-600
-						`,
+						`
 						)"
 						:data-contains-conflicting="keyShortcutMap[key.id]?.containsConflicting"
 					>
@@ -257,7 +265,7 @@ All css variables are set here for maximum flexibility.
 									dark:border-accent-300
 									bg-accent-200
 									dark:bg-accent-800
-								`,
+								`
 
 							)
 
@@ -266,14 +274,17 @@ All css variables are set here for maximum flexibility.
 							:data-is-pressable-chain="isPressableChain"
 							:title="getTitle(keyShortcutMap[key.id]?.pressableEntries, i)"
 							:shortcut-index="i"
-							v-for="{shortcut, isPressed, isPressable, isPressableChain }, i in keyShortcutMap[key.id]?.pressableEntries"
+							v-for="{ shortcut, isPressed, isPressable, isPressableChain }, i in keyShortcutMap[key.id]?.pressableEntries"
 							:key="manager.options.stringifier.stringify(shortcut, manager)"
 						>
 							<template v-if="!isPressableChain">
 								{{ shortcut?.command ?? "(None)" }}
 							</template>
 							<!-- <WDebug :value="{isPressable, isPressableChain}"/> -->
-							<WIcon v-else class="pointer-events-none">
+							<WIcon
+								v-else
+								class="pointer-events-none"
+							>
 								<i-fa-solid-link/>
 							</WIcon>
 						</div>
@@ -294,7 +305,8 @@ All css variables are set here for maximum flexibility.
 		:style="`left:${coords.x}px; top:${coords.y}px;`"
 	>
 		<div class="relative">
-			<div v-if="typeof canDrop === 'string' && grabbedShortcut"
+			<div
+				v-if="typeof canDrop === 'string' && grabbedShortcut"
 				class="
 					whitespace-pre-wrap
 					translate-y-[calc(-100%-4px)]
@@ -327,7 +339,10 @@ All css variables are set here for maximum flexibility.
 				<template v-if="!grabbedShortcut.isPressableChain">
 					{{ grabbedShortcut?.shortcut.command ?? "(None)" }}
 				</template>
-				<WIcon v-else class="pointer-events-none">
+				<WIcon
+					v-else
+					class="pointer-events-none"
+				>
 					<i-fa-solid-link/>
 				</WIcon>
 			</div>
@@ -343,7 +358,7 @@ import {
 	type createManagerEventListeners,
 	detach,
 	setManagerProp,
-	setShortcutProp,
+	setShortcutProp
 } from "@witchcraft/spellcraft"
 import {
 	generateKeyShortcutMap,
@@ -351,21 +366,21 @@ import {
 	safeSetManagerChain,
 	shortcutSwapChords,
 	virtualPress,
-	virtualRelease,
+	virtualRelease
 } from "@witchcraft/spellcraft/helpers"
 import type {
 	Key,
 	Manager,
-	ShortcutInfo,
+	ShortcutInfo
 } from "@witchcraft/spellcraft/types"
 import {
 	cloneChain,
-	equalsKey,
+	equalsKey
 } from "@witchcraft/spellcraft/utils"
 import { equalsKeys } from "@witchcraft/spellcraft/utils/equalsKeys"
 import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler"
 import { useScrollNearContainerEdges } from "@witchcraft/ui/composables/useScrollNearContainerEdges"
-import { computed,onBeforeUnmount,onMounted, type Ref, ref, shallowRef, toRefs } from "vue"
+import { computed, onBeforeUnmount, onMounted, type Ref, ref, shallowRef, toRefs } from "vue"
 
 import { usePointerCoords } from "#witchcraft-spellcraft/composables/usePointerCoords.js"
 import { useShortcutManagerKeysLayout } from "#witchcraft-spellcraft/composables/useShortcutManagerKeysLayout.js"
@@ -374,7 +389,7 @@ import IFaSolidLink from "~icons/fa-solid/link"
 import { clearVirtuallyPressed } from "../common/clearVirtuallyPressed.js"
 import { createDropChain } from "../common/createDropChain.js"
 import { transformShortcutAllowsChainRes } from "../common/transformShortcutAllowsChainRes.js"
-import { type Filters } from "../composables/useFilterableShortcutsList.js"
+import type { Filters } from "../composables/useFilterableShortcutsList.js"
 import { useFilterableShortcutsList } from "../composables/useFilterableShortcutsList.js"
 
 const props = defineProps<{
@@ -393,7 +408,7 @@ const filters = ref<Filters<boolean>>({
 	showPressable: true,
 	showPressableModOrChords: true,
 	showUnpressable: false,
-	showExactMatches: true,
+	showExactMatches: true
 })
 const shortcutsList = useFilterableShortcutsList(manager, chain, filters)
 const keyShortcutMap = computed(() => generateKeyShortcutMap(chain.value, shortcutsList.value, manager.value))
@@ -417,7 +432,7 @@ const openedKey = shallowRef<string | undefined>()
 const grabbedKey = shallowRef<{ key: Key, id: string } | undefined>()
 const grabbedShortcut = shallowRef<ShortcutInfo | undefined>()
 const candidateKey = shallowRef<{ key: Key, id: string } | undefined>()
-const isDragging = defineModel<boolean>("isDragging",{ default: false })
+const isDragging = defineModel<boolean>("isDragging", { default: false })
 const chainBeforeDrag = shallowRef<string[][]>([])
 
 const getKeyEl = (e: PointerEvent): HTMLElement | undefined => (e?.target as HTMLElement).closest(`.${keyClass}`) as HTMLElement | undefined
@@ -436,11 +451,11 @@ const getKeyByElIdProp = (el?: HTMLElement): { key: Key, id: string } | undefine
 
 const getShortcutByElIndexProp = (
 	el?: HTMLElement,
-	keyId?: string,
+	keyId?: string
 ): ShortcutInfo | undefined => {
 	if (!el || !keyId) return
 	let i: string | number | null = el.getAttribute("shortcut-index")
-	i = typeof i === "string" ? parseInt(i, 10) : i
+	i = typeof i === "string" ? Number.parseInt(i, 10) : i
 	return i !== null && i > -1 ? keyShortcutMap.value[keyId].pressableEntries[i] : undefined
 }
 
@@ -467,7 +482,7 @@ const canOpen = computed(() => {
 const newDragChain = computed(() => createDropChain(
 	manager.value,
 	chain.value,
-	candidateKey.value?.id,
+	candidateKey.value?.id
 	// grabbedShortcut.value?.isPressableChain ? chainBeforeDrag.value.length : undefined
 ))
 const getOldChainBase = () => {
@@ -543,7 +558,7 @@ const capture = true
 const {
 	coords,
 	setPointerCoords,
-	setInitialPointerOffset,
+	setInitialPointerOffset
 } = usePointerCoords()
 
 const scrollMargin = 20
@@ -552,11 +567,11 @@ const {
 	scrollEdges,
 	isScrolling,
 	scrollIndicator,
-	endScroll,
+	endScroll
 } = useScrollNearContainerEdges({
 	containerEl,
 	scrollMargin,
-	outerScrollMargin,
+	outerScrollMargin
 })
 
 function onDragStart(e: PointerEvent): void {
@@ -616,13 +631,13 @@ function onDragEnd(e: PointerEvent): void {
 			if (!grabbedShortcut.value.isPressableChain) {
 				const res = setShortcutProp(grabbedShortcut.value.shortcut, "chain", newDragChain.value, props.manager)
 				const transformedRes = transformShortcutAllowsChainRes(res, grabbedShortcut.value.shortcut.chain, newDragChain.value, props.manager) as string | boolean
-				if (typeof transformedRes === "string") {message = transformedRes}
+				if (typeof transformedRes === "string") { message = transformedRes }
 			} else {
 				const oldChain = getOldChainBase()
 				if (oldChain) {
 					const res = shortcutSwapChords(shortcuts.value, oldChain, newDragChain.value, props.manager)
 					const transformedRes = transformShortcutAllowsChainRes(res, oldChain, newDragChain.value, props.manager)
-					if (typeof transformedRes === "string") {message = transformedRes}
+					if (typeof transformedRes === "string") { message = transformedRes }
 				}
 			}
 
@@ -657,7 +672,6 @@ onBeforeUnmount(() => {
 	window.removeEventListener("pointermove", onDragMove)
 	window.removeEventListener("pointerup", onDragEnd)
 })
-
 </script>
 
 <!-- 	.iso-enter & { -->

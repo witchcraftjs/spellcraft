@@ -11,7 +11,7 @@ export function attach(
 	el: AttachTarget,
 	listeners: Record<EventTypes, AnyFunction>,
 	/** Add options to some listeners. An abort controller is added by default. You can use the `*` key to set a default for all. */
-	opts: Partial<Record<EventTypes | "*", AddEventListenerOptions>> = { wheel: { passive: true } },
+	opts: Partial<Record<EventTypes | "*", AddEventListenerOptions>> = { wheel: { passive: true } }
 ): AbortController {
 	const controller = new AbortController()
 	const defaultOpts = opts["*"] ?? {}
@@ -19,8 +19,8 @@ export function attach(
 		el.addEventListener(listenerName, listeners[listenerName], {
 			signal: controller.signal,
 			...defaultOpts,
-			...opts[listenerName],
-		},)
+			...opts[listenerName]
+		})
 	}
 	return controller
 }

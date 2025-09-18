@@ -2,7 +2,7 @@ import type { DeepPartial } from "@alanscodelog/utils"
 import { debounce } from "@alanscodelog/utils/debounce"
 import { isArray } from "@alanscodelog/utils/isArray"
 import { keys } from "@alanscodelog/utils/keys"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 import { setReadOnly } from "@alanscodelog/utils/setReadOnly"
 
 import { managerToStorableClone } from "../helpers/managerToStorableClone.js"
@@ -23,7 +23,7 @@ export class ShortcutManagerManager {
 	readonly managerNames: string[] = []
 
 	readonly managers: Readonly<Record<string, Manager>> = {}
-	
+
 	readonly activeManagerName: string = "default"
 
 	/** A debounced version of the save function. Is already bound to the instance. */
@@ -44,7 +44,7 @@ export class ShortcutManagerManager {
 	 */
 	createManager: (
 		raw: Partial<Omit<Manager, "options" | "hooks" | "listener" | "state">> & {
-			options: PickManager<"options", "enableShortcuts" | "enableListeners" | "updateStateOnAllEvents" >
+			options: PickManager<"options", "enableShortcuts" | "enableListeners" | "updateStateOnAllEvents">
 		},
 		isNew: boolean
 	) => Manager | Error
@@ -61,7 +61,7 @@ export class ShortcutManagerManager {
 		 *
 		 * If you return an error, `onError` will be called and `createManager` will be skipped.
 		 */
-		onParse?: (parsed: object) => void | undefined | Error
+		onParse?: (parsed: object) => undefined | Error
 		/**
 		 * Called when a manager is saved or exported. It's called with the cloned version of the manager that has been stripped of properties that should not be saved (see {@link managerToStorableClone}).
 		 *
@@ -91,7 +91,7 @@ export class ShortcutManagerManager {
 		hooks: ShortcutManagerManager["hooks"],
 		{
 			storageKeys = {} as any,
-			storage = localStorage,
+			storage = localStorage
 		}:
 		{
 			storageKeys?: Partial<ShortcutManagerManager["storageKeys"]>
@@ -179,7 +179,7 @@ export class ShortcutManagerManager {
 		if (index === -1) return
 		this.setManagerNames(this.managerNames.toSpliced(index, 1))
 	}
-	
+
 
 	protected storageSaveManager(name: string, clone: any): void {
 		this.storage.setItem(`${this.storageKeys.managerPrefix}${name}`, JSON.stringify(clone))
@@ -215,14 +215,14 @@ export class ShortcutManagerManager {
 		}
 		const r = this.createManager(
 			!raw && force ? { name } : this.parseJsonManager(raw!).unwrap(),
-			force,
+			force
 		)
 		if (r instanceof Error) return Err(r)
 		return Ok(r)
 	}
-	
+
 	parseJsonManager(
-		raw: string,
+		raw: string
 	): Result<any, Error> {
 		if (!raw) {
 			return Err(new Error(`Nothing to parse.`))
@@ -243,7 +243,7 @@ export class ShortcutManagerManager {
 	load(
 		manager: Manager,
 		{
-			doActivate = true,
+			doActivate = true
 		}: {
 			doActivate?: boolean
 		} = {}
@@ -327,7 +327,7 @@ export class ShortcutManagerManager {
 
 		return Ok(instance)
 	}
-	
+
 	exportManagers(names: string[]): Result<object, Error> {
 		const obj = { managers: [] as any[] }
 		for (const name of names) {
@@ -365,7 +365,7 @@ export class ShortcutManagerManager {
 		}
 		return Ok()
 	}
-	
+
 	/** Clears all managers and resets the state. `init` must be called again if you want to use the class instance again. */
 	clearAll(): void {
 		// todo, check we can init again after this

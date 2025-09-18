@@ -1,4 +1,4 @@
-import { computed, type ComputedRef,reactive } from "vue"
+import { computed, type ComputedRef, reactive } from "vue"
 /**
  * Returns a set of coordinates that includes an initial offset.
  *
@@ -13,7 +13,7 @@ import { computed, type ComputedRef,reactive } from "vue"
  * This can then be used to position an element and it won't jump, it will stay grabbed from where the user initially grabbed it.
  */
 
- 
+
 export const usePointerCoords = (): {
 	pointerCoords: { x: number, y: number }
 	coords: ComputedRef<{ x: number, y: number }>

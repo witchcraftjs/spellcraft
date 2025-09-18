@@ -1,9 +1,9 @@
 import { crop } from "@alanscodelog/utils/crop"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
-import { type Key, type KeysSetEntries,SHORTCUT_ERROR } from "../types/index.js"
+import { type Key, type KeysSetEntries, SHORTCUT_ERROR } from "../types/index.js"
 
 
 export function areValidVariants(
@@ -16,12 +16,12 @@ export function areValidVariants(
 
 	const keysVariants = key.variants
 		? key.variants
-			.flatMap(id => {
-				const res = getKeyFromIdOrVariant(id, keys)
-				if (res.isOk) return res.value
-				// it's fine for a key's variants to not exist / have been added yet
-				return []
-			})
+				.flatMap(id => {
+					const res = getKeyFromIdOrVariant(id, keys)
+					if (res.isOk) return res.value
+					// it's fine for a key's variants to not exist / have been added yet
+					return []
+				})
 		: []
 
 	const variants = [...existingVariants, ...keysVariants]
@@ -36,7 +36,7 @@ export function areValidVariants(
 			`, {
 				variants,
 				key,
-				otherKey: k,
+				otherKey: k
 
 			}))
 		}
@@ -51,7 +51,7 @@ export function areValidVariants(
 			`, {
 				variants,
 				key,
-				otherKey: k,
+				otherKey: k
 			}))
 		}
 	}

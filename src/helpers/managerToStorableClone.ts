@@ -1,7 +1,7 @@
 import type { DeepPartial } from "@alanscodelog/utils/types"
 import { walk } from "@alanscodelog/utils/walk"
 
-import { type Manager } from "../types/index.js"
+import type { Manager } from "../types/index.js"
 
 /**
  * Strips the manager of properties that should not be saved such as `hooks`, `listener`, `state`, and the following function options:

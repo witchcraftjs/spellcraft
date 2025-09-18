@@ -4,38 +4,35 @@ import { addKey } from "./addKey.js"
 
 import { defaultStringifier } from "../defaults/Stringifier.js"
 import { calculateLayoutSize } from "../helpers/calculateLayoutSize.js"
-import { type Key, type Keys, type MultipleErrors, type PickManager,type SHORTCUT_ERROR } from "../types/index.js"
+import type { Key, Keys, MultipleErrors, PickManager, SHORTCUT_ERROR } from "../types/index.js"
 
 
 export function createKeys<
 	TKey extends
-		Key =
-		Key,
+	Key = Key,
 	TKeys extends
-		(TKey)[] =
-		(TKey)[],
+	(TKey)[] = (TKey)[],
 	TEntries extends
-		Record<TKeys[number]["id"], Key> =
-		Record<TKeys[number]["id"], Key>,
+	Record<TKeys[number]["id"], Key> = Record<TKeys[number]["id"], Key>,
 	// causing issues
 	// RecordFromArray<TKeys, "id", Key> =
 	// RecordFromArray<TKeys, "id", Key>,
-TCheck extends boolean | "only" = true,
+	TCheck extends boolean | "only" = true
 >(
 	entries: TKeys,
 	manager: PickManager<"options", "stringifier"> = {
-		options: { stringifier: defaultStringifier },
+		options: { stringifier: defaultStringifier }
 	},
 	rawKeys: Partial<Pick<Keys, "autoManageLayout" | "layout">> = {} as any,
 	{
-		check = true as TCheck,
+		check = true as TCheck
 	}: { check?: TCheck } = {}
 ): Result<
 	TCheck extends "only" ? true : Keys<TEntries>,
-		MultipleErrors<
+	MultipleErrors<
 			typeof SHORTCUT_ERROR.DUPLICATE_KEY
-		>
-	> {
+	>
+> {
 	const keysList = entries
 	const keys: Keys = {
 		type: "keys",
@@ -47,7 +44,7 @@ TCheck extends boolean | "only" = true,
 		nativeToggleKeys: [],
 		nativeModifierKeys: [],
 		variants: {},
-		toggles: {},
+		toggles: {}
 	}
 	// clone anything addKey might touch, see below
 	const managerClone = { ...manager, keys }
@@ -62,7 +59,7 @@ TCheck extends boolean | "only" = true,
 	}
 	if (check === "only") return Ok(true) satisfies Result<true, never> as any
 
-	
+
 	if (rawKeys?.autoManageLayout) {
 		keys.autoManageLayout = true
 		keys.layout = calculateLayoutSize(keys)

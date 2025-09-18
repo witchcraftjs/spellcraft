@@ -1,5 +1,5 @@
 import { castType } from "@alanscodelog/utils/castType"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { doesShortcutConflict } from "../helpers/doesShortcutConflict.js"
 import { equalsShortcut } from "../helpers/equalsShortcut.js"
@@ -7,7 +7,7 @@ import { isValidShortcut } from "../helpers/isValidShortcut.js"
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
 import { errorTextRemove } from "../internal/errorTextRemove.js"
-import { type CanHookErrors, type CanHookShortcutsProps, type Manager,type MultipleErrors, type Shortcut, SHORTCUT_ERROR, type Shortcuts, type ShortcutsSetEntries } from "../types/index.js"
+import { type CanHookErrors, type CanHookShortcutsProps, type Manager, type MultipleErrors, type Shortcut, SHORTCUT_ERROR, type Shortcuts, type ShortcutsSetEntries } from "../types/index.js"
 
 
 const canHookable: CanHookShortcutsProps[] = ["entries@add", "entries@remove"]
@@ -15,25 +15,24 @@ const canHookable: CanHookShortcutsProps[] = ["entries@add", "entries@remove"]
  * Sets a settable {@link Shortcuts} property.
  */
 export function setShortcutsProp<
-	TEntries extends ShortcutsSetEntries ,
+	TEntries extends ShortcutsSetEntries,
 	TProp extends keyof ShortcutsSetEntries,
-	TEntry extends TEntries[TProp] ,
+	TEntry extends TEntries[TProp],
 	THooks extends Manager["hooks"],
-	TCheck extends boolean | "only" = true,
+	TCheck extends boolean | "only" = true
 >(
 	prop: TProp,
 	val: TEntry["val"],
 	/** Shortcuts is mutated if check is not "only". */
 	manager: TEntry["manager"] & { hooks?: THooks },
 	{
-		check = true as TCheck,
+		check = true as TCheck
 	}: { check?: TCheck } = {}
 ): Result<
-		TCheck extends "only" ? true : Shortcut,
-		MultipleErrors<TEntry["error"]>
-		| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetShortcutsProp">
-	>
-{
+	TCheck extends "only" ? true : Shortcut,
+	MultipleErrors<TEntry["error"]>
+	| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetShortcutsProp">
+> {
 	const s = manager.options.stringifier
 	const shortcuts = manager.shortcuts
 	if (check) {
@@ -83,7 +82,7 @@ export function setShortcutsProp<
 				}
 				break
 			}
-			
+
 			default: break
 		}
 		if (manager?.hooks && "canSetShortcutsProp" in manager.hooks && canHookable.includes(prop as any)) {
@@ -93,7 +92,7 @@ export function setShortcutsProp<
 			}
 		}
 	}
-	
+
 	if (check === "only") {
 		return Ok(true) satisfies Result<true, never> as any
 	}
@@ -119,7 +118,7 @@ export function setShortcutsProp<
 	}
 
 	manager.hooks?.onSetShortcutsProp?.(shortcuts, prop as any, val as any)
-	
+
 	return Ok(shortcuts) satisfies Result<Shortcuts, never> as any
 }
 

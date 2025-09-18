@@ -17,7 +17,7 @@ export function equalsKey(
 	{ allowVariants = true }: { allowVariants?: boolean } = {}
 ): boolean {
 	const idsEqual = keyIdA === keyIdB
-	
+
 	const keyA = getKeyFromIdOrVariant(keyIdA, keys).unwrap()[0]
 	const keyB = getKeyFromIdOrVariant(keyIdB, keys).unwrap()[0]
 

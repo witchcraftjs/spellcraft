@@ -23,15 +23,15 @@ export function doesShortcutConflict<TShortcut extends Shortcut>(
 	shortcutA: TShortcut,
 	shortcutB: Shortcut,
 	manager: Pick<Manager, "keys" | "commands" | "shortcuts"> & { context?: Manager["context"] }
-	& PickManager<"options", "evaluateCondition" | "conditionEquals">
+		& PickManager<"options", "evaluateCondition" | "conditionEquals">
 ): boolean {
 	const context = manager.context
 	if (!context && manager.shortcuts.useContextInConflictCheck) {
-		throw Error("Manager must have a context if `useContextInConflictCheck` is true.")
+		throw new Error("Manager must have a context if `useContextInConflictCheck` is true.")
 	}
 	const {
 		ignoreChainConflicts,
-		ignoreModifierConflicts,
+		ignoreModifierConflicts
 	} = manager.shortcuts
 	if (ignoreChainConflicts && ignoreModifierConflicts) return false
 
@@ -54,7 +54,7 @@ export function doesShortcutConflict<TShortcut extends Shortcut>(
 	if (shortcutA.chain.length === 0 || shortcutB.chain.length === 0) {
 		return ignoreChainConflicts === true && ignoreModifierConflicts === true
 	}
-		
+
 	const lastSharedIndex = Math.max(0, Math.min(shortcutA.chain.length - 1, shortcutB.chain.length - 1))
 	const lastIsModOnly = shortcutA.chain[lastSharedIndex].find(id => !getKeyFromIdOrVariant(id, keys).unwrap()[0].isModifier) === undefined
 	const otherLastIsModOnly = shortcutB.chain[lastSharedIndex].find(id => !getKeyFromIdOrVariant(id, keys).unwrap()[0].isModifier) === undefined
@@ -66,7 +66,7 @@ export function doesShortcutConflict<TShortcut extends Shortcut>(
 	const lastSharedChordConflicts = (lastIsModOnly || otherLastIsModOnly) && sharedModifiers.length > 0
 	const conflictsWithChain = equalsKeys(shortcutA.chain, shortcutB.chain, keys, lastSharedIndex + 1, { allowVariants: true })
 	return (
-		(!ignoreChainConflicts && conflictsWithChain) ||
-		(!ignoreModifierConflicts && lastSharedChordConflicts)
+		(!ignoreChainConflicts && conflictsWithChain)
+		|| (!ignoreModifierConflicts && lastSharedChordConflicts)
 	)
 }

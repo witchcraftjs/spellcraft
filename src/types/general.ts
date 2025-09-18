@@ -1,7 +1,7 @@
 import type { Command } from "./commands.js"
 import type { Condition } from "./condition.js"
-import type { Manager } from "./index.js"
 import type { Key } from "./keys.js"
+import type { Manager } from "./manager.js"
 import type { Shortcut } from "./shortcuts.js"
 
 
@@ -88,10 +88,10 @@ export type IStringifier = {
 export type PickManager<
 	TType extends "options" | "state" | "hooks",
 	TKeys extends keyof TManager[TType],
-	TManager extends Manager = Manager,
-> =
-	Record<TType, Pick<TManager[TType], TKeys>>
-	
+	TManager extends Manager = Manager
+>
+	= Record<TType, Pick<TManager[TType], TKeys>>
+
 export type PickManagerHooks<T extends Manager["hooks"]> = {
 	hooks?: T
 }
@@ -108,9 +108,9 @@ export type ShortcutInfo = {
 export type KeyInfo = {
 	/** All shortcuts that contain this key and are either pressable, pressable chains, or pressed. */
 	pressableEntries: ShortcutInfo[]
-	/** All shortcuts that contain this key and are not pressable but have unpressed modifiers (see {@link ShortcutInfo.hasUnpressedModifiers}).*/
+	/** All shortcuts that contain this key and are not pressable but have unpressed modifiers (see {@link ShortcutInfo.hasUnpressedModifiers}). */
 	modifierEntries: ShortcutInfo[]
-	/** Depending on the shortcut's list passed, or how conditions and contexts are implemented, it's possible for their to be conflicting shortcuts in certain contexts.*/
+	/** Depending on the shortcut's list passed, or how conditions and contexts are implemented, it's possible for their to be conflicting shortcuts in certain contexts. */
 	containsConflicting: boolean
 	/** Indicates there are shortcuts in the modifierEntries, i.e. there are shortcuts that have unpressedModifiers (see {@link ShortcutInfo.hasUnpressedModifiers}). You will usually want to have some visual hint the modifier key can be pressed to show more shortcuts. */
 	isModifierHint: boolean

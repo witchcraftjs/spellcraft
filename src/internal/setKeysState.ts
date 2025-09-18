@@ -1,4 +1,4 @@
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { safeSetEmulatedToggleState } from "./safeSetEmulatedToggleState.js"
 
@@ -9,25 +9,24 @@ import { SHORTCUT_ERROR } from "../types/index.js"
 
 
 export function setKeysState<
-	THooks extends Manager["hooks"],
+	THooks extends Manager["hooks"]
 >(
 	keysList: string[],
 	manager: KeySetEntries["pressed" | "toggleOnPressed" | "toggleOffPressed"]["manager"] & { hooks?: THooks },
 	state: boolean,
 	{
-		ignoreToggleType = false,
+		ignoreToggleType = false
 	}: {
 		ignoreToggleType?: boolean
 	} = {}
 ): Result<
-		true,
-		| MultipleErrors<
-			| typeof SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED
-			| typeof SHORTCUT_ERROR.INCORRECT_TOGGLE_STATE
-		>
-		| CanHookErrors<THooks extends never ? never : THooks, "canSetKeyProp">
+	true,
+	| MultipleErrors<
+		| typeof SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED
+		| typeof SHORTCUT_ERROR.INCORRECT_TOGGLE_STATE
 	>
-{
+	| CanHookErrors<THooks extends never ? never : THooks, "canSetKeyProp">
+> {
 	const s = manager.options.stringifier
 	for (const id of keysList) {
 		const key = manager.keys.entries[id]
@@ -54,7 +53,7 @@ export function setKeysState<
 						{ key }
 					))
 				}
-				// eslint-disable-next-line @typescript-eslint/no-shadow
+
 				let res
 				if (!key.toggleOnPressed && !key.toggleOffPressed) {
 					res = safeSetEmulatedToggleState(key, true, manager)

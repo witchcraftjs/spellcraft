@@ -1,14 +1,14 @@
 import { browserSaveFile } from "@alanscodelog/utils/browserSaveFile"
 import { keys as objectKeys } from "@alanscodelog/utils/keys"
-import { Err,type Result } from "@alanscodelog/utils/Result"
+import { Err, type Result } from "@alanscodelog/utils/Result"
 import { setReadOnly } from "@alanscodelog/utils/setReadOnly"
-import {
-	type Command,
-	type CommandExecute,
-	type Context,
-	type Manager,
+import type {
+	Command,
+	CommandExecute,
+	Context,
+	Manager
 } from "@witchcraft/spellcraft"
-import { createContext , ShortcutManagerManager } from "@witchcraft/spellcraft"
+import { createContext, ShortcutManagerManager } from "@witchcraft/spellcraft"
 import { computed, ref, watch } from "vue"
 
 import type { ContextInfo } from "#witchcraft-spellcraft/types.js"
@@ -19,11 +19,11 @@ import { createDefaultManager } from "../common/createDefaultManager.js"
 
 const VERSION = "0.0.1"
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
 export function useMultipleManagers(
 	notifyIfError: <T extends Result<any, Error>>(res: T) => T,
 	commandExec: CommandExecute
-	
+
 ) {
 	const managerNames = ref<string[]>([])
 	const managers = ref<Record<string, Manager>>({})
@@ -36,7 +36,7 @@ export function useMultipleManagers(
 		{
 			onError: notifyIfError,
 			onParse: (parsed: any) => {
-				if (!("__version" in parsed) || !(parsed.__version as string).match(/^([0-9]+)\.([0-9]+)\.([0-9]+)$/)) {
+				if (!("__version" in parsed) || !(parsed.__version as string).match(/^(\d+)\.(\d+)\.(\d+)$/)) {
 					// we should not actually return here as we can still import the manager
 					notifyIfError(Err(`Parsed manager "${parsed.name}"'s __version property is not defined or does not match the version format. The manager will be imported anyways, but it might not function correctly.`))
 					;(parsed as any).__version = VERSION
@@ -71,7 +71,7 @@ export function useMultipleManagers(
 		}
 	)
 	managerManager.init()
-	
+
 	const debouncedSave = managerManager.debouncedSave
 	const duplicateManager = managerManager.duplicateManager.bind(managerManager)
 	const deleteManager = managerManager.deleteManager.bind(managerManager)
@@ -85,9 +85,9 @@ export function useMultipleManagers(
 
 	const context = ref<ContextInfo>({
 		count: {},
-		isActive: {},
+		isActive: {}
 	})
-	
+
 	const activeManager = computed<Manager>(() => {
 		const m = managers.value[activeManagerName.value]!
 		const managerOverlay: Manager = {
@@ -114,8 +114,8 @@ export function useMultipleManagers(
 				onSetCommandProp(...args) {
 					m.hooks?.onSetCommandProp?.(...args)
 					debouncedSave(activeManagerName.value)
-				},
-			},
+				}
+			}
 		}
 		return managerOverlay
 	})
@@ -123,14 +123,14 @@ export function useMultipleManagers(
 		addContext,
 		removeContext,
 		activateContext,
-		deactivateContext,
+		deactivateContext
 	} = useShortcutManagerContextCount(activeManager, context)
-	
+
 	watch(() => activeManager.value.context.value, () => {
 		conditionParser.setContext(activeManager.value.context.value)
 	})
-	
-	
+
+
 	return {
 		duplicateManager,
 		managers,
@@ -149,7 +149,7 @@ export function useMultipleManagers(
 		addContext,
 		removeContext,
 		activateContext,
-		deactivateContext,
+		deactivateContext
 	}
 }
 

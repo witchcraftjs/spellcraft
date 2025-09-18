@@ -4,7 +4,7 @@ import type { RawKey } from "../types/keys.js"
 
 const start = 0
 const mediaKey = { height: 0.5, width: 4 / 3 }
-const setY = <T extends Record<"id", string>>(yVal: number) => (val: T):(T & { y: number }) => {
+const setY = <T extends Record<"id", string>>(yVal: number) => (val: T): (T & { y: number }) => {
 	(val as any).y = yVal
 	return val as any
 }
@@ -26,20 +26,18 @@ const setY = <T extends Record<"id", string>>(yVal: number) => (val: T):(T & { y
  *
  * This also adds the following classes to some keys: `center-label` for media and arrow keys, and `iso-enter` for the iso enter which requires a different approach to styling (see the demo, it's painful).
  */
- 
-export function createLayout
-<
+
+export function createLayout<
 	TNumpad extends boolean = true,
 	TMediaKeys extends boolean = true,
 	TFn extends boolean = true,
 	TNavigation extends boolean = true,
 	TArrowKeys extends boolean = true,
-	TNames extends string =
-"Escape"
-| (
+	TNames extends string = "Escape"
+		| (
 	TFn extends true
-	? "F1" | "F2" | "F3" | "F4" | "F5" | "F6" | "F7" | "F8" | "F9" | "F10" | "F11" | "F12"
-	: never
+		? "F1" | "F2" | "F3" | "F4" | "F5" | "F6" | "F7" | "F8" | "F9" | "F10" | "F11" | "F12"
+		: never
 )
 | "Backquote" | "Digit1" | "Digit2" | "Digit3" | "Digit4" | "Digit5" | "Digit6" | "Digit7" | "Digit8" | "Digit9" | "Digit0" | "Minus" | "Equal" | "Backspace"
 | "Tab" | "KeyQ" | "KeyW" | "KeyE" | "KeyR" | "KeyT" | "KeyY" | "KeyU" | "KeyI" | "KeyO" | "KeyP" | "BracketLeft" | "BracketRight" | "Backslash"
@@ -53,28 +51,28 @@ export function createLayout
 
 | (
 	TNavigation extends true
-	? "Insert" | "Home" | "PageUp"
-	: never
+		? "Insert" | "Home" | "PageUp"
+		: never
 )
 | (
 	TArrowKeys extends true
-	? "ArrowUp" | "ArrowLeft" | "ArrowDown" | "ArrowRight"
-	: never
+		? "ArrowUp" | "ArrowLeft" | "ArrowDown" | "ArrowRight"
+		: never
 )
 
 | (
 	TMediaKeys extends true
-	? "AudioVolumeMute" | "AudioVolumeDown" | "AudioVolumeUp" | "MediaTrackPrevious" | "MediaTrackPause" | "MediaTrackNext"
-	: never
+		? "AudioVolumeMute" | "AudioVolumeDown" | "AudioVolumeUp" | "MediaTrackPrevious" | "MediaTrackPause" | "MediaTrackNext"
+		: never
 )
 | (
 	TNumpad extends true
-	? "NumLock" | "NumpadDivide" | "NumpadMultiply" | "NumpadSubtract"
-	| "Numpad7" | "Numpad8" | "Numpad9" | "NumpadAdd"
-	| "Numpad4" | "Numpad5" | "Numpad6"
-	| "Numpad1" | "Numpad2" | "Numpad3" | "NumpadEnter"
-	| "Numpad0" | "NumpadDecimal"
-	: never
+		? ("NumLock" | "NumpadDivide" | "NumpadMultiply" | "NumpadSubtract"
+			| "Numpad7" | "Numpad8" | "Numpad9" | "NumpadAdd"
+			| "Numpad4" | "Numpad5" | "Numpad6"
+			| "Numpad1" | "Numpad2" | "Numpad3" | "NumpadEnter"
+			| "Numpad0" | "NumpadDecimal")
+		: never
 )
 >(
 	type: "ansi" | "iso" | "" = "ansi",
@@ -83,7 +81,7 @@ export function createLayout
 		mediaKeys = true as any,
 		fn = true as any,
 		navigation = true as any,
-		arrowKeys = true as any,
+		arrowKeys = true as any
 	}:
 	Partial<{
 		numpad: TNumpad
@@ -98,21 +96,21 @@ export function createLayout
 			{ id: "Escape" as const, label: "Esc" },
 			...(fn
 				? [
-					{ id: "F1" as const, x: 2 },
-					{ id: "F2" as const },
-					{ id: "F3" as const },
-					{ id: "F4" as const },
-					{ id: "F5" as const, x: 6.5 },
-					{ id: "F6" as const },
-					{ id: "F7" as const },
-					{ id: "F8" as const },
-					{ id: "F9" as const, x: 11 },
-					{ id: "F10" as const },
-					{ id: "F11" as const },
-					{ id: "F12" as const },
-				] as const
+						{ id: "F1" as const, x: 2 },
+						{ id: "F2" as const },
+						{ id: "F3" as const },
+						{ id: "F4" as const },
+						{ id: "F5" as const, x: 6.5 },
+						{ id: "F6" as const },
+						{ id: "F7" as const },
+						{ id: "F8" as const },
+						{ id: "F9" as const, x: 11 },
+						{ id: "F10" as const },
+						{ id: "F11" as const },
+						{ id: "F12" as const }
+					] as const
 				: []
-			),
+			)
 		]).map(setY(start + 0)),
 		...calculateAndSetPositionAndSize([
 			{ id: "Backquote" as const, label: "`" },
@@ -128,7 +126,7 @@ export function createLayout
 			{ id: "Digit0" as const, label: "0" },
 			{ id: "Minus" as const, label: "-" },
 			{ id: "Equal" as const, label: "=" },
-			{ id: "Backspace" as const, width: 2 },
+			{ id: "Backspace" as const, width: 2 }
 		] as const).map(setY(start + 2)),
 		...calculateAndSetPositionAndSize([
 			{ id: "Tab" as const, width: 1.5 },
@@ -145,10 +143,10 @@ export function createLayout
 			{ id: "BracketLeft" as const, label: "[" },
 			{ id: "BracketRight" as const, label: "]" },
 			type === "ansi"
-			? { id: "Backslash" as const, label: "\\", width: 1.5 }
-			: type === "iso"
-			? { id: "Enter" as const, width: 1.5, height: 2, classes: ["iso-enter"]}
-			: {} as never,
+				? { id: "Backslash" as const, label: "\\", width: 1.5 }
+				: type === "iso"
+					? { id: "Enter" as const, width: 1.5, height: 2, classes: ["iso-enter"] }
+					: {} as never
 		] as const).map(setY(start + 3)),
 		...calculateAndSetPositionAndSize([
 			{ id: "CapsLock" as const, width: 1.75, isToggle: "native" as const },
@@ -164,22 +162,22 @@ export function createLayout
 			{ id: "Semicolon" as const, label: ";" },
 			{ id: "Quote" as const, label: "'" },
 			type === "ansi"
-			? { id: "Enter" as const, width: 2.25 }
-			: type === "iso"
-			? { id: "Backslash" as const, label: "#", width: 1 }
-			: {} as never,
+				? { id: "Enter" as const, width: 2.25 }
+				: type === "iso"
+					? { id: "Backslash" as const, label: "#", width: 1 }
+					: {} as never
 		] as const).map(setY(start + 4)),
 		...calculateAndSetPositionAndSize([
 			...(type === "ansi"
-			? [
-				{ id: "VirtualShiftLeft" as const, isModifier: "native" as const, label: "Shift", variants: ["ShiftLeft", "ShiftRight", "Shift"], width: 2.25 },
-			]
-			: type === "iso"
-			? [
-				{ id: "VirtualShiftLeft" as const, isModifier: "native" as const, label: "Shift", variants: ["ShiftLeft", "ShiftRight", "Shift"], width: 1.25 },
-				{ id: "IntlBackslash" as const, label: "\\", width: 1 },
-			]
-			: []),
+				? [
+						{ id: "VirtualShiftLeft" as const, isModifier: "native" as const, label: "Shift", variants: ["ShiftLeft", "ShiftRight", "Shift"], width: 2.25 }
+					]
+				: type === "iso"
+					? [
+							{ id: "VirtualShiftLeft" as const, isModifier: "native" as const, label: "Shift", variants: ["ShiftLeft", "ShiftRight", "Shift"], width: 1.25 },
+							{ id: "IntlBackslash" as const, label: "\\", width: 1 }
+						]
+					: []),
 			{ id: "KeyZ" as const, label: "z" },
 			{ id: "KeyX" as const, label: "x" },
 			{ id: "KeyC" as const, label: "c" },
@@ -195,8 +193,8 @@ export function createLayout
 				isModifier: "native" as const,
 				label: "Shift",
 				variants: ["ShiftLeft", "ShiftRight", "Shift"],
-				width: 2.75,
-			},
+				width: 2.75
+			}
 		] as const).map(setY(start + 5)),
 		...calculateAndSetPositionAndSize([
 			{
@@ -204,21 +202,21 @@ export function createLayout
 				isModifier: "native" as const,
 				label: "Ctrl",
 				variants: ["ControlLeft", "ControlRight", "Control", "Ctrl"],
-				width: 1.25,
+				width: 1.25
 			},
 			{
 				id: "VirtualMetaLeft" as const,
 				isModifier: "native" as const,
 				label: "Meta",
 				variants: ["MetaLeft", "MetaRight", "Meta"],
-				width: 1.25,
+				width: 1.25
 			},
 			{
 				id: "VirtualAltLeft" as const,
 				isModifier: "native" as const,
 				label: "Alt",
 				variants: ["AltLeft", "AltRight", "Alt"],
-				width: 1.25,
+				width: 1.25
 			},
 			{ id: "Space" as const, label: "", width: 6.25 },
 			{
@@ -226,14 +224,14 @@ export function createLayout
 				isModifier: "native" as const,
 				label: "Alt",
 				variants: ["AltLeft", "AltRight", "Alt"],
-				width: 1.25,
+				width: 1.25
 			},
 			{
 				id: "VirtualMetaRight" as const,
 				isModifier: "native" as const,
 				label: "Meta",
 				variants: ["MetaLeft", "MetaRight", "Meta"],
-				width: 1.25,
+				width: 1.25
 			},
 			{ id: "ContextMenu" as const, label: "Menu", width: 1.25 },
 			{
@@ -241,90 +239,90 @@ export function createLayout
 				isModifier: "native" as const,
 				label: "Ctrl",
 				variants: ["ControlLeft", "ControlRight", "Control", "Ctrl"],
-				width: 1.25,
-			},
+				width: 1.25
+			}
 		] as const).map(setY(start + 6)),
 		...calculateAndSetPositionAndSize([
 			{ id: "PrintScreen" as const, label: "PrtScn", x: 15.5 },
 			{ id: "ScrollLock" as const, label: "Scroll\nLock", isToggle: "native" as const },
-			{ id: "Pause" as const, label: "Pause\nBreak" },
+			{ id: "Pause" as const, label: "Pause\nBreak" }
 		] as const).map(setY(start)),
 		...(navigation
 			? [
-				...calculateAndSetPositionAndSize([
-					{ id: "Insert" as const, x: 15.5 },
-					{ id: "Home" as const },
-					{ id: "PageUp" as const, label: "Pg\nUp" },
-				] as const).map(setY(start + 2)),
-				...calculateAndSetPositionAndSize([
-					{ id: "Delete" as const, x: 15.5 },
-					{ id: "End" as const },
-					{ id: "PageDown" as const, label: "Pg\nDown" },
-				] as const).map(setY(start + 3)),
-			]
+					...calculateAndSetPositionAndSize([
+						{ id: "Insert" as const, x: 15.5 },
+						{ id: "Home" as const },
+						{ id: "PageUp" as const, label: "Pg\nUp" }
+					] as const).map(setY(start + 2)),
+					...calculateAndSetPositionAndSize([
+						{ id: "Delete" as const, x: 15.5 },
+						{ id: "End" as const },
+						{ id: "PageDown" as const, label: "Pg\nDown" }
+					] as const).map(setY(start + 3))
+				]
 			: []
 		),
 		...(arrowKeys
 			? [
-				...calculateAndSetPositionAndSize([
-					{ id: "ArrowUp" as const, label: "▲", x: 16.5, y: start + 5, classes: ["center-label"]},
-				]),
-				...calculateAndSetPositionAndSize([
-					{ id: "ArrowLeft" as const, label: "◄", x: 15.5, classes: ["center-label"]},
-					{ id: "ArrowDown" as const, label: "▼", classes: ["center-label"]},
-					{ id: "ArrowRight" as const, label: "►", classes: ["center-label"]},
-				] as const).map(setY(start + 6)),
-			]
+					...calculateAndSetPositionAndSize([
+						{ id: "ArrowUp" as const, label: "▲", x: 16.5, y: start + 5, classes: ["center-label"] }
+					]),
+					...calculateAndSetPositionAndSize([
+						{ id: "ArrowLeft" as const, label: "◄", x: 15.5, classes: ["center-label"] },
+						{ id: "ArrowDown" as const, label: "▼", classes: ["center-label"] },
+						{ id: "ArrowRight" as const, label: "►", classes: ["center-label"] }
+					] as const).map(setY(start + 6))
+				]
 			: []
 		),
 		...(
 			mediaKeys
-			? [
-				...calculateAndSetPositionAndSize([
-					{ id: "AudioVolumeMute" as const, label: "🔇", x: 19, ...mediaKey, classes: ["center-label"]},
-					{ id: "AudioVolumeDown" as const, label: "🔉", ...mediaKey, classes: ["center-label"]},
-					{ id: "AudioVolumeUp" as const, label: "🔊", ...mediaKey, classes: ["center-label"]},
-				]).map(setY(start)),
-				...calculateAndSetPositionAndSize([
-					{ id: "MediaTrackPrevious" as const, label: "⏮️", x: 19, ...mediaKey, classes: ["center-label"]},
-					{ id: "MediaTrackPause" as const, label: "⏯️", ...mediaKey, classes: ["center-label"]},
-					{ id: "MediaTrackNext" as const, label: "⏭️", ...mediaKey, classes: ["center-label"]},
-				]).map(setY(start + 0.5)),
-			]
-			: []
+				? [
+						...calculateAndSetPositionAndSize([
+							{ id: "AudioVolumeMute" as const, label: "🔇", x: 19, ...mediaKey, classes: ["center-label"] },
+							{ id: "AudioVolumeDown" as const, label: "🔉", ...mediaKey, classes: ["center-label"] },
+							{ id: "AudioVolumeUp" as const, label: "🔊", ...mediaKey, classes: ["center-label"] }
+						]).map(setY(start)),
+						...calculateAndSetPositionAndSize([
+							{ id: "MediaTrackPrevious" as const, label: "⏮️", x: 19, ...mediaKey, classes: ["center-label"] },
+							{ id: "MediaTrackPause" as const, label: "⏯️", ...mediaKey, classes: ["center-label"] },
+							{ id: "MediaTrackNext" as const, label: "⏭️", ...mediaKey, classes: ["center-label"] }
+						]).map(setY(start + 0.5))
+					]
+				: []
 		),
 		...(numpad
 			? [
-				...calculateAndSetPositionAndSize([
-					{ id: "NumLock" as const, label: "Num\nLock", x: 19, isToggle: "native" as const },
-					{ id: "NumpadDivide" as const, label: "/" },
-					{ id: "NumpadMultiply" as const, label: "*" },
-					{ id: "NumpadSubtract" as const, label: "-" },
-				]).map(setY(start + 2)),
-				...calculateAndSetPositionAndSize([
-					{ id: "Numpad7" as const, label: "7", x: 19 },
-					{ id: "Numpad8" as const, label: "8" },
-					{ id: "Numpad9" as const, label: "9" },
-					{ id: "NumpadAdd" as const, label: "+", height: 2 },
-				]).map(setY(start + 3)),
-				...calculateAndSetPositionAndSize([
-					{ id: "Numpad4" as const, label: "4", x: 19 },
-					{ id: "Numpad5" as const, label: "5" },
-					{ id: "Numpad6" as const, label: "6" },
-				]).map(setY(start + 4)),
-				...calculateAndSetPositionAndSize([
-					{ id: "Numpad1" as const, label: "1", x: 19 },
-					{ id: "Numpad2" as const, label: "2" },
-					{ id: "Numpad3" as const, label: "3" },
-					{ id: "NumpadEnter" as const, label: "+", height: 2 },
-				]).map(setY(start + 5)),
-				...calculateAndSetPositionAndSize([
-					{ id: "Numpad0" as const, label: "0", x: 19, width: 2 },
-					{ id: "NumpadDecimal" as const, label: "." },
-				]).map(setY(start + 6)),
-			]
+					...calculateAndSetPositionAndSize([
+						{ id: "NumLock" as const, label: "Num\nLock", x: 19, isToggle: "native" as const },
+						{ id: "NumpadDivide" as const, label: "/" },
+						{ id: "NumpadMultiply" as const, label: "*" },
+						{ id: "NumpadSubtract" as const, label: "-" }
+					]).map(setY(start + 2)),
+					...calculateAndSetPositionAndSize([
+						{ id: "Numpad7" as const, label: "7", x: 19 },
+						{ id: "Numpad8" as const, label: "8" },
+						{ id: "Numpad9" as const, label: "9" },
+						{ id: "NumpadAdd" as const, label: "+", height: 2 }
+					]).map(setY(start + 3)),
+					...calculateAndSetPositionAndSize([
+						{ id: "Numpad4" as const, label: "4", x: 19 },
+						{ id: "Numpad5" as const, label: "5" },
+						{ id: "Numpad6" as const, label: "6" }
+					]).map(setY(start + 4)),
+					...calculateAndSetPositionAndSize([
+						{ id: "Numpad1" as const, label: "1", x: 19 },
+						{ id: "Numpad2" as const, label: "2" },
+						{ id: "Numpad3" as const, label: "3" },
+						{ id: "NumpadEnter" as const, label: "+", height: 2 }
+					]).map(setY(start + 5)),
+					...calculateAndSetPositionAndSize([
+						{ id: "Numpad0" as const, label: "0", x: 19, width: 2 },
+						{ id: "NumpadDecimal" as const, label: "." }
+					]).map(setY(start + 6))
+				]
 			: []
-		),
+		)
 	] satisfies RawKey[]
 	return keys as any
 }

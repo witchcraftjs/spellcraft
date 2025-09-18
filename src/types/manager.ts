@@ -1,5 +1,6 @@
 import type { AnyFunction } from "@alanscodelog/utils/types"
 
+// eslint-disable-next-line no-restricted-imports
 import type {
 	CanHookCommandProps,
 	CanHookCommandsProps,
@@ -34,23 +35,23 @@ import type {
 	Shortcuts,
 	ShortcutSetEntries,
 	ShortcutsSetEntries,
-	TriggerableShortcut,
+	TriggerableShortcut
 } from "./index.js"
 
 import type { EmulatedEvent } from "../core/EmulatedEvent.js"
 import type { KnownError } from "../helpers/index.js"
 
 
-export type AnyInputEvent =
-	| KeyboardEvent
-	| MouseEvent
-	| WheelEvent
-	| EmulatedEvent
-export type MinimalInputEvent =
-	(
-	| { button: number }
-	| { code?: string, key: string }
-	| { deltaY: number })
+export type AnyInputEvent
+	= | KeyboardEvent
+		| MouseEvent
+		| WheelEvent
+		| EmulatedEvent
+export type MinimalInputEvent
+	= (
+		| { button: number }
+		| { code?: string, key: string }
+		| { deltaY: number })
 	& Record<string, any>
 
 
@@ -67,13 +68,13 @@ export type ExportedManager = {
 }
 
 
-export type OnHook <
+export type OnHook<
 	TBase,
-T extends Record<string, { val: any }>,
+	T extends Record<string, { val: any }>,
 	TKey extends keyof T = keyof T,
-	TVal extends T[TKey]["val"] = T[TKey]["val"],
-> =
-(obj: TBase, key: TKey, val: TVal) => void
+	TVal extends T[TKey]["val"] = T[TKey]["val"]
+>
+	= (obj: TBase, key: TKey, val: TVal) => void
 
 
 export type CanHook<
@@ -81,21 +82,21 @@ export type CanHook<
 	T extends Record<string, { val: any }>,
 	TKey extends keyof T = keyof T,
 	TVal extends T[TKey]["val"] = T[TKey]["val"],
-	TError extends Error = Error,
-> =
-	(obj: TBase, key: TKey, val: TVal) => TError | true
+	TError extends Error = Error
+>
+	= (obj: TBase, key: TKey, val: TVal) => TError | true
 
-type GetManagerHooks<T extends OnHookManagerProps> =
-T extends CanHookManagerProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetManagerProp" | "onSetManagerProp">>
-: Partial<Pick<NonNullable<Manager["hooks"]>, "onSetManagerProp">>
+type GetManagerHooks<T extends OnHookManagerProps>
+	= T extends CanHookManagerProps
+		? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetManagerProp" | "onSetManagerProp">>
+		: Partial<Pick<NonNullable<Manager["hooks"]>, "onSetManagerProp">>
 
 export type OnHookManagerProps = "state.chain" | "shortcuts" | "keys" | "commands" | `state.${keyof Manager["state"]}`
 export type CanHookManagerProps = "state.chain" | "shortcuts" | "keys" | "commands" | `state.${keyof Pick<Manager["state"], "isRecording">}`
 type ManagerStateHook<T extends keyof Manager["state"]> = {
 	val: Manager["state"][T]
 	manager: Manager
-	hooks: GetManagerHooks< `state.${T}` >
+	hooks: GetManagerHooks<`state.${T}`>
 	error: never
 }
 export type ManagerSetEntries = {
@@ -138,7 +139,7 @@ export type ManagerSetEntries = {
 export type CanHooks = {
 	canSetKeyProp?: CanHook<Key, Pick<KeySetEntries, CanHookKeyProps>>
 	canSetKeysProp?: CanHook<Keys, Pick<KeysSetEntries, CanHookKeysProps>>
-	
+
 	canSetCommandProp?: CanHook<Command, Pick<CommandSetEntries, CanHookCommandProps>>
 	canSetCommandsProp?: CanHook<Commands, Pick<CommandsSetEntries, CanHookCommandsProps>>
 
@@ -161,20 +162,20 @@ export type OnHooks = {
 }
 export type Hooks = OnHooks & CanHooks
 
-export type CanHookErrors<T extends CanHooks | any, TKey extends keyof T | string> =
-	T extends CanHooks
-	? TKey extends keyof T
-	? Extract<ReturnType<Extract<T[TKey], AnyFunction>>, Error>
-	: never
-	: never
+export type CanHookErrors<T extends CanHooks | any, TKey extends keyof T | string>
+	= T extends CanHooks
+		? TKey extends keyof T
+			? Extract<ReturnType<Extract<T[TKey], AnyFunction>>, Error>
+			: never
+		: never
 export type Manager<
 
 	THooks extends Partial<Hooks> = Partial<Hooks>,
-	TKeys extends Keys= Keys,
+	TKeys extends Keys = Keys,
 	TShortcuts extends Shortcuts = Shortcuts,
 	TCommands extends Commands = Commands,
 	TContext extends Context = Context,
-	TListener extends ManagerListener= ManagerListener,
+	TListener extends ManagerListener = ManagerListener
 > = {
 	/** A name for the manager. */
 	name: string
@@ -201,13 +202,12 @@ export type Manager<
 		cb: (
 			manager: Manager,
 			error: MultipleErrors<
-			| typeof SHORTCUT_ERROR.MULTIPLE_MATCHING_SHORTCUTS
-			| typeof SHORTCUT_ERROR.NO_MATCHING_SHORTCUT
-			| typeof SHORTCUT_ERROR.UNKNOWN_KEY_EVENT
-			| typeof SHORTCUT_ERROR.UNKNOWN_KEY_ID
-			| typeof SHORTCUT_ERROR.UNKNOWN_KEY // for chain
-			>
-			, e?: AnyInputEvent) => void
+				| typeof SHORTCUT_ERROR.MULTIPLE_MATCHING_SHORTCUTS
+				| typeof SHORTCUT_ERROR.NO_MATCHING_SHORTCUT
+				| typeof SHORTCUT_ERROR.UNKNOWN_KEY_EVENT
+				| typeof SHORTCUT_ERROR.UNKNOWN_KEY_ID
+				| typeof SHORTCUT_ERROR.UNKNOWN_KEY>,
+			e?: AnyInputEvent) => void
 
 		/**
 		 * Determines if two conditions are equal.
@@ -271,7 +271,7 @@ export type Manager<
 	 * They could also technically be used as an escape hatch for frameworks that don't support working mutable data, but I would advice against it. Instead I would recommend using a proxy based state management solution like valtio that allows for mutations and optimized rendering.
 	 */
 	hooks: THooks
-	
+
 	/**
 	 * The manager requires some state to function and be a little bit more efficient. All properties are readonly because they should not be modified unless they are allowed to be by {@link setManagerProp}.
 	 */
@@ -329,7 +329,7 @@ export type LabelOptions = {
 	 * See {@link labelWithKeyboardMap}. This is required for label strategies that use the navigator. You can get the map using [navigator.keyboard.getLayoutMap()](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard/getLayoutMap).
 	 */
 	map: KeyboardLayoutMap
-	
+
 	/**
 	 * Filters the auto labeling.
 	 *
@@ -355,12 +355,20 @@ export type LabelOptions = {
 export type EventTypes = "keydown" | "keyup" | "wheel" | "mousedown" | "mouseup" | "mouseenter"
 
 export type EventListenerTypes<T extends EventTypes = EventTypes> = {
-	[key in T]: (
-		e: key extends "keydown" | "keyup"
-		? KeyboardEvent
-	: key extends "wheel"
-	? WheelEvent
-	: MouseEvent
-	) => boolean | void
+	[key in T]:
+		| ((
+			e: key extends "keydown" | "keyup"
+				? KeyboardEvent
+				: key extends "wheel"
+					? WheelEvent
+					: MouseEvent
+		) => boolean)
+		| ((
+			e: key extends "keydown" | "keyup"
+				? KeyboardEvent
+				: key extends "wheel"
+					? WheelEvent
+					: MouseEvent
+		) => void)
 }
 

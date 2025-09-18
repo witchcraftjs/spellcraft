@@ -6,19 +6,18 @@ import type { CanHookErrors, Command, CommandsSetEntries, Manager, MultipleError
 
 
 export function removeCommand<
-THooks extends Manager["hooks"],
-	TCheck extends boolean | "only" = true,
+	THooks extends Manager["hooks"],
+	TCheck extends boolean | "only" = true
 >(
 	command: Command,
 	manager: CommandsSetEntries["entries@remove"]["manager"] & { hooks?: THooks },
 	opts: { check?: TCheck } = {}
 ): Result<
-		TCheck extends "only" ? true : Command,
-		MultipleErrors<
-			CommandsSetEntries["entries@remove"]["error"]
-		> | CanHookErrors<THooks extends never ? never : THooks, "canSetCommandsProp">
-	>
-{
+	TCheck extends "only" ? true : Command,
+	MultipleErrors<
+		CommandsSetEntries["entries@remove"]["error"]
+	> | CanHookErrors<THooks extends never ? never : THooks, "canSetCommandsProp">
+> {
 	const res = setCommandsProp("entries@remove", command, manager, opts)
 	if (res.isError) return res
 

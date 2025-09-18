@@ -1,12 +1,12 @@
-import { type Result } from "@alanscodelog/utils/Result"
-import { type KnownError } from "@witchcraft/spellcraft/helpers"
+import type { Result } from "@alanscodelog/utils/Result"
+import type { KnownError } from "@witchcraft/spellcraft/helpers"
 import {
 	type Manager,
 	type ManagerSetEntries,
 	type MultipleErrors,
 	type PickManager,
 	SHORTCUT_ERROR,
-	type ShortcutSetEntries,
+	type ShortcutSetEntries
 } from "@witchcraft/spellcraft/types"
 import { equalsKeys } from "@witchcraft/spellcraft/utils"
 

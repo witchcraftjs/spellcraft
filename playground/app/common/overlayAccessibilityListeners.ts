@@ -1,5 +1,5 @@
 import { keys as objectKeys } from "@alanscodelog/utils/keys"
-import { type MakeRequired } from "@alanscodelog/utils/types"
+import type { MakeRequired } from "@alanscodelog/utils/types"
 import type { EventListenerTypes } from "@witchcraft/spellcraft/types"
 
 /**
@@ -30,7 +30,7 @@ export function overlayHoldListeners<T extends MakeRequired<EventListenerTypes, 
 	}>,
 	onDefault?: (listener: EventListenerTypes["keydown"], e: KeyboardEvent) => void,
 	holdTime: number = 1500,
-	filter?: () => boolean,
+	filter?: () => boolean
 ): T {
 	const originalKeydown = listeners.keydown
 	const originalKeyup = listeners.keyup
@@ -42,8 +42,8 @@ export function overlayHoldListeners<T extends MakeRequired<EventListenerTypes, 
 				event: undefined as undefined | KeyboardEvent,
 				time: -1,
 				thresholdReached: false,
-				...actions[k],
-			},
+				...actions[k]
+			}
 		])
 	)
 	return {
@@ -103,6 +103,6 @@ export function overlayHoldListeners<T extends MakeRequired<EventListenerTypes, 
 			}
 			if (onDefault) onDefault(originalKeyup, e)
 			else originalKeyup(e)
-		},
+		}
 	}
 }

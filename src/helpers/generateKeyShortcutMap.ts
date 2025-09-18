@@ -40,7 +40,7 @@ export function generateKeyShortcutMap(
 ): Record<Key["id"], KeyInfo> {
 	const obj: Record<string, KeyInfo> = {}
 	const nextIsChord = manager.state.nextIsChord
-	
+
 	const isEmpty = chain.length === 0 || (chain.length === 1 && chain?.[0].length === 0)
 	const index = isEmpty ? 0 : nextIsChord ? chain.length : chain.length - 1
 	for (const shortcut of shortcutsList) {
@@ -51,7 +51,7 @@ export function generateKeyShortcutMap(
 		const keysLeftInChord = removeKeys((shortcut.chain[index] ?? []), (chain[index] ?? []), manager.keys)
 			// normalize to Key[] so that we are only looking at "full" keys
 			.map(_ => getKeyFromIdOrVariant(_, manager.keys).unwrap()[0])
-				
+
 		const isPressableChord = keysLeftInChord.length === 1
 		const isPressable = isPressableChord && shortcut.chain.length - 1 === index
 		const isPressableChain = isPressableChord && shortcut.chain.length - 1 > index
@@ -62,17 +62,17 @@ export function generateKeyShortcutMap(
 		if (!isPressable && !isPressableChain && !isPressed && unpressedModifiers.length <= 0) continue
 
 		const pressableKeys = isPressed
-		? (last(shortcut.chain) ?? []).map(_ => getKeyFromIdOrVariant(_, manager.keys).unwrap()[0])
-		: unpressedModifiers.length === 0
-		? keysLeftInChord
-		: []
+			? (last(shortcut.chain) ?? []).map(_ => getKeyFromIdOrVariant(_, manager.keys).unwrap()[0])
+			: unpressedModifiers.length === 0
+				? keysLeftInChord
+				: []
 
 		const entry = {
 			shortcut,
 			isPressed,
 			isPressable,
 			isPressableChain,
-			hasUnpressedModifiers,
+			hasUnpressedModifiers
 		}
 		if (postFilter !== undefined && !postFilter(entry, { unpressedModifiers, pressableKeys, isPressed, containsSubset })) continue
 		if (!hasUnpressedModifiers || isPressed) {
@@ -82,7 +82,7 @@ export function generateKeyShortcutMap(
 						pressableEntries: [] as ShortcutInfo[],
 						modifierEntries: [] as ShortcutInfo[],
 						containsConflicting: false,
-						isModifierHint: false,
+						isModifierHint: false
 					}
 					if (!obj[k.id].containsConflicting) {
 						const containsConflicting = obj[k.id].pressableEntries
@@ -100,7 +100,7 @@ export function generateKeyShortcutMap(
 						pressableEntries: [] as ShortcutInfo[],
 						modifierEntries: [] as ShortcutInfo[],
 						containsConflicting: false,
-						isModifierHint: false,
+						isModifierHint: false
 					}
 					obj[k.id].modifierEntries.push({ ...entry })
 					obj[k.id].isModifierHint ||= true

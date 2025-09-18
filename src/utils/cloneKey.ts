@@ -20,13 +20,14 @@ export function cloneKey(key: Key): Key {
 		updateStateOnAllEvents: key.updateStateOnAllEvents,
 		isToggle: key.isToggle,
 		...(key.isToggle
-		? {
-			toggleOnPressed: key.toggleOnPressed,
-			toggleOnId: key.toggleOnId,
-			toggleOffId: key.toggleOffId,
-			toggleOffPressed: key.toggleOffPressed,
-		} satisfies Partial<Key<string>> : {}) as any,
+			? {
+				toggleOnPressed: key.toggleOnPressed,
+				toggleOnId: key.toggleOnId,
+				toggleOffId: key.toggleOffId,
+				toggleOffPressed: key.toggleOffPressed
+			} satisfies Partial<Key<string>>
+			: {}) as any
 	}
-	
+
 	return clone
 }

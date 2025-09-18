@@ -1,11 +1,11 @@
 import { castType } from "@alanscodelog/utils/castType"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { KnownError } from "../helpers/KnownError.js"
 import { errorTextAdd } from "../internal/errorTextAdd.js"
 import { errorTextInUse } from "../internal/errorTextInUse.js"
 import { errorTextRemove } from "../internal/errorTextRemove.js"
-import { type CanHookCommandsProps, type CanHookErrors, type Command, type Commands, type CommandsSetEntries, type Manager,type MultipleErrors,SHORTCUT_ERROR } from "../types/index.js"
+import { type CanHookCommandsProps, type CanHookErrors, type Command, type Commands, type CommandsSetEntries, type Manager, type MultipleErrors, SHORTCUT_ERROR } from "../types/index.js"
 
 
 const canHookable: CanHookCommandsProps[] = ["entries@add", "entries@remove"]
@@ -18,24 +18,24 @@ const canHookable: CanHookCommandsProps[] = ["entries@add", "entries@remove"]
  *
  */
 export function setCommandsProp<
-	TEntries extends CommandsSetEntries ,
-	TProp extends keyof CommandsSetEntries ,
+	TEntries extends CommandsSetEntries,
+	TProp extends keyof CommandsSetEntries,
 	TEntry extends TEntries[TProp],
 	THooks extends Manager["hooks"],
-	TCheck extends boolean | "only" = true,
+	TCheck extends boolean | "only" = true
 >(
 	prop: TProp,
 	val: TEntry["val"],
 	/** Commands is mutated if check is not "only". */
 	manager: TEntry["manager"] & { hooks?: THooks },
 	{
-		check = true as TCheck,
+		check = true as TCheck
 	}: { check?: TCheck } = {}
 ): Result<
 	TCheck extends "only" ? true : Command,
 	MultipleErrors<TEntry["error"]>
 	| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetCommandsProp">
-	> {
+> {
 	const commands = manager.commands
 	const s = manager.options.stringifier
 	if (check) {
@@ -100,7 +100,7 @@ export function setCommandsProp<
 			}
 		}
 	}
-	
+
 	if (check === "only") {
 		return Ok(true) satisfies Result<true, never> as any
 	}
@@ -122,7 +122,7 @@ export function setCommandsProp<
 	}
 
 	manager.hooks?.onSetCommandsProp?.(commands, prop as any, val as any)
-	
+
 	return Ok(commands) satisfies Result<Commands, never> as any
 }
 

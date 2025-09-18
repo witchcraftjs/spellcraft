@@ -13,10 +13,10 @@ import type { KeySetEntries, LabelOptions, Manager } from "../types/index.js"
  * You can use {@link labelWithEvent} as a fallback, by using it with a filter and only labeling the keys that were not set by this function.
  */
 export function labelWithKeyboardMap<
-	THooks extends KeySetEntries["label"]["hooks"],
+	THooks extends KeySetEntries["label"]["hooks"]
 >(
 	manager: Pick<Manager, "keys"> & { hooks?: THooks },
-	opts: LabelOptions,
+	opts: LabelOptions
 ): string[] {
 	const set = []
 	for (const key of Object.values(manager.keys.entries)) {

@@ -5,11 +5,20 @@
 	:preferred-vertical="['center-screen']"
 	v-model="showHelp"
 >
-	<template #button="{extractEl}">
-		<div class="text-center underline text-neutral-700 text-xs hover:cursor-pointer" v-extract-root-el="extractEl" @click="showHelp = !showHelp">Help</div>
+	<template #button="{ extractEl }">
+		<div
+			class="text-center underline text-neutral-700 text-xs hover:cursor-pointer"
+			v-extract-root-el="extractEl"
+			@click="showHelp = !showHelp"
+		>
+			Help
+		</div>
 	</template>
-	<template #popup="{extractEl}">
-		<div class="h-[500px] p-10" :ref="extractEl">
+	<template #popup="{ extractEl }">
+		<div
+			class="h-[500px] p-10"
+			:ref="extractEl"
+		>
 			<div class="bg-white h-full p-4 rounded-sm border border-neutral-500">
 				Basics:
 				<ul class="list-disc ml-4">
@@ -28,9 +37,10 @@
 	</template>
 </WPopup>
 </template>
-<script setup lang="ts">
-import { ref } from "vue"
 
+<script setup lang="ts">
+import { vExtractRootEl } from "@witchcraft/ui/directives/vExtractRootEl"
+import { ref } from "vue"
 
 const showHelp = ref(false)
 </script>

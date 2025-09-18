@@ -32,8 +32,8 @@ export function equalsKeys(
 ): boolean {
 	// Since they're pre-sorted this should be quite fast
 	if (
-		(length === undefined && base.length !== chain.length) ||
-		(length !== undefined && (chain.length < length || base.length < length))
+		(length === undefined && base.length !== chain.length)
+		|| (length !== undefined && (chain.length < length || base.length < length))
 	) return false
 
 	return chain.slice(0, length ?? chain.length)

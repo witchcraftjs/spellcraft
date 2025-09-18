@@ -1,7 +1,7 @@
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { KnownError } from "../helpers/KnownError.js"
-import { type Key, type MultipleErrors, type RawKey,SHORTCUT_ERROR } from "../types/index.js"
+import { type Key, type MultipleErrors, type RawKey, SHORTCUT_ERROR } from "../types/index.js"
 
 
 /**
@@ -13,17 +13,17 @@ import { type Key, type MultipleErrors, type RawKey,SHORTCUT_ERROR } from "../ty
  */
 
 export function createKey<
-TId extends string = string,
-TKey extends RawKey<TId> = RawKey<TId>,
+	TId extends string = string,
+	TKey extends RawKey<TId> = RawKey<TId>
 >(
 	id: TId,
-	rawKey: Omit<TKey, "id"> = {} as any,
+	rawKey: Omit<TKey, "id"> = {} as any
 ): Result<
-		Key<TId>,
-		MultipleErrors<
+	Key<TId>,
+	MultipleErrors<
 		| typeof SHORTCUT_ERROR.INVALID_VARIANT
-		>
-	> {
+	>
+> {
 	const k = rawKey
 	const key: Key<TId> = {
 		type: "key",
@@ -38,19 +38,21 @@ TKey extends RawKey<TId> = RawKey<TId>,
 		pressed: false,
 		isModifier: k.isModifier ?? false,
 		isToggle: (k.isToggle ?? false) satisfies Key["isToggle"] as false,
-		...(k.isToggle ? {
-			toggleOnId: `${id}On`,
-			toggleOffId: `${id}Off`,
-			toggleOnPressed: false,
-			toggleOffPressed: false,
-		} satisfies Partial<Key<string>> : {}) as any,
+		...(k.isToggle
+			? {
+				toggleOnId: `${id}On`,
+				toggleOffId: `${id}Off`,
+				toggleOnPressed: false,
+				toggleOffPressed: false
+			} satisfies Partial<Key<string>>
+			: {}) as any,
 		variants: k.variants ?? [],
 		render: k.render ?? true,
-		updateStateOnAllEvents: k.updateStateOnAllEvents ?? true,
+		updateStateOnAllEvents: k.updateStateOnAllEvents ?? true
 	}
 	if (key.variants?.includes(key.id)) {
 		return Err(
-			new KnownError(SHORTCUT_ERROR.INVALID_VARIANT, `A key variant cannot be the key id itself. Attempted to use "${key.id}" in variants:[ ${key.variants.join(",")} ]`, { variants: key.variants as any /* todo*/, id: key.id })
+			new KnownError(SHORTCUT_ERROR.INVALID_VARIANT, `A key variant cannot be the key id itself. Attempted to use "${key.id}" in variants:[ ${key.variants.join(",")} ]`, { variants: key.variants as any /* todo */, id: key.id })
 		)
 	}
 	return Ok(key)

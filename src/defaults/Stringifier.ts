@@ -52,14 +52,14 @@ import type { Command, Condition, DefaultStringifierOptions, IStringifier, Key, 
  *
  * You can just import it early and change it's options.
  */
- 
+
 export class Stringifier implements IStringifier {
 	opts: DefaultStringifierOptions
 
 	constructor(opts: DefaultStringifierOptions = {}) {
 		this.opts = opts
 	}
-	
+
 	stringify(
 		entry: string | string[] | string[][],
 		manager: Pick<Manager, "keys">
@@ -100,7 +100,7 @@ export class Stringifier implements IStringifier {
 				return this.stringifyKey(entry, manager!)
 			}
 		}
-		
+
 		unreachable()
 	}
 
@@ -149,7 +149,7 @@ export class Stringifier implements IStringifier {
 	stringifyCommand(name: string, manager: Pick<Manager, "commands">): string
 
 	stringifyCommand(command?: Command): string
- 
+
 	stringifyCommand(nameOrCommand?: string | Command | undefined, manager?: Pick<Manager, "commands">): string {
 		const command = typeof nameOrCommand === "string"
 			? manager!.commands.entries[nameOrCommand]
@@ -160,9 +160,9 @@ export class Stringifier implements IStringifier {
 	}
 
 	protected stringifyKey(key: Key): string
- 
+
 	protected stringifyKey(key: string, manager: Pick<Manager, "keys">): string
- 
+
 	protected stringifyKey(keyOrId: Key | string, manager?: Pick<Manager, "keys">): string {
 		if (typeof keyOrId === "string") {
 			const res = getKeyFromIdOrVariant(keyOrId, manager!.keys)
@@ -219,8 +219,8 @@ export class Stringifier implements IStringifier {
 		let stringified: string[]
 		if (typeof entries[0] === "string") {
 			stringified = (entries as string[]).map(entry => type === "keys"
-			? this.stringify(entry, manager as any)
-			: this.stringifyCommand(entry, manager as any)
+				? this.stringify(entry, manager as any)
+				: this.stringifyCommand(entry, manager as any)
 			)
 		} else {
 			stringified = (entries as any[]).map(entry => this.stringify(entry, manager as any))

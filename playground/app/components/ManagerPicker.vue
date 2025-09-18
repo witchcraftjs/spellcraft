@@ -1,5 +1,6 @@
 <template>
-<div class="
+<div
+	class="
 		manager-picker
 		w-full
 		flex
@@ -17,7 +18,7 @@
 		:suggestions-filter="(_:any, items:any[]) => items"
 		:restrict-to-suggestions="false"
 		v-model="tempValue"
-		v-extract-root-el="(_:any)=> el = _"
+		v-extract-root-el="(_:any) => el = _"
 		@submit="handleSubmit"
 		@unfocus="onUnfocus"
 	>
@@ -30,7 +31,7 @@
 					aria-label="Activate"
 					title="Activate"
 					@mousedown.prevent
-					@click.prevent="emit('activate',slotProps.item); blurInputComp()"
+					@click.prevent="emit('activate', slotProps.item); blurInputComp()"
 				>
 					{{ slotProps.item }}
 				</div>
@@ -42,7 +43,9 @@
 					@mousedown.prevent
 					@click.prevent="$event.stopPropagation();exportItem(slotProps.item)"
 				>
-					<template #icon> <WIcon> <i-fa-solid-file-export/> </WIcon> </template>
+					<template #icon>
+						<WIcon> <i-fa-solid-file-export/> </WIcon>
+					</template>
 				</WButton>
 				<WButton
 					aria-label="Duplicate"
@@ -52,7 +55,9 @@
 					@mousedown.prevent
 					@click.prevent="duplicateManager(slotProps.item)"
 				>
-					<template #icon> <WIcon> <i-fa-solid-clone/> </WIcon> </template>
+					<template #icon>
+						<WIcon> <i-fa-solid-clone/> </WIcon>
+					</template>
 				</WButton>
 				<WButton
 					aria-label="Remove"
@@ -60,9 +65,11 @@
 					class="whitespace-nowrap p-0 text-neutral-800"
 					:border="false"
 					@mousedown.prevent
-					@click.prevent="$event.stopPropagation();emit('remove',slotProps.item)"
+					@click.prevent="$event.stopPropagation();emit('remove', slotProps.item)"
 				>
-					<template #icon> <WIcon> <i-fa-solid-trash/> </WIcon> </template>
+					<template #icon>
+						<WIcon> <i-fa-solid-trash/> </WIcon>
+					</template>
 				</WButton>
 			</div>
 		</template>
@@ -78,7 +85,9 @@
 					:border="false"
 					@mouseup="emit('export', activeManager); blurInputComp()"
 				>
-					<template #icon> <WIcon> <i-fa-solid-file-export/> </WIcon> </template>
+					<template #icon>
+						<WIcon> <i-fa-solid-file-export/> </WIcon>
+					</template>
 				</WButton>
 				<WButton
 					aria-label="Duplicate"
@@ -87,7 +96,9 @@
 					:border="false"
 					@mouseup="duplicateManager(activeManager)"
 				>
-					<template #icon> <WIcon> <i-fa-solid-clone/> </WIcon> </template>
+					<template #icon>
+						<WIcon> <i-fa-solid-clone/> </WIcon>
+					</template>
 				</WButton>
 				<WButton
 					aria-label="Remove"
@@ -96,7 +107,9 @@
 					:border="false"
 					@mouseup="emit('remove', activeManager)"
 				>
-					<template #icon> <WIcon> <i-fa-solid-trash/> </WIcon> </template>
+					<template #icon>
+						<WIcon> <i-fa-solid-trash/> </WIcon>
+					</template>
 				</WButton>
 			</div>
 			<!-- Can't get auto-title-from-aria working in slot, weird. -->
@@ -109,7 +122,9 @@
 				:disabled="!canRename"
 				@click="emit('rename', tempValue)"
 			>
-				<template #icon> <WIcon> <i-fa-solid-check/> </WIcon> </template>
+				<template #icon>
+					<WIcon> <i-fa-solid-check/> </WIcon>
+				</template>
 				Rename
 			</WButton>
 			<WButton
@@ -120,7 +135,9 @@
 				class="whitespace-nowrap p-0"
 				@click="addManager(tempValue)"
 			>
-				<template #icon> <WIcon> <i-fa-solid-plus/> </WIcon> </template>
+				<template #icon>
+					<WIcon> <i-fa-solid-plus/> </WIcon>
+				</template>
 				Add New
 			</WButton>
 		</template>
@@ -132,7 +149,7 @@
 import { isBlank } from "@alanscodelog/utils/isBlank"
 import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler"
 import { vExtractRootEl } from "@witchcraft/ui/directives/vExtractRootEl"
-import { computed, inject, ref, toRef, watch, watchEffect } from "vue"
+import { computed, ref, toRef, watch } from "vue"
 
 import IFaSolidClone from "~icons/fa-solid/clone"
 import IFaSolidFileExport from "~icons/fa-solid/file-export"
@@ -149,10 +166,10 @@ const activeManager = toRef(props, "activeManager")
 
 const emit = defineEmits<{
 	add: [val: string]
-	activate: [val:string]
-	remove: [val:string]
-	rename: [val:string]
-	export: [val:string]
+	activate: [val: string]
+	remove: [val: string]
+	rename: [val: string]
+	export: [val: string]
 	duplicate: [{ oldName: string, newName: string }]
 }>()
 
@@ -166,16 +183,16 @@ watch(activeManager, newVal => {
 
 const isValidNewName = computed(() =>
 	!isBlank(tempValue.value)
-	&& !props.managers.includes(tempValue.value),
+	&& !props.managers.includes(tempValue.value)
 )
 
 const isSameName = computed(() =>
-	tempValue.value === props.activeManager,
+	tempValue.value === props.activeManager
 )
 
 const canAdd = computed(() =>
 	!isBlank(tempValue.value)
-	&& !props.managers.includes(tempValue.value),
+	&& !props.managers.includes(tempValue.value)
 )
 const canRename = computed(() => isValidNewName.value && !isSameName.value)
 function handleSubmit(val: string) {
@@ -192,13 +209,13 @@ function addManager(name: string) {
 		emit("add", name)
 	} else {
 		void notificationHandler?.notify({
-			message: "Manager name cannot be empty value.",
+			message: "Manager name cannot be empty value."
 		})
 	}
 }
 function duplicateManager(name: string) {
 	let i = 0
-	const baseName = name.replace(/(.*?)(#([0-9]+))?$/, `$1`)
+	const baseName = name.replace(/(.*?)(#(\d+))?$/, `$1`)
 	let newName = `${baseName}#${i}`
 	while (props.managers.includes(newName)) {
 		i++
@@ -220,7 +237,5 @@ function onUnfocus() {
 function blurInputComp() {
 	el.value?.querySelector("input")?.blur()
 }
-
-
 </script>
 

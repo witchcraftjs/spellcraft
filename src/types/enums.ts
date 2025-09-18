@@ -1,7 +1,10 @@
-import { type EnumLike } from "@alanscodelog/utils"
+import type { EnumLike } from "@alanscodelog/utils"
 import { enumFromArray } from "@alanscodelog/utils/enumFromArray"
 
-import type { AnyInputEvent, Command, Commands, Key, Keys, Shortcut, Shortcuts } from "./index.js"
+import type { Command, Commands } from "./commands.js"
+import type { Key, Keys } from "./keys.js"
+import type { AnyInputEvent } from "./manager.js"
+import type { Shortcut, Shortcuts } from "./shortcuts.js"
 
 import type { KnownError } from "../helpers/index.js"
 
@@ -43,20 +46,20 @@ export const SHORTCUT_ERROR = enumFromArray([
 ])
 export type ShortcutError = EnumLike<typeof SHORTCUT_ERROR>
 
-export type ChainError =
-| typeof SHORTCUT_ERROR.UNKNOWN_KEY
-| typeof SHORTCUT_ERROR.CHORD_W_DUPLICATE_KEY
-| typeof SHORTCUT_ERROR.CHORD_W_ONLY_MODIFIERS
-| typeof SHORTCUT_ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS
-| typeof SHORTCUT_ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS
-| typeof SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE
+export type ChainError
+	= | typeof SHORTCUT_ERROR.UNKNOWN_KEY
+		| typeof SHORTCUT_ERROR.CHORD_W_DUPLICATE_KEY
+		| typeof SHORTCUT_ERROR.CHORD_W_ONLY_MODIFIERS
+		| typeof SHORTCUT_ERROR.CHORD_W_MULTIPLE_TRIGGER_KEYS
+		| typeof SHORTCUT_ERROR.CHORD_W_MULTIPLE_WHEEL_KEYS
+		| typeof SHORTCUT_ERROR.IMPOSSIBLE_TOGGLE_SEQUENCE
 
 /** Errors that will throw since they should be caught at production. */
 
 export const TYPE_ERROR = enumFromArray([
 	"ILLEGAL_OPERATION",
 	"HOOK_OR_LISTENER_DOES_NOT_EXIST",
-	"FILTER_DOES_NOT_EXIST",
+	"FILTER_DOES_NOT_EXIST"
 ])
 export type TypeError = EnumLike<typeof TYPE_ERROR>
 
@@ -66,10 +69,10 @@ export type TypeError = EnumLike<typeof TYPE_ERROR>
  * Makes it easy to define the properties attached to each error by just allowing passing the error (regardless of error type) as T in [[KnownError]] and [[InternalError]].
  */
 
-export type ErrorInfo<T extends ShortcutError | TypeError> =
-	T extends ShortcutError
-	? ERROR_Info[T]
-	: never
+export type ErrorInfo<T extends ShortcutError | TypeError>
+	= T extends ShortcutError
+		? ERROR_Info[T]
+		: never
 
 /** Type multiple {@link KnownError} errors to work like a discriminated union. */
 export type MultipleErrors<T extends ShortcutError | TypeError> = {
@@ -119,7 +122,7 @@ type ERROR_Info = {
 		key: Key
 		otherKey: Key
 	}
-	
+
 	[SHORTCUT_ERROR.DUPLICATE_KEY]: {
 		existing: Key
 		self: Keys
@@ -135,17 +138,17 @@ type ERROR_Info = {
 		existing: Command
 		self: Commands
 	}
-	
+
 
 	// === other
 	[SHORTCUT_ERROR.INVALID_SWAP_CHORDS]:
-	{
-		chord: string[][]
-	} |
-	{
-		chordsA: string[][]
-		chordsB: string[][]
-	}
+		{
+			chord: string[][]
+		}
+		| {
+			chordsA: string[][]
+			chordsB: string[][]
+		}
 
 	[SHORTCUT_ERROR.CANNOT_SET_WHILE_DISABLED]:
 	{
@@ -201,17 +204,17 @@ export const MOUSE = enumFromArray([
 	"M",
 	"L",
 	"BACK",
-	"FORWARD",
+	"FORWARD"
 ])
 export type Mouse = EnumLike<typeof MOUSE>
-	
+
 export const WHEEL = enumFromArray([
 	"down",
-	"up",
+	"up"
 ])
 export type Wheel = EnumLike<typeof WHEEL>
 
- 
+
 // These do not need to be initialized, we want the order they're declared in.
 export const KEY_SORT_POS = {
 	mod: 0,
@@ -227,7 +230,7 @@ export const KEY_SORT_POS = {
 	wheel: 8,
 	toggle: 9,
 	togglemouse: 10,
-	togglewheel: 11, // weird...
+	togglewheel: 11 // weird...
 	// modtogglemousewheel = error
 }
- 
+

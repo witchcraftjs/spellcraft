@@ -6,7 +6,9 @@
 		class="flex-1 whitespace-nowrap"
 		@click="emit('exportAll', managers)"
 	>
-		<template #icon> <WIcon> <i-fa-solid-file-export/> </WIcon> </template>
+		<template #icon>
+			<WIcon> <i-fa-solid-file-export/> </WIcon>
+		</template>
 		Export All
 	</WButton>
 
@@ -18,7 +20,9 @@
 		:compact="true"
 		@input="importManagers as any"
 	>
-		<template #icon> <WIcon> <i-fa-solid-file-import/> </WIcon> </template>
+		<template #icon>
+			<WIcon> <i-fa-solid-file-import/> </WIcon>
+		</template>
 		<template #label>
 			Import
 		</template>
@@ -36,8 +40,8 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-	exportAll: [val:string[]]
-	import: [val:string]
+	exportAll: [val: string[]]
+	import: [val: string]
 }>()
 
 async function importManagers(files: File[]) {

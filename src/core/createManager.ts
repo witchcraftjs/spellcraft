@@ -1,6 +1,6 @@
 import { castType } from "@alanscodelog/utils/castType"
 import { isArray } from "@alanscodelog/utils/isArray"
-import { Ok,type Result } from "@alanscodelog/utils/Result"
+import { Ok, type Result } from "@alanscodelog/utils/Result"
 import type { RecordFromArray } from "@alanscodelog/utils/types"
 
 import { createCommand } from "./createCommand.js"
@@ -11,7 +11,7 @@ import { createManagerOptions } from "./createManagerOptions.js"
 import { createShortcut } from "./createShortcut.js"
 import { createShortcuts } from "./createShortcuts.js"
 
-import { type CanHookErrors, type CanHooks, type Command, type Commands, type CommandsSetEntries, type Context, type Hooks, type Key, type Keys, type KeysSetEntries, type Manager, type ManagerListener, type MultipleErrors, type RawCommand, type RawKey, type RawShortcut, type Shortcut, type SHORTCUT_ERROR, type Shortcuts, type ShortcutsSetEntries } from "../types/index.js"
+import type { CanHookErrors, CanHooks, Command, Commands, CommandsSetEntries, Context, Hooks, Key, Keys, KeysSetEntries, Manager, ManagerListener, MultipleErrors, RawCommand, RawKey, RawShortcut, Shortcut, SHORTCUT_ERROR, Shortcuts, ShortcutsSetEntries } from "../types/index.js"
 
 /**
  * Create a manager which can track key states, layouts, and trigger shortcuts. Basically the brains of the operation.
@@ -86,12 +86,12 @@ export function createManager<
 	TShortcuts extends Shortcuts | RawShortcut[],
 	TCommands extends Commands | RawCommand[],
 	TContext extends Context,
-	TListener extends ManagerListener,
+	TListener extends ManagerListener
 >(
 	rawManager: {
 		name?: string
 		options: Partial<Omit<Manager["options"], "evaluateCondition">>
-		& Pick<Manager<any, any, any, any, TContext>["options"], "evaluateCondition">
+			& Pick<Manager<any, any, any, any, TContext>["options"], "evaluateCondition">
 		context?: TContext
 		keys?: TKeys
 		shortcuts?: TShortcuts
@@ -99,35 +99,34 @@ export function createManager<
 		hooks?: Partial<THooks>
 		listener?: TListener
 	},
-	additionalOpts: Partial< {
+	additionalOpts: Partial<{
 		keys?: Partial<Pick<Keys, "autoManageLayout" | "layout">>
-		shortcuts?:	Partial<Pick<Shortcuts, "ignoreModifierConflicts" | "ignoreChainConflicts" >>
+		shortcuts?:	Partial<Pick<Shortcuts, "ignoreModifierConflicts" | "ignoreChainConflicts">>
 	}
 	> = {}
 ): Result<
-		Manager<
-			THooks,
-			TKeys extends Keys
+	Manager<
+		THooks,
+		TKeys extends Keys
 			? Extract<TKeys, Keys>
 			: TKeys extends RawKey[]
-			? Keys<RecordFromArray<TKeys, "id", Key>>
-			: never,
-			Shortcuts,
-			TCommands extends Commands
+				? Keys<RecordFromArray<TKeys, "id", Key>>
+				: never,
+		Shortcuts,
+		TCommands extends Commands
 			? Extract<TCommands, Commands>
 			: TCommands extends RawCommand[]
-			? Commands<RecordFromArray<TCommands, "name", Command>>
-			: never,
-			TContext
-		>,
-		MultipleErrors<
+				? Commands<RecordFromArray<TCommands, "name", Command>>
+				: never,
+		TContext
+	>,
+	MultipleErrors<
 		| CommandsSetEntries["entries@add"]["error"]
 		| KeysSetEntries["entries@add"]["error"]
 		| ShortcutsSetEntries["entries@add"]["error"]
 		| typeof SHORTCUT_ERROR.INVALID_VARIANT
-		> | CanHookErrors<THooks extends never ? never : THooks, keyof CanHooks>
-	>
-{
+	> | CanHookErrors<THooks extends never ? never : THooks, keyof CanHooks>
+> {
 	const options = createManagerOptions(rawManager.options as any)
 	const m = { options }
 	const state = {
@@ -135,7 +134,7 @@ export function createManager<
 		isAwaitingKeyup: false,
 		isRecording: false,
 		untrigger: false,
-		nextIsChord: false,
+		nextIsChord: false
 	} satisfies Manager["state"]
 
 	let keys = rawManager.keys
@@ -166,7 +165,7 @@ export function createManager<
 				commandsList.push(res)
 			}
 		}
-														
+
 		const res = createCommands(commandsList, { options })
 		if (res.isError) return res as any
 		commands = res.value satisfies Commands as any
@@ -188,7 +187,7 @@ export function createManager<
 		const res = createShortcuts(shortcutsList, {
 			keys: keys! as Keys,
 			commands: commands! as Commands,
-			options,
+			options
 		}, additionalOpts?.shortcuts)
 		if (res.isError) return res as any
 		shortcuts = res.value satisfies Shortcuts as any
@@ -204,7 +203,7 @@ export function createManager<
 		options,
 		state,
 		context: rawManager.context!,
-		hooks: rawManager?.hooks as any as THooks,
+		hooks: rawManager?.hooks as any as THooks
 	}
 	return Ok(manager) as any
 }

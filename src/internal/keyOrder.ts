@@ -15,7 +15,7 @@ export function keyOrder(
 		key.isModifier ? "mod" : "",
 		key.isToggle ? "toggle" : "",
 		isMouseKey(key) ? "mouse" : "",
-		isWheelKey(key) ? "wheel" : "",
+		isWheelKey(key) ? "wheel" : ""
 	].join("")
 	if (type === "") {
 		type = "normal"

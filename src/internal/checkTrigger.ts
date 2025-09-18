@@ -5,13 +5,13 @@ import { inChain } from "./inChain.js"
 import { setManagerProp } from "../core/setManagerProp.js"
 import { getTriggerableShortcut } from "../helpers/getTriggerableShortcut.js"
 import { KnownError } from "../helpers/KnownError.js"
-import { type AnyInputEvent, type Manager,SHORTCUT_ERROR } from "../types/index.js"
+import { type AnyInputEvent, type Manager, SHORTCUT_ERROR } from "../types/index.js"
 import { isTriggerKey } from "../utils/isTriggerKey.js"
 
 
 export function checkTrigger(
 	manager: Manager,
-	e?: AnyInputEvent,
+	e?: AnyInputEvent
 ): void {
 	checkUntrigger(manager, e)
 	const hadUntrigger = manager.state.untrigger
@@ -47,7 +47,7 @@ export function checkTrigger(
 				"A chord containing a non-modifier key was pressed while in a chord chain, but no shortcut found to trigger.",
 				{ chain: manager.state.chain }
 			)
-			
+
 			cb(manager, error, e)
 		}
 	}

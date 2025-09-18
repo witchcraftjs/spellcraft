@@ -24,7 +24,7 @@ export const useShortcutManagerKeysLayout = (keys: Keys, keyboardEl: Ref<HTMLEle
 		layout.x = x
 		layout.y = y
 	})
-	
+
 	const width = ref(0)
 	const keyWidth = computed(() => {
 		const val = width.value / layout.x

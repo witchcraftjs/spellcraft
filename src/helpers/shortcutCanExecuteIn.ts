@@ -3,9 +3,9 @@ import type { Manager, PickManager, Shortcut } from "../types/index.js"
 
 export function shortcutCanExecuteIn(
 	shortcut: Shortcut,
-	manager: Pick<Manager, "context" | "commands" > & PickManager<"options", "evaluateCondition">,
+	manager: Pick<Manager, "context" | "commands"> & PickManager<"options", "evaluateCondition">,
 	{
-		allowEmptyCommand = false,
+		allowEmptyCommand = false
 	}: {
 		allowEmptyCommand?: boolean
 	} = {}

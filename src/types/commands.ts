@@ -1,5 +1,7 @@
 import type { Condition } from "./condition.js"
-import type { Context, PickManager,SHORTCUT_ERROR } from "./index.js"
+import type { Context } from "./context.js"
+import type { SHORTCUT_ERROR } from "./enums.js"
+import type { PickManager } from "./general.js"
 import type { AnyInputEvent, Manager, MinimalInputEvent } from "./manager.js"
 import type { Shortcut } from "./shortcuts.js"
 
@@ -7,8 +9,8 @@ import type { Shortcut } from "./shortcuts.js"
 export type RawCommand<TName extends string = string> = Pick<Command<TName>, "name"> & Partial<Command<TName>>
 
 export type CommandExecute<TName extends string = string> = <
-	
-	T extends AnyInputEvent | MinimalInputEvent = AnyInputEvent | MinimalInputEvent,
+
+	T extends AnyInputEvent | MinimalInputEvent = AnyInputEvent | MinimalInputEvent
 >(args: {
 	isKeydown: boolean
 	command: Command<TName>
@@ -24,14 +26,12 @@ export type CommandExecute<TName extends string = string> = <
 	context: Context
 }) => void
 
-export interface Command <
+export interface Command<
 	TName extends
-		string =
-		string,
+	string = string,
 	TExec extends CommandExecute<string> = CommandExecute<string>,
 	TCondition extends
-		Condition =
-		Condition,
+	Condition = Condition
 > {
 	readonly type: "command"
 	/**
@@ -72,8 +72,8 @@ export interface Command <
 	readonly description: string
 }
 
-export type Commands <
-		TEntries extends Record<string, Command> = Record<string, Command>,
+export type Commands<
+	TEntries extends Record<string, Command> = Record<string, Command>
 > = {
 	type: "commands"
 	/**
@@ -91,14 +91,14 @@ export type Commands <
 export type RawCommands = Pick<Commands, "entries"> & Partial<Commands>
 
 
-type GetCommandHooks<T extends keyof CommandSetEntries | keyof CommandsSetEntries> =
-T extends CanHookCommandProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetCommandProp" | "onSetCommandProp">>
-: T extends OnHookCommandProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "onSetCommandProp">>
-: T extends CanHookCommandsProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetCommandsProp" | "onSetCommandsProp">>
-: Partial<Pick<NonNullable<Manager["hooks"]>, "onSetCommandsProp">>
+type GetCommandHooks<T extends keyof CommandSetEntries | keyof CommandsSetEntries>
+	= T extends CanHookCommandProps
+		? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetCommandProp" | "onSetCommandProp">>
+		: T extends OnHookCommandProps
+			? Partial<Pick<NonNullable<Manager["hooks"]>, "onSetCommandProp">>
+			: T extends CanHookCommandsProps
+				? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetCommandsProp" | "onSetCommandsProp">>
+				: Partial<Pick<NonNullable<Manager["hooks"]>, "onSetCommandsProp">>
 
 type Unmanaged<T extends keyof Command & keyof CommandSetEntries> = {
 	val: Command[T]
@@ -123,7 +123,7 @@ export type OnHookCommandProps = "condition" | "execute" | "description"
 export type CanHookCommandProps = OnHookCommandProps
 
 type BaseCommandsManager = PickManager<"options", "stringifier"> & Record<any, any>
-& Pick<Manager, "commands">
+	& Pick<Manager, "commands">
 
 export type CommandsSetEntries = {
 	// eslint-disable-next-line @typescript-eslint/naming-convention

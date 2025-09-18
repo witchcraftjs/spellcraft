@@ -9,7 +9,7 @@ import { isArray } from "@alanscodelog/utils/isArray"
  */
 export function mapKeys<
 	TType extends any[] | any[][],
-	TReturn = string,
+	TReturn = string
 >(
 	chainOrChord: TType,
 	func: (key: TType extends any[][] ? TType[number][number] : TType[number]) => TReturn = key => (key as any)?.id

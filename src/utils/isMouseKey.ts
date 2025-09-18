@@ -16,12 +16,12 @@ const possibleIds = [
 	"1Off",
 	"2Off",
 	"3Off",
-	"4Off",
+	"4Off"
 ]
 /**
  * Returns whether a key is a mouse key (id = 0-4).
  */
 export function isMouseKey(key: Key): boolean {
 	return possibleIds.includes(key.id)
-	|| (key.variants?.some(id => possibleIds.includes(id)) ?? false)
+		|| (key.variants?.some(id => possibleIds.includes(id)) ?? false)
 }

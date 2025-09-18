@@ -1,4 +1,4 @@
-import { type AnyFunction } from "@alanscodelog/utils/types"
+import type { AnyFunction } from "@alanscodelog/utils/types"
 
 import { EmulatedEvent } from "./EmulatedEvent.js"
 
@@ -36,13 +36,13 @@ export class Emulator {
 		mouseup: AnyFunction[]
 		mouseenter: AnyFunction[]
 	} = {
-			keydown: [],
-			keyup: [],
-			wheel: [],
-			mousedown: [],
-			mouseenter: [],
-			mouseup: [],
-		}
+		keydown: [],
+		keyup: [],
+		wheel: [],
+		mousedown: [],
+		mouseenter: [],
+		mouseup: []
+	}
 
 	initiated: boolean = false
 
@@ -134,7 +134,7 @@ export class Emulator {
 		this._checkIsValidKey(key, validKeys)
 		switch (type) {
 			case "mouse": {
-				const event = new EmulatedEvent("mousedown", { button: parseInt(key, 10) }, modifiers)
+				const event = new EmulatedEvent("mousedown", { button: Number.parseInt(key, 10) }, modifiers)
 				this._dispatch("mousedown", event)
 			} break
 			case "wheel": {
@@ -152,7 +152,7 @@ export class Emulator {
 		this._checkIsValidKey(key, validKeys)
 		switch (type) {
 			case "mouse": {
-				const event = new EmulatedEvent("mouseup", { button: parseInt(key, 10) }, modifiers)
+				const event = new EmulatedEvent("mouseup", { button: Number.parseInt(key, 10) }, modifiers)
 				this._dispatch("mouseup", event)
 			} break
 			case "key": {
@@ -164,7 +164,7 @@ export class Emulator {
 
 	private _checkIsValidKey(key: string, validKeys?: Keys): void {
 		const valid = validKeys ?? this.validKeys
-		
+
 		if (valid) {
 			const match = Object.values(valid.entries).find(k => k.id === key
 				|| k.toggleOnId === key

@@ -1,9 +1,9 @@
 import { isArray } from "@alanscodelog/utils/isArray"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { KnownError } from "./KnownError.js"
 
-import { type Key, type Keys,SHORTCUT_ERROR } from "../types/index.js"
+import { type Key, type Keys, SHORTCUT_ERROR } from "../types/index.js"
 
 
 export function getKeyFromIdOrVariant(
@@ -25,8 +25,8 @@ export function getKeyFromIdOrVariant(
 	if (k === undefined) {
 		return Err(new KnownError(
 			SHORTCUT_ERROR.UNKNOWN_KEY_ID,
-				`Tried to get unknown key (${id}).`,
-				{ id }
+			`Tried to get unknown key (${id}).`,
+			{ id }
 		))
 	}
 	return Ok(k)

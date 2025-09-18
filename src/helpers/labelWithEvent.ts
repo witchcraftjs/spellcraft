@@ -11,7 +11,7 @@ import type { AnyInputEvent, KeySetEntries, LabelOptions, Manager, MinimalInputE
  */
 export function labelWithEvent<
 	T extends MinimalInputEvent | AnyInputEvent = MinimalInputEvent | AnyInputEvent,
-	THooks extends KeySetEntries["label"]["hooks"] = KeySetEntries["label"]["hooks"],
+	THooks extends KeySetEntries["label"]["hooks"] = KeySetEntries["label"]["hooks"]
 >(
 	e: T,
 	keyIds: string[],

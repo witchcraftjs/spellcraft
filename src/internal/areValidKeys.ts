@@ -1,5 +1,5 @@
 import { crop } from "@alanscodelog/utils/crop"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { getKeyFromIdOrVariant } from "../helpers/getKeyFromIdOrVariant.js"
 import { KnownError } from "../helpers/KnownError.js"
@@ -11,8 +11,8 @@ import { SHORTCUT_ERROR } from "../types/index.js"
  */
 export function areValidKeys(
 	chain: string[][] | Shortcut,
-	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier">,
-	
+	manager: Pick<Manager, "keys"> & PickManager<"options", "stringifier">
+
 ): Result<true, MultipleErrors<typeof SHORTCUT_ERROR.UNKNOWN_KEY>> {
 	const s = manager.options.stringifier
 	const keys = manager.keys
@@ -33,7 +33,7 @@ export function areValidKeys(
 			${s.stringify(shortcut ?? chain, manager)} contains unknown keys: ${stringified}
 			`, {
 			shortcut: shortcut ?? { chain },
-			keys: unknownKeys,
+			keys: unknownKeys
 		}))
 	}
 	return Ok(true)

@@ -1,5 +1,5 @@
 import { crop } from "@alanscodelog/utils/crop"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 
 import { KnownError } from "./KnownError.js"
 
@@ -23,18 +23,18 @@ function setForceUnequalOnAll<TSave extends boolean = false>(shortcuts: Shortcut
 
 function canSwapChords(
 	shortcuts: Shortcuts,
-	manager: Pick<Manager, "keys" | "shortcuts" | "commands" >
-	& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "sorter">,
+	manager: Pick<Manager, "keys" | "shortcuts" | "commands">
+		& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "sorter">,
 	chainA: string[][],
 	chainB: string[][],
 	filter?: (shortcut: Shortcut) => boolean
 ): Result<true, Error | KnownError<typeof SHORTCUT_ERROR.INVALID_SWAP_CHORDS | typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT>> {
 	let can: Result<true, any> = Ok(true)
-	const shortcutsClone = { ...shortcuts, entries: [...shortcuts.entries.map(_ => ({ ..._ }))]}
+	const shortcutsClone = { ...shortcuts, entries: [...shortcuts.entries.map(_ => ({ ..._ }))] }
 	const managerClone = { ...manager, shortcuts: shortcutsClone }
 
 	const { shortcutsA, shortcutsB } = getToSwap(shortcutsClone, manager, chainA, chainB, filter)
-	
+
 	const wasA = setForceUnequalOnAll(shortcutsA, true, true)
 
 	for (const shortcutB of shortcutsB) {
@@ -87,7 +87,7 @@ function assertCorrectSwapParameters(
 	keys: Keys,
 	chordsA: string[][], chordsB: string[][],
 	{
-		stringifier: s = defaultStringifier,
+		stringifier: s = defaultStringifier
 	}: {
 		stringifier?: IStringifier
 	} = {}
@@ -98,7 +98,7 @@ function assertCorrectSwapParameters(
 	if (canB.isError) { return canB }
 
 	if (equalsKeys(chordsA, chordsB, keys, chordsB.length)
-			|| equalsKeys(chordsB, chordsA, keys, chordsA.length)
+		|| equalsKeys(chordsB, chordsA, keys, chordsA.length)
 	) {
 		return Err(new KnownError(SHORTCUT_ERROR.INVALID_SWAP_CHORDS, crop`
 			The chords to swap cannot share starting chords.
@@ -111,8 +111,8 @@ function assertCorrectSwapParameters(
 }
 function getToSwap(
 	shortcuts: Shortcuts,
-	manager: Pick<Manager, "keys" | "shortcuts" | "commands" >
-	& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "sorter">,
+	manager: Pick<Manager, "keys" | "shortcuts" | "commands">
+		& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "sorter">,
 	chainA: string[][],
 	chainB: string[][],
 	filter?: (shortcut: Shortcut) => boolean
@@ -199,10 +199,10 @@ export function shortcutSwapChords(
 	shortcuts: Shortcuts,
 	chainA: string[][],
 	chainB: string[][],
-	manager: Pick<Manager, "keys" | "shortcuts" | "commands" >
-	& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "sorter">,
+	manager: Pick<Manager, "keys" | "shortcuts" | "commands">
+		& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "sorter">,
 	{
-		check = true,
+		check = true
 	}: {
 		check?: boolean | "only"
 	} = {},
@@ -212,7 +212,6 @@ export function shortcutSwapChords(
 	if (res.isError) { return res }
 
 	if (check) {
-		// eslint-disable-next-line @typescript-eslint/no-shadow
 		const res = canSwapChords(shortcuts, manager, chainA, chainB, filter)
 		if (res.isError) { return res }
 	}
@@ -235,7 +234,7 @@ export function shortcutSwapChords(
 	}
 	setForceUnequalOnAll(shortcutsA, wasB, true)
 
-	
+
 	return Ok(true)
 }
 

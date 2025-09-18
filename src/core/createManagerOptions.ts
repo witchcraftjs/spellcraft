@@ -13,7 +13,7 @@ import type { Manager } from "../types/index.js"
  * This can be used to create the base manager options.
  */
 export function createManagerOptions(
-	rawOpts: Parameters<typeof createManager>[0]["options"],
+	rawOpts: Parameters<typeof createManager>[0]["options"]
 ): Manager["options"] {
 	const options: Manager["options"] = {
 		sorter: defaultSorter,
@@ -23,7 +23,7 @@ export function createManagerOptions(
 		enableShortcuts: true,
 		enableListeners: true,
 		updateStateOnAllEvents: true,
-		...rawOpts,
+		...rawOpts
 	}
 	return options
 }

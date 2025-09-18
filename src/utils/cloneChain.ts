@@ -8,6 +8,6 @@ export function cloneChain(chain: string[][]): string[][] {
 		}
 		clone.push(chordClone)
 	}
-	
+
 	return clone
 }

@@ -13,7 +13,7 @@ import { cloneChain } from "../utils/cloneChain.js"
 export function removeFromChain(
 	manager: Manager,
 	keys: string[],
-	e?: AnyInputEvent,
+	e?: AnyInputEvent
 ): Result<true, MultipleErrors<ManagerSetEntries["state.chain"]["error"]>> {
 	if (keys.length === 0) return Ok(true)
 	if (manager.state.isAwaitingKeyup) {
@@ -34,8 +34,8 @@ export function removeFromChain(
 			const chain = manager.state.chain
 			const precedingChords = chain.slice(0, chain.length - 1)
 			const spreadableLastChord = precedingChords.length === 0 && lastChord.length === 0
-					? []
-					: [lastChord]
+				? []
+				: [lastChord]
 			const res = setManagerProp(manager, "state.chain", cloneChain([...precedingChords, ...spreadableLastChord]))
 			if (res.isError) return res as any
 		}

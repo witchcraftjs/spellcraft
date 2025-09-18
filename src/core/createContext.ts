@@ -8,7 +8,7 @@ export function createContext<TContext extends RawContext>(
 	const context: Context = {
 		type: "context",
 		...rawContext,
-		value,
+		value
 	}
 	return context
 }

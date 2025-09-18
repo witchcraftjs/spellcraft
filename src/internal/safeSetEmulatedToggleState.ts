@@ -2,9 +2,8 @@ import { setKeyProp } from "../core/setKeyProp.js"
 import type { Key, KeySetEntries, Manager } from "../types/index.js"
 
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function safeSetEmulatedToggleState<
-	THooks extends Manager["hooks"],
+	THooks extends Manager["hooks"]
 >(
 	key: Key,
 	value: boolean,

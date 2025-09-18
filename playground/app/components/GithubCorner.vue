@@ -18,10 +18,14 @@
 			scale-x-[-1]
 		"
 	>
-		<polygon points="0,0 0,100 100,0" fill="black"/>
+		<polygon
+			points="0,0 0,100 100,0"
+			fill="black"
+		/>
 		Sorry, your browser does not support inline SVG.
 	</svg>
-	<div class="
+	<div
+		class="
 		pt-[0.4rem]
 		pr-[0.4rem]
 			absolute
@@ -36,6 +40,7 @@
 	</div>
 </a>
 </template>
+
 <script setup lang="ts">
 import IFaBrandsGithub from "~icons/fa-brands/github"
 </script>

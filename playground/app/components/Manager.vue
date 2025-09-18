@@ -1,5 +1,6 @@
 <template>
-<div id="@witchcraft/spellcraft"
+<div
+	id="manager"
 	:class="twMerge(`
 		dark:bg-neutral-900
 		dark:text-white
@@ -18,7 +19,8 @@
 		@activate="activateContext($event)"
 		@deactivate="deactivateContext($event)"
 	/>
-	<div class="active-area"
+	<div
+		class="active-area"
 		tabindex="0"
 		ref="el"
 		@click="el?.focus()"
@@ -31,15 +33,17 @@
 			v-model:is-dragging="isDragging"
 		/>
 	</div>
-	<div class="
-		
+	<div
+		class="
+
 		gap-2
 		flex
 		justify-start
 		items-center
 	"
 	>
-		<WButton :disabled="activeListTab === type"
+		<WButton
+			:disabled="activeListTab === type"
 			v-for="type of ['Shortcuts', 'Commands'] as const"
 			:key="type"
 			@click="activeListTab = type"
@@ -47,7 +51,8 @@
 			{{ type }}
 		</WButton>
 	</div>
-	<list-shortcuts v-show="activeListTab === 'Shortcuts'"
+	<list-shortcuts
+		v-show="activeListTab === 'Shortcuts'"
 		class=""
 		:listeners="listeners"
 		:manager="manager"
@@ -61,7 +66,7 @@
 		<WButton
 			v-if="Object.values(manager.commands.entries).length ===0 && manager.shortcuts.entries.length === 0"
 			class="flex-1"
-		
+
 			@click="emit('addExampleData')"
 		>
 			Add Example Data
@@ -73,17 +78,17 @@
 <script setup lang="ts">
 import { castType } from "@alanscodelog/utils/castType"
 import { last } from "@alanscodelog/utils/last"
-import { type Manager } from "@witchcraft/spellcraft"
+import type { Manager } from "@witchcraft/spellcraft"
 import {
 	attach,
 	createManagerEventListeners,
-	detach,
+	detach
 } from "@witchcraft/spellcraft"
 import { getKeyFromIdOrVariant } from "@witchcraft/spellcraft/helpers/getKeyFromIdOrVariant"
 import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain"
+import type { ContextInfo } from "@witchcraft/spellcraft/types"
 // import { overlayHoldListeners } from "../common/overlayAccessibilityListeners.js"
-import type { ContextInfo } from "@witchcraft/spellcraft/types/index"
-import { onMounted, onUnmounted, reactive, type Ref, ref, toRefs, watch, watchEffect } from "vue"
+import { onMounted, onUnmounted, type Ref, ref, toRefs, watch } from "vue"
 
 import KContexts from "./Contexts.vue"
 import KKeyboard from "./Keyboard.vue"
@@ -134,7 +139,7 @@ function keydownListener(e: KeyboardEvent) {
 		e.stopImmediatePropagation()
 		const stillPressed = last(manager.value.state.chain)?.filter(_ => getKeyFromIdOrVariant(_, manager.value.keys).unwrap()[0].pressed) ?? []
 		safeSetManagerChain(manager.value, [
-			stillPressed,
+			stillPressed
 		])
 
 		clearVirtuallyPressed(props.virtuallyPressedKeys, manager.value)
@@ -157,8 +162,8 @@ watch(() => manager.value.name, () => {
 	listeners.value = createManagerEventListeners(manager.value)
 	attach(el.value!, listeners.value)
 })
-
 </script>
+
 <style>
 body {
 	overscroll-behavior: none;

@@ -1,13 +1,13 @@
 import { castType } from "@alanscodelog/utils/castType"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 import { set } from "@alanscodelog/utils/set"
 import { unreachable } from "@alanscodelog/utils/unreachable"
 
 import { isValidManager } from "../helpers/isValidManager.js"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { type safeSetManagerChain } from "../helpers/safeSetManagerChain.js"
+import type { safeSetManagerChain } from "../helpers/safeSetManagerChain.js"
 import { areValidKeys } from "../internal/areValidKeys.js"
-import { type CanHookErrors, type CanHookManagerProps, type ChainError, type Manager, type ManagerSetEntries, type MultipleErrors,SHORTCUT_ERROR } from "../types/index.js"
+import { type CanHookErrors, type CanHookManagerProps, type ChainError, type Manager, type ManagerSetEntries, type MultipleErrors, SHORTCUT_ERROR } from "../types/index.js"
 import { cloneChain } from "../utils/cloneChain.js"
 
 
@@ -42,9 +42,9 @@ const canHookable: CanHookManagerProps[] = ["state.chain", "shortcuts", "command
 export function setManagerProp<
 	TEntries extends ManagerSetEntries,
 	TProp extends keyof ManagerSetEntries,
-	TEntry extends TEntries[TProp] ,
+	TEntry extends TEntries[TProp],
 	THooks extends Manager["hooks"],
-	TCheck extends boolean | "only" = true,
+	TCheck extends boolean | "only" = true
 
 >(
 	/** Manager is mutate if check is not "only" */
@@ -53,18 +53,17 @@ export function setManagerProp<
 	val: TEntry["val"],
 	{ check = true as TCheck }: { check?: TCheck } = {}
 ): Result<
-		TCheck extends "only" ? true : Manager,
-		MultipleErrors<TEntry["error"]>
+	TCheck extends "only" ? true : Manager,
+	MultipleErrors<TEntry["error"]>
 	| CanHookErrors<Manager["hooks"] extends never ? never : THooks, "canSetManagerProp">
-	>
-{
+> {
 	// castType is used extensively because of https://github.com/microsoft/TypeScript/issues/50652
 	if (check) {
 		switch (prop) {
 			case "state.chain": {
 				castType<TEntries["state.chain"]["val"]>(val)
 				castType<TEntries["state.chain"]["manager"]>(manager)
-				
+
 				const resIsValid = areValidKeys(val, manager)
 				if (resIsValid.isError) return resIsValid satisfies Result<never, MultipleErrors<TEntries["state.chain"]["error"]>>
 				break

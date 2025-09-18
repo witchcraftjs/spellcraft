@@ -8,7 +8,7 @@ export const notifyIfError = <T extends Result<any, Error>>(res: T): T => {
 			message: res.error.message,
 			options: ["Ok"],
 			timeout: true,
-			cancellable: "Ok",
+			cancellable: "Ok"
 		})
 	}
 	return res

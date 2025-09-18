@@ -1,10 +1,10 @@
 import { shortcutCanExecuteIn } from "@witchcraft/spellcraft/helpers"
-import { type Manager, type Shortcut } from "@witchcraft/spellcraft/types"
+import type { Manager, Shortcut } from "@witchcraft/spellcraft/types"
 import { chainContainsSubset, equalsKeys } from "@witchcraft/spellcraft/utils"
 import { computed, type Ref } from "vue"
 
 
-export type Filters <T> = {
+export type Filters<T> = {
 	onlyExecutable: T
 	onlyEnabled: T
 	showPressable: T
@@ -25,7 +25,7 @@ export const useFilterableShortcutsList = (
 		const keys = manager.value.keys
 		for (const shortcut of manager.value.shortcuts.entries) {
 			const executable = shortcutCanExecuteIn(shortcut, manager.value, { allowEmptyCommand: true })
-			
+
 			const exactMatch = equalsKeys(shortcut.chain, chain, keys)
 			const pressable = chainContainsSubset(shortcut.chain, chain, keys, { onlySubset: false, onlyPressable: true })
 			const pressableModOrChord = chainContainsSubset(shortcut.chain, chain, keys, { onlySubset: true, onlyPressable: false }) && !pressable

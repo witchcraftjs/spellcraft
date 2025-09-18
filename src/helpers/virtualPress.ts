@@ -17,7 +17,7 @@ import type { Manager } from "../types/index.js"
  */
 export function virtualPress(
 	manager: Manager,
-	keyIdOrVariant: string,
+	keyIdOrVariant: string
 ): void {
 	const res = getKeyFromIdOrVariant(keyIdOrVariant, manager.keys)
 	if (res.isError) {

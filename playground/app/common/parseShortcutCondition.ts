@@ -1,6 +1,6 @@
 import { isWhitespace } from "@alanscodelog/utils/isWhitespace"
 import { readable } from "@alanscodelog/utils/readable"
-import { Err,Ok, type Result } from "@alanscodelog/utils/Result"
+import { Err, Ok, type Result } from "@alanscodelog/utils/Result"
 import { extractTokens } from "@witchcraft/expressit/utils/extractTokens"
 import type { Shortcut } from "@witchcraft/spellcraft/types/shortcuts"
 

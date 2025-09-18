@@ -1,6 +1,6 @@
-import { type Mutable } from "@alanscodelog/utils/types"
+import type { Mutable } from "@alanscodelog/utils/types"
 
-import type { KEY_SORT_POS,SHORTCUT_ERROR } from "./enums.js"
+import type { KEY_SORT_POS, SHORTCUT_ERROR } from "./enums.js"
 import type { PickManager } from "./general.js"
 import type { Manager } from "./manager.js"
 
@@ -191,7 +191,7 @@ export interface ToggleKey<TId extends string = string> extends BaseKey<TId> {
 	 * - If the toggle is native and the state is seen to change without a key press (i.e. when the element is not in focus), a key release is **NOT** emulated.
 	 */
 	readonly isToggle: "native" | "emulated"
-	
+
 	readonly toggleOnId: string
 	readonly toggleOffId: string
 	/**
@@ -213,7 +213,7 @@ export type IKeysSorter = {
 }
 
 export interface Keys<
-	TEntries extends Record<string, Key> = Record<string, Key>,
+	TEntries extends Record<string, Key> = Record<string, Key>
 > {
 	type: "keys"
 	/**
@@ -262,14 +262,14 @@ export interface Keys<
 	readonly toggles: Record<string, Key>
 }
 
-type GetKeyHooks<T extends keyof KeySetEntries | keyof KeysSetEntries> =
-T extends CanHookKeyProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetKeyProp" | "onSetKeyProp">>
-: T extends OnHookKeyProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "onSetKeyProp">>
-: T extends CanHookKeysProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetKeysProp" | "onSetKeysProp">>
-: Partial<Pick<NonNullable<Manager["hooks"]>, "onSetKeysProp">>
+type GetKeyHooks<T extends keyof KeySetEntries | keyof KeysSetEntries>
+	= T extends CanHookKeyProps
+		? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetKeyProp" | "onSetKeyProp">>
+		: T extends OnHookKeyProps
+			? Partial<Pick<NonNullable<Manager["hooks"]>, "onSetKeyProp">>
+			: T extends CanHookKeysProps
+				? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetKeysProp" | "onSetKeysProp">>
+				: Partial<Pick<NonNullable<Manager["hooks"]>, "onSetKeysProp">>
 
 type BaseKeyManager = PickManager<"options", "stringifier"> & Record<any, any>
 type Unmanaged<T extends keyof Key & keyof KeySetEntries> = {
@@ -313,40 +313,40 @@ export type KeySetEntries = {
 
 }
 
-export type OnHookKeyProps =
-	| "pressed"
-	| "x"
-	| "y"
-	| "width"
-	| "height"
-	| "label"
-	| "toggleOnPressed"
-	| "toggleOffPressed"
-	| "enabled"
-	| "render"
-	| "classes"
-	
+export type OnHookKeyProps
+	= | "pressed"
+		| "x"
+		| "y"
+		| "width"
+		| "height"
+		| "label"
+		| "toggleOnPressed"
+		| "toggleOffPressed"
+		| "enabled"
+		| "render"
+		| "classes"
+
 
 export type CanHookKeyProps = Exclude<
 	OnHookKeyProps,
 	"pressed" | "toggleOffPressed" | "toggleOnPressed"
 >
 
-export type SyntheticOnHookKeysProps =
-	| `entries@${"add" | "remove"}`
-	| `variants@${"add" | "remove"}@${string}`
-	| `toggles@${"add" | "remove"}@${string}`
+export type SyntheticOnHookKeysProps
+	= | `entries@${"add" | "remove"}`
+		| `variants@${"add" | "remove"}@${string}`
+		| `toggles@${"add" | "remove"}@${string}`
 
 export type CanHookKeysProps = `entries@${"add" | "remove"}`
 
 export type OnHookKeysProps = SyntheticOnHookKeysProps | CanHookKeysProps
 
 type BaseKeysManager = PickManager<"options", "stringifier"> & Record<any, any>
-& Pick<Manager, "keys">
- 
+	& Pick<Manager, "keys">
 
-export type KeysSetEntries =
-	Record<`entries@add`, {
+
+export type KeysSetEntries
+	= Record<`entries@add`, {
 		val: Key
 		manager: BaseKeysManager
 		hooks: GetKeyHooks<`entries@add`>

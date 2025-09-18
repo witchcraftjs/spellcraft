@@ -12,29 +12,28 @@ import type { CanHookErrors, Manager, MultipleErrors, PickManager, Shortcut, Sho
  */
 export function createShortcuts<
 	THooks extends Manager["hooks"],
-	TRawShortcuts extends Shortcut[] ,
-	TCheck extends boolean | "only" = true,
+	TRawShortcuts extends Shortcut[],
+	TCheck extends boolean | "only" = true
 >(
 	shortcutsList: TRawShortcuts,
 	manager: Pick<Manager, "keys" | "commands">
-	& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "sorter">
-	& { hooks?: THooks },
-	opts?: Partial<Pick<Shortcuts, "ignoreModifierConflicts" | "ignoreChainConflicts" >>,
+		& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "sorter">
+		& { hooks?: THooks },
+	opts?: Partial<Pick<Shortcuts, "ignoreModifierConflicts" | "ignoreChainConflicts">>,
 	{
-		check = true as TCheck,
+		check = true as TCheck
 	}: { check?: boolean | "only" } = {}
 ): Result<
-		TCheck extends "only" ? true : Shortcuts,
-		MultipleErrors<
-			ShortcutsSetEntries["entries@add"]["error"]
-		> | CanHookErrors<THooks extends never ? never : THooks, "canSetShortcutsProp">
-	>
-{
+	TCheck extends "only" ? true : Shortcuts,
+	MultipleErrors<
+		ShortcutsSetEntries["entries@add"]["error"]
+	> | CanHookErrors<THooks extends never ? never : THooks, "canSetShortcutsProp">
+> {
 	const shortcuts: Shortcuts = {
 		entries: [],
 		ignoreModifierConflicts: opts?.ignoreModifierConflicts ?? false,
-		ignoreChainConflicts: opts?.ignoreChainConflicts ?? false,
-		
+		ignoreChainConflicts: opts?.ignoreChainConflicts ?? false
+
 	}
 	const managerClone = { ...manager, shortcuts }
 	if (check) {
@@ -46,7 +45,7 @@ export function createShortcuts<
 	}
 	if (check === "only") return Ok(true) satisfies Result<true, never> as any
 
-	
+
 	return Ok(shortcuts) satisfies Result<Shortcuts, never> as any
 }
 

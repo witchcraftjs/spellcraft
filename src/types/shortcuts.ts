@@ -1,7 +1,7 @@
 import type { Command } from "./commands.js"
 import type { Condition } from "./condition.js"
+import type { ChainError, SHORTCUT_ERROR } from "./enums.js"
 import type { PickManager } from "./general.js"
-import type { ChainError, SHORTCUT_ERROR } from "./index.js"
 import type { Key } from "./keys.js"
 import type { Manager } from "./manager.js"
 
@@ -13,7 +13,7 @@ import type { Manager } from "./manager.js"
 export interface RawShortcut<
 	TRawCommand extends Command["name"] | Command = Command["name"] | Command,
 	TCommand extends TRawCommand extends string ? Command<TRawCommand> : TRawCommand = TRawCommand extends string ? Command<TRawCommand> : TRawCommand,
-	TCondition extends Condition = Condition,
+	TCondition extends Condition = Condition
 > extends Omit<Partial<Shortcut<TCommand["name"], TCondition>>, "chain" | "command"> {
 	chain: (string | Key)[][]
 	command?: TRawCommand
@@ -25,7 +25,7 @@ export interface RawShortcut<
 // and also possibly the condition, don't think others are needed
 export interface Shortcut<
 	TCommand extends Command["name"] = Command["name"],
-	TCondition extends Condition = Condition,
+	TCondition extends Condition = Condition
 > {
 	type: "shortcut"
 	/**
@@ -64,10 +64,9 @@ export interface Shortcut<
 	readonly forceUnequal: boolean
 }
 
-export type Shortcuts <
+export type Shortcuts<
 	TEntries extends
-		Shortcut[] =
-		Shortcut[],
+	Shortcut[] = Shortcut[]
 > = {
 	/**
 	 * The shortcut entries.
@@ -112,14 +111,14 @@ export type TriggerableShortcut = Shortcut & {
 }
 
 
-type GetShortcutHooks<T extends keyof ShortcutSetEntries | keyof ShortcutsSetEntries> =
-T extends CanHookShortcutProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetShortcutProp" | "onSetShortcutProp">>
-: T extends OnHookShortcutProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "onSetShortcutProp">>
-: T extends CanHookShortcutsProps
-? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetShortcutsProp" | "onSetShortcutsProp">>
-: Partial<Pick<NonNullable<Manager["hooks"]>, "onSetShortcutsProp">>
+type GetShortcutHooks<T extends keyof ShortcutSetEntries | keyof ShortcutsSetEntries>
+	= T extends CanHookShortcutProps
+		? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetShortcutProp" | "onSetShortcutProp">>
+		: T extends OnHookShortcutProps
+			? Partial<Pick<NonNullable<Manager["hooks"]>, "onSetShortcutProp">>
+			: T extends CanHookShortcutsProps
+				? Partial<Pick<NonNullable<Manager["hooks"]>, "canSetShortcutsProp" | "onSetShortcutsProp">>
+				: Partial<Pick<NonNullable<Manager["hooks"]>, "onSetShortcutsProp">>
 
 
 type BaseShortcutManager = Record<any, any>
@@ -128,17 +127,17 @@ export type ShortcutSetEntries = {
 	chain: {
 		val: Shortcut["chain"]
 		manager: BaseShortcutManager
-		& PickManager<"options", "stringifier" | "sorter">
-		& Pick<Manager, "shortcuts" | "commands" | "keys">
+			& PickManager<"options", "stringifier" | "sorter">
+			& Pick<Manager, "shortcuts" | "commands" | "keys">
 		hooks: GetShortcutHooks<"chain">
 		error: ChainError | typeof SHORTCUT_ERROR.DUPLICATE_KEY | typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT
 	}
 	command: {
 		val: Shortcut["command"]
 		manager: BaseShortcutManager
-		& PickManager<"options", "stringifier" >
-		& Pick<Manager, "commands" >
-		& Partial<Pick<Manager, "keys">>
+			& PickManager<"options", "stringifier">
+			& Pick<Manager, "commands">
+			& Partial<Pick<Manager, "keys">>
 
 		hooks: GetShortcutHooks<"command">
 		error: typeof SHORTCUT_ERROR.UNKNOWN_COMMAND
@@ -163,12 +162,12 @@ export type ShortcutSetEntries = {
 	}
 }
 
-export type OnHookShortcutProps =
-	| "chain"
-	| "command"
-	| "condition"
-	| "enabled"
-	| "forceUnequal"
+export type OnHookShortcutProps
+	= | "chain"
+		| "command"
+		| "condition"
+		| "enabled"
+		| "forceUnequal"
 
 export type CanHookShortcutProps = Exclude<OnHookShortcutProps, "forceUnequal">
 
@@ -177,10 +176,10 @@ export type SyntheticOnHookShortcutsProps = "entries@add" | "entries@remove"
 export type CanHookShortcutsProps = SyntheticOnHookShortcutsProps
 export type OnHookShortcutsProps = SyntheticOnHookShortcutsProps
 
-type BaseShortcutsManager =
-	& Pick<Manager, "keys" | "commands" | "shortcuts">
-	& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier">
-	& Record<any, any>
+type BaseShortcutsManager
+	= & Pick<Manager, "keys" | "commands" | "shortcuts">
+		& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier">
+		& Record<any, any>
 
 export type ShortcutsSetEntries = {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -188,12 +187,12 @@ export type ShortcutsSetEntries = {
 		val: Shortcut
 		hooks: GetShortcutHooks<`entries@add`>
 		manager: BaseShortcutsManager
-		& PickManager<"options", "sorter">
-	
+			& PickManager<"options", "sorter">
+
 		error:
-		| typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT
-		| typeof SHORTCUT_ERROR.UNKNOWN_COMMAND
-		| ChainError
+			| typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT
+			| typeof SHORTCUT_ERROR.UNKNOWN_COMMAND
+			| ChainError
 	}
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	"entries@remove": {

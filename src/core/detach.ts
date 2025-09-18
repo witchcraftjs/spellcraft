@@ -12,7 +12,7 @@ export function detach(
 	el: AttachTarget,
 	listeners: Record<EventTypes, AnyFunction>,
 	/** Listeners need ot be detached with the same options they were attached with. */
-	opts: Partial<Record<EventTypes, AddEventListenerOptions>> = { wheel: { passive: true } },
+	opts: Partial<Record<EventTypes, AddEventListenerOptions>> = { wheel: { passive: true } }
 ): void {
 	for (const name of keys(listeners)) {
 		el.removeEventListener(name, listeners[name], opts[name])
