@@ -39,7 +39,7 @@
 		}
 	},
 	"scripts": {
-		"prepare": "husky && cd playground && pnpm i",
+		"prepare": "husky && pnpm nuxt-module-build prepare && pnpm build:only && cd playground && pnpm i --ignore-scripts --ignore-workspace",
 		"build": "nuxt-module-build prepare && nuxt-module-build build && nuxi generate playground",
 		"build:only": "nuxt-module-build build",
 		"dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
@@ -59,7 +59,7 @@
 		"lint:types": "vue-tsc --noEmit && echo 'todo cd playground && vue-tsc --noEmit'",
 		"lint:commits": "commitlint --from-last-tag --to HEAD --verbose",
 		"lint:imports": "madge --circular --extensions ts ./src",
-		"lint": "pnpm lint:types && pnpm lint:eslint && pnpm lint:imports",
+		"lint": "pnpm lint:types && pnpm lint:eslint && pnpm lint:commits && pnpm lint:imports",
 		"actions:debug": "act -r -v",
 		"gen:exports": "indexit update -o '${path}.js'"
 	},
