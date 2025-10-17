@@ -1,3 +1,52 @@
+packages:
+  - ./
+  - playground/
+
+allowUnusedPatches: true
+
+catalog:
+  '@alanscodelog/commitlint-config': ^3.1.2
+  '@alanscodelog/eslint-config': ^6.3.1
+  '@alanscodelog/semantic-release-config': ^6.0.0
+  '@alanscodelog/tsconfigs': ^6.2.0
+  '@alanscodelog/utils': ^6.0.2
+  '@alanscodelog/vite-config': ^0.0.6
+  '@commitlint/cli': ^19.8.1
+  '@iconify/json': ^2.2.385
+  '@nuxt/eslint-config': ^1.9.0
+  '@nuxt/kit': ^4.1.2
+  '@nuxt/module-builder': ^1.0.2
+  '@nuxt/schema': ^4.1.2
+  '@nuxt/types': ^2.18.1
+  '@types/node': ^24.5.2
+  '@vitejs/plugin-vue': ^6.0.1
+  '@vitest/coverage-c8': ^0.33.0
+  '@witchcraft/expressit': ^0.4.1
+  '@witchcraft/ui': ^0.3.7
+  concurrently: ^9.2.1
+  cross-env: ^10.0.0
+  defu: ^6.1.4
+  fast-glob: ^3.3.3
+  http-server: ^14.1.1
+  husky: ^9.1.7
+  indexit: 2.1.0-beta.3
+  madge: ^8.0.0
+  nuxt: ^4.1.2
+  onchange: ^7.1.0
+  semantic-release: ^24.2.8
+  tailwindcss: ^4.1.13
+  typedoc: 0.28.13
+  typescript: ^5.9.2
+  unbuild: ^3.6.1
+  unplugin-icons: ^22.3.0
+  vite-tsconfig-paths: ^5.1.4
+  vitest: ^3.2.4
+  vue: ^3.5.21
+  vue-tsc: ^3.0.7
+
 patchedDependencies:
   '@nuxt/module-builder': patches/@nuxt__module-builder.patch
-allowUnusedPatches: true
+
+settings:
+  catalogMode: strict
+  cleanupUnusedCatalogs: false

@@ -5,8 +5,6 @@ import {
 	defineNuxtModule
 } from "@nuxt/kit"
 
-import pkg from "../package.json" with { type: "json" }
-
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -30,7 +28,7 @@ export default defineNuxtModule<ModuleOptions>({
 	},
 	moduleDependencies: {
 		"@witchcraft/ui/nuxt": {
-			version: pkg.dependencies["@witchcraft/ui"]
+			version: "^0.3.6"
 		}
 	},
 	async setup(_options, nuxt) {
