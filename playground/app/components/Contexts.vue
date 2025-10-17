@@ -5,7 +5,7 @@
 		w-full
 		flex
 		flex-col
-		align-center
+		items-center
 		justify-center
 	"
 >
