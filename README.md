@@ -123,7 +123,7 @@ You can choose in your execute function what exactly to do at that point for bot
 
 If non-modifier keys are still being held at this point, the manager will not allow triggering a shortcut until they are released (see `state.isAwaitingKeyup`). Modifiers are not affect by this. We usually want the user to be able to keep the modifier pressed and do, for example, `Ctrl+B` then `Ctrl+I` to bold and italicize text, without having to release `Ctrl`, only `B` and `I`.
 
-## Errors and `{check}` Option
+## Errors and Checking if Actions can be Performed
 
 Note the use of `unwrap()`. Because many actions can throw "soft" errors, to better help deal with all the errors the library uses a Result monad in most of the return types. `unwrap` is like rust's unwrap and will throw the error if there was one, otherwise "unwrap" and return the value within. 
 
@@ -280,6 +280,12 @@ export { }
 Additionally, when you create a condition, you can pass a function to `parse` it and add these needed properties:
 
 You'll probably want to create a wrapping function to do this. Here's an example with the expressit library:
+
+
+<details>
+
+<summary>Click to Expand</summary>
+
 ```ts
 import { ShortcutContextParser } from "@witchcraft/expressit/examples/ShortcutContextParser"
 import { createCondition as _createCondition } from "@witchcraft/spellcraft"
@@ -303,7 +309,27 @@ function createCondition(text: string) {
 }
 const condition = createCondition("a || b")
 condition.ast // should exist
+
+// tell the manager how to evaluare the condition:
+const manager = createmanager({
+	context: createcontext<context<map<string, boolean>>>(new map()),
+	options: {
+		evaluatecondition(condition, context) {
+			if (condition.ast === undefined) throw new Error("condition ast is undefined")
+
+			const res = condition.ast.valid 
+				? conditionParser.evaluate(
+					conditionParser.normalize(condition.ast),
+					context.value.isActive
+				) 
+				: false 
+			return res
+		},
+	}
+})
+
 ```
+</details>
 
 ## Contexts
 
@@ -312,10 +338,10 @@ Similarly with contexts, you can use any sort of object or type that you like.
 You can tell the manager it's type when you create it. For example, say we wanted to use a map:
 
 ```ts
-const manager = createManager({
-	context: createContext<Context<Map<string, boolean>>>(new Map()),
+const manager = createmanager({
+	context: createcontext<context<map<string, boolean>>>(new map()),
 	options: {
-		evaluateCondition(condition, context) {
+		evaluatecondition(condition, context) {
 			// context is now correctly typed
 			return context.value.has(condition.text)
 		},
@@ -328,7 +354,7 @@ const manager = createManager({
 Creating a shortcut requires a the key/commands we created and the manager options to create a valid shortcut.
 
 ```ts
-const shortcut =createShortcut({
+const shortcut = createShortcut({
 	command: "test",
 	chain: [["a"]],
 	condition: createCondition("a || b"),
@@ -399,6 +425,10 @@ Note that while the built in errors are property specific, custom errors are not
 
 A helper class `ShortcutManagerManager` is provided to help manage multiple managers.
 
+<details>
+
+<summary>Click to Expand</summary>
+
 ```ts
 import { ShortcutManagerManager } from "@witchcraft/spellcraft"
 
@@ -455,6 +485,9 @@ managerManager.duplicateManager("myManagerName", "myDuplicateManagerName")
 managerManager.deleteManager("myManagerName")
 managerManager.renameManager("myManagerName", "myNewManagerName")
 ```
+
+</details>
+
 You can then use the active manager's `onSet*Prop` hooks to call debouncedSave. You can wrap only the active manager to intercept all it's `onSet*Prop` calls. See the `useMultipleManagers` composable in the demo.
 
 ## Other Helpers and Utilities
@@ -473,6 +506,7 @@ There are many helpers provided to simplify common use cases under `/helpers`. S
 There's also some smaller utility functions in `/utils`:
 - `equals/dedupe/clone/*Key` These are particularly important for manipulating chords. This is because keys which are variants of eachother (see `Key.variants`) do not have matching ids and we usually want to be able to dedupe by the variants as well. 
 - `isAny/Trigger/Wheel/MouseKey`.
+- `getKeyCodesFromKeys` for getting the raw key codes from a list of keys for use with third-party libraries.
 
 
 There's also a few other functions that in the future might be moved from the demo were I created them and into the library. See [demo/src/common](https://github.com/AlansCodeLog/spellcraft/tree/master/demo/src/common).
@@ -510,18 +544,28 @@ Under gnome at least, if a key (usually Ctrl) is set to locate the cursor, it wi
 
 # FAQ 
 
-## Browser shortcuts interfere with certain shortcuts, how can this be avoided?
+
+<details>
+
+<summary>Browser shortcuts interfere with certain shortcuts, how can this be avoided?</summary>
 
 You can use a listener on the manager to e.preventDefault() some of these, but this doesn't work for all of them.
 
 If available you can also try using the [Keyboard API's](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API) lock method (see [Keyboard Locking](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API#keyboard_locking) ).
 
-## How to label keys with their local names?
+</details>
+
+<details>
+
+<summary>How to label keys with their local names?</summary>
 
 If the [Keyboard API](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard_API) is available, you can use it's [navigator.keyboard.getLayoutMap method.](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard/getLayoutMap). Helpers (getKeyboardLayoutMap and labelWithNavigator) are provided for this purpose, see them for details.
 
+</details>
 
-## How to set multiple manager properties safely (i.e. batch replace shortcuts/commands/keys)?
+<details>
+
+<summary>How to set multiple manager properties safely (i.e. batch replace shortcuts/commands/keys)?</summary>
 
 This can be an issue because there isn't a way to tell the manager you want to replace *multiple* properties and it might be impossible to, for example, replace commands with a smaller subset but not have it error even if you're planning to replace the shortcuts so they don't contain missing commands.
 
@@ -539,7 +583,11 @@ if (isValidManager(manager)) {
 }
 
 ```
-## How to create `modifier-only` shortcuts? (e.g. a shortcut `Ctrl` that changes the some state like enabling multiple selection).
+</details>
+
+<details>
+
+<summary>How to create `modifier-only` shortcuts? (e.g. a shortcut `Ctrl` that changes the some state like enabling multiple selection).</summary>
 
 To do this, instead of clearing the manager's chain, you just set the state directly.
 
@@ -583,7 +631,35 @@ function addToSelected(item) {
 }
 </script>
 ```
-# How to type the context?
+</details>
+
+<details>
+
+<summary>How to show pretty shortcut strings to the user?</summary>
+
+To show a pretty stringified version of a shortcut, use `manager.options.stringifier.stringify(shortcut.chain, manager)`.
+
+Here's an advanced example in vue that shows a hint only when needed:
+
+```ts
+const usageInstructions = computed(() => {
+	const manager = shortcuts.activeManager!.value!
+	const s = manager.options.stringifier
+	const context = shortcuts.context!
+	const isDragging = context.value.layout.drag.isDragging
+	const splitChain = manager.shortcuts.entries.find(_ => _.command === LAYOUT_COMMANDS.dragModifierSplit)?.chain
+		
+	return isDragging && splitChain
+		`Hold ${s.stringify(splitChain, manager)} to Split` 
+		: undefined,
+})
+```
+
+</details>
+
+<details>
+
+<summary>How to type the context?</summary>
 
 Types can be extended multiple times from different files so long as the `NAME` part below is unique for each extension.
 
@@ -598,4 +674,5 @@ declare module "@witchcraft/spellcraft/types" {
 	}
 }
 ```
+</details>
 
