@@ -278,11 +278,31 @@ export { }
 ```
 
 Additionally, when you create a condition, you can pass a function to `parse` it and add these needed properties:
+
+You'll probably want to create a wrapping function to do this. Here's an example with the expressit library:
 ```ts
-const condition = createCondition("a || b ", (_) => {
-	_.ast = parse(_.text)
+import { ShortcutContextParser } from "@witchcraft/expressit/examples/ShortcutContextParser"
+import { createCondition as _createCondition } from "@witchcraft/spellcraft"
+
+const dummyContext = { a: { }, b: { c: {} } }
+const shortcutParser = new ShortcutContextParser(dummyContext) // see docs for details
+function parser(text: string, _: Condition) {
+	const res = shortcutsParser.parse(text)
+	// === undefined is to narrow out the ErrorToken type
+	if (!res.valid || res.type === undefined) {
+		throw new Error(`Shortcut context parser failed to parse condition ${_.text}`)
+	}
+
+	_.ast = res
 	return _
-})
+}
+
+/** Creates a condition with the ast saved in it. */
+function createCondition(text: string) {
+	return _createCondition(text, parser)
+}
+const condition = createCondition("a || b")
+condition.ast // should exist
 ```
 
 ## Contexts
@@ -311,7 +331,7 @@ Creating a shortcut requires a the key/commands we created and the manager optio
 const shortcut =createShortcut({
 	command: "test",
 	chain: [["a"]],
-	condition: createCondition("a || b", true),
+	condition: createCondition("a || b"),
 	enabled: true,
 }, {options, keys, commands}).unwrap()
 
