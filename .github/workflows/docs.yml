@@ -17,7 +17,7 @@ jobs:
       matrix:
         node-version: ["lts/*"]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       if: "env.ENABLE_DOCS == 'true'"
 
     - name: Setup
@@ -29,6 +29,8 @@ jobs:
     - name: Build 
       uses: ./.github/actions/composite-build
       if: "env.ENABLE_DOCS == 'true'"
+      with:
+        USE_LOCKFILE: ${{ env.USE_LOCKFILE }}
 
     - run: pnpm doc
       if: "env.ENABLE_DOCS == 'true'"
