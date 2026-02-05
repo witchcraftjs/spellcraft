@@ -565,12 +565,14 @@ function addToSelected(item) {
 ```
 # How to type the context?
 
+Types can be extended multiple times from different files so long as the `NAME` part below is unique for each extension.
+
 ```ts [global.ts]
 declare module "@witchcraft/spellcraft/types" {
 // or for nuxt
 // declare module "#witchcraft/spellcraft/types.js" {
 	export interface Register {
-		ExtendedContextInfo: {
+		ShortcutManagerContextNAME: { //replace NAME with something
 			// extend types here
 		}
 	}
