@@ -10,39 +10,39 @@ catalog:
   '@alanscodelog/semantic-release-config': ^6.0.0
   '@alanscodelog/tsconfigs': ^6.2.0
   '@alanscodelog/utils': ^6.0.2
-  '@alanscodelog/vite-config': ^0.0.6
-  '@commitlint/cli': ^19.8.1
-  '@iconify/json': ^2.2.385
-  '@nuxt/eslint-config': ^1.9.0
-  '@nuxt/kit': ^4.1.2
+  '@alanscodelog/vite-config': ^0.0.7
+  '@commitlint/cli': ^20.4.1
+  '@iconify/json': ^2.2.436
+  '@nuxt/eslint-config': ^1.13.0
+  '@nuxt/kit': ^4.3.0
   '@nuxt/module-builder': ^1.0.2
-  '@nuxt/schema': ^4.1.2
+  '@nuxt/schema': ^4.3.0
   '@nuxt/types': ^2.18.1
-  '@types/node': ^24.5.2
-  '@vitejs/plugin-vue': ^6.0.1
+  '@types/node': ^25.2.1
+  '@vitejs/plugin-vue': ^6.0.4
   '@vitest/coverage-c8': ^0.33.0
   '@witchcraft/expressit': ^0.4.1
-  '@witchcraft/ui': ^0.3.7
+  '@witchcraft/ui': ^0.3.20
   concurrently: ^9.2.1
-  cross-env: ^10.0.0
+  cross-env: ^10.1.0
   defu: ^6.1.4
   fast-glob: ^3.3.3
   http-server: ^14.1.1
   husky: ^9.1.7
   indexit: 2.1.0-beta.3
   madge: ^8.0.0
-  nuxt: ^4.1.2
+  nuxt: ^4.3.0
   onchange: ^7.1.0
-  semantic-release: ^24.2.8
-  tailwindcss: ^4.1.13
-  typedoc: 0.28.13
-  typescript: ^5.9.2
+  semantic-release: ^25.0.3
+  tailwindcss: ^4.1.18
+  typedoc: 0.28.16
+  typescript: ^5.9.3
   unbuild: ^3.6.1
-  unplugin-icons: ^22.3.0
-  vite-tsconfig-paths: ^5.1.4
-  vitest: ^3.2.4
-  vue: ^3.5.21
-  vue-tsc: ^3.0.7
+  unplugin-icons: ^23.0.1
+  vite-tsconfig-paths: ^6.0.5
+  vitest: ^4.0.18
+  vue: ^3.5.27
+  vue-tsc: ^3.2.4
 
 patchedDependencies:
   '@nuxt/module-builder': patches/@nuxt__module-builder.patch

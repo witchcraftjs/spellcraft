@@ -79,6 +79,7 @@
 		"@alanscodelog/utils": "catalog:",
 		"@witchcraft/expressit": "catalog:",
 		"@witchcraft/ui": "catalog:",
+		"reka-ui": "^2.8.0",
 		"vue": "catalog:"
 	},
 	"devDependencies": {
