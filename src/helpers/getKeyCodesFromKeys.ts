@@ -13,7 +13,7 @@ import type { Key } from "../types/keys.js"
 export function getKeyCodesFromKeys(keys: Key[], { skipIdIfHasVariants = true}: { skipIdIfHasVariants?: boolean } = {}): string[] {
 	const res = new Set<string>()
 	for (const key of keys) {
-		if (key.variants) {
+		if (key.variants && key.variants.length > 0) {
 			if (!skipIdIfHasVariants) {
 				res.add(key.id)
 			}
