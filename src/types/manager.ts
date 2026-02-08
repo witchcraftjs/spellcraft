@@ -222,8 +222,9 @@ export type Manager<
 		 *
 		 * - `ignoreCommand` (default) will ignore both shortcuts' commands. If everything else is equal, they are considered equal.
 		 * - `ignoreCommandWithDifferentCondition` will ignore both commands' names and only compare their conditions. If everything else is equal, they are considered equal. Use it if you allow command conditions to equal eachother. See {@link ConditionComparer} for details.
-		 * - `all` will compare everything.
+		 * - `all` will compare everything. Useful for finding an exact shortcut match. Should not be used when comparing shortcuts to find conflicts as it will allow shortcuts with the same chain but different commands to not be equal.
 		 *
+		 * Note that regardless of this setting shortcut conflicts can arise for other reasons due to `doesShortcutConflict` which checks other conditions.
 		 */
 		shortcutEqualityStrategy: "ignoreCommand" | "ignoreCommandWithDifferentCondition" | "all"
 

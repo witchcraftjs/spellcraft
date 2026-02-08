@@ -175,7 +175,7 @@ export function createManager<
 	if (!shortcuts || isArray(shortcuts)) {
 		castType<RawShortcut[]>(shortcuts)
 		const shortcutsList: Shortcut[] = []
-		const m2 = { ...m, commands: commands as Commands, keys: keys as Keys }
+		const m2 = { ...m, commands: commands as Commands, keys: keys as Keys, context: rawManager.context! }
 		if (shortcuts) {
 			for (const shortcut of shortcuts) {
 				const res = createShortcut(shortcut, m2)
@@ -187,7 +187,8 @@ export function createManager<
 		const res = createShortcuts(shortcutsList, {
 			keys: keys! as Keys,
 			commands: commands! as Commands,
-			options
+			options,
+			context: rawManager.context!
 		}, additionalOpts?.shortcuts)
 		if (res.isError) return res as any
 		shortcuts = res.value satisfies Shortcuts as any

@@ -39,15 +39,30 @@ export function doesShortcutConflict<TShortcut extends Shortcut>(
 	if (equalsShortcut(shortcutA, shortcutB, manager)) return true
 	const evaluateCondition = manager.options.evaluateCondition
 	const conditionEquals = manager.options.conditionEquals
+
+	const commandA = shortcutA.command ? manager.commands.entries[shortcutA.command] : undefined
+	const commandB = shortcutB.command ? manager.commands.entries[shortcutB.command] : undefined
+
+	if ((shortcutA.condition || shortcutB.condition || commandA?.condition || commandB?.condition) && context === undefined) {
+		// eslint-disable-next-line no-console
+		console.warn("Condition comparisons will not work without a context (the base conditionComparer is still used).")
+	}
 	if (context) {
 		if (shortcutA.condition && shortcutB.condition) {
 			const shortcutCondition = evaluateCondition(shortcutA.condition, context)
 			const otherCondition = evaluateCondition(shortcutB.condition, context)
-			if (shortcutCondition !== otherCondition) return false
-			if (!shortcutCondition) return false
+			if (!shortcutCondition || shortcutCondition !== otherCondition) return false
+		}
+		if (commandA?.condition && commandB?.condition) {
+			const commandCondition = evaluateCondition(commandA.condition, context)
+			const otherCondition = evaluateCondition(commandB.condition, context)
+			if (!commandCondition || commandCondition !== otherCondition) return false
 		}
 	} else {
 		if	(!conditionEquals(shortcutA.condition, shortcutB.condition, "shortcut")) return false
+		if (commandA?.condition && commandB?.condition) {
+			if (!conditionEquals(commandA?.condition, commandB?.condition, "command")) return false
+		}
 	}
 	const { keys } = manager
 	// an empty chain is always in conflict ?
