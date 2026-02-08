@@ -1,7 +1,7 @@
 import { catchError } from "@alanscodelog/utils"
 import { expect, it } from "vitest"
 
-import { manager } from "./helpers.keys.js"
+import { k, manager } from "./helpers.keys.js"
 
 import { createKey } from "../src/core/createKey.js"
 import { createKeys } from "../src/core/createKeys.js"
@@ -10,6 +10,7 @@ import { getLabel } from "../src/helpers/getLabel.js"
 import { virtualPress } from "../src/helpers/virtualPress.js"
 import { SHORTCUT_ERROR } from "../src/types/enums.js"
 import { equalsKey } from "../src/utils/equalsKey.js"
+import { getKeyCodesFromKeyIds } from "../src/helpers/getKeyCodesFromKeyIds.js"
 
 
 it("should compare equality properly", () => {
@@ -86,4 +87,10 @@ it("gaurds against invalid variant", () => {
 	expect(catchError(() => {
 		createKey("a", { variants: ["a"]}).unwrap()
 	}).code).to.equal(SHORTCUT_ERROR.INVALID_VARIANT)
+})
+it("gets key codes properly", () => {
+	// duplicates should be removed
+	expect(getKeyCodesFromKeyIds([k.a.id, k.a.id], manager.keys, {skipIdIfHasVariants: false})).to.deep.equal(["a", "aVariant"])
+	expect(getKeyCodesFromKeyIds([k.a.id, k.a.id], manager.keys, {skipIdIfHasVariants: true})).to.deep.equal(["aVariant"])
+	
 })
