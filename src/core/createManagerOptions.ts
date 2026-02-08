@@ -16,6 +16,7 @@ export function createManagerOptions(
 	rawOpts: Parameters<typeof createManager>[0]["options"]
 ): Manager["options"] {
 	const options: Manager["options"] = {
+		shortcutEqualityStrategy: "ignoreCommand",
 		sorter: defaultSorter,
 		stringifier: defaultStringifier,
 		conditionEquals: defaultConditionEquals,

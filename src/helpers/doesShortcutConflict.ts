@@ -23,7 +23,7 @@ export function doesShortcutConflict<TShortcut extends Shortcut>(
 	shortcutA: TShortcut,
 	shortcutB: Shortcut,
 	manager: Pick<Manager, "keys" | "commands" | "shortcuts"> & { context?: Manager["context"] }
-		& PickManager<"options", "evaluateCondition" | "conditionEquals">
+		& PickManager<"options", "evaluateCondition" | "conditionEquals" | "shortcutEqualityStrategy">
 ): boolean {
 	const context = manager.context
 	if (!context && manager.shortcuts.useContextInConflictCheck) {
@@ -47,7 +47,7 @@ export function doesShortcutConflict<TShortcut extends Shortcut>(
 			if (!shortcutCondition) return false
 		}
 	} else {
-		if	(!conditionEquals(shortcutA.condition, shortcutB.condition)) return false
+		if	(!conditionEquals(shortcutA.condition, shortcutB.condition, "shortcut")) return false
 	}
 	const { keys } = manager
 	// an empty chain is always in conflict ?

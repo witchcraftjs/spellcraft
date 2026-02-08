@@ -6,6 +6,8 @@ import { createKeys } from "../src/core/createKeys.js"
 import { createManager } from "../src/core/createManager.js"
 import { keyOrder } from "../src/internal/keyOrder.js"
 import type { Key } from "../src/types/index.js"
+import { createCommand } from "../src/core/createCommand.js"
+import { createCondition } from "../src/core/createCondition.js"
 
 
 const a = createKey("a", { variants: ["aVariant"]}).unwrap()
@@ -61,10 +63,21 @@ export const keys = createKeys([
 	wheelUp,
 	toggle1,
 	toggle2,
-
-	
 ]).unwrap()
-export const commands = createCommands([]).unwrap()
+
+export const commands = createCommands([
+	createCommand("a", {
+		condition: createCondition("a"),
+		execute: () => {}
+	}),
+	createCommand("b", {
+		condition: createCondition("b"),
+		execute: () => {}
+	}),
+	createCommand("conditionless", {
+		execute: () => {}
+	}),
+]).unwrap()
 
 export const manager = createManager({
 	keys,

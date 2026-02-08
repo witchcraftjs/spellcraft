@@ -4,12 +4,14 @@ import { describe, expect, it } from "vitest"
 import { commands, k, keys, manager, properOrder, properOrderExtraKeys } from "./helpers.keys.js"
 
 import { createShortcut } from "../src/core/createShortcut.js"
+import { createCondition } from "../src/core/createCondition.js"
 import { defaultSorter } from "../src/defaults/KeysSorter.js"
 import { equalsShortcut } from "../src/helpers/equalsShortcut.js"
 import { SHORTCUT_ERROR, type Key } from "../src/types/index.js"
 import { chainContainsSubset } from "../src/utils/chainContainsSubset.js"
 import { containsKey } from "../src/utils/containsKey.js"
 import { equalsKeys } from "../src/utils/equalsKeys.js"
+import { createCommand } from "../src/core/createCommand.js"
 
 
 it("it works", () => {
@@ -58,6 +60,18 @@ it("should compare equality properly", () => {
 	const shortcutB3 = createShortcut({ chain: [[k.modA, k.a], [k.b]]}, manager).unwrap()
 	const shortcutB4 = createShortcut({ chain: [[k.a], [k.modA, k.a]]}, manager).unwrap()
 
+	const commandAA = commands.entries.a // a w condition a
+	const commandBB = commands.entries.b // b w condition b
+
+	const shortcutC1 = createShortcut({
+		chain: [ [ k.a ] ],
+		command: commandAA.name
+	}, manager).unwrap()
+	const shortcutC2 = createShortcut({
+		chain: [ [ k.a ] ],
+		command: commandBB.name
+	}, manager).unwrap()
+
 	// Against themselves
 	expect(equalsShortcut(shortcutA1, shortcutA1, manager)).to.be.true
 	expect(equalsShortcut(shortcutB1, shortcutB1, manager)).to.be.true
@@ -68,6 +82,14 @@ it("should compare equality properly", () => {
 	expect(equalsShortcut(shortcutA1, shortcutA3, manager)).to.be.false
 	expect(equalsShortcut(shortcutB1, shortcutB3, manager)).to.be.false
 	expect(equalsShortcut(shortcutB1, shortcutB4, manager)).to.be.false
+	// special command condition check
+	expect(equalsShortcut(shortcutC1, shortcutC2, manager, {
+		// the default
+		shortcutEqualityStrategy: "ignoreCommand",
+	})).to.be.true
+	expect(equalsShortcut(shortcutC1, shortcutC2, manager, {
+		shortcutEqualityStrategy: "ignoreCommandWithDifferentCondition",
+	})).to.be.false
 })
 it("should guard against impossible toggle shortcut", () => {
 	expect(catchError(() => {

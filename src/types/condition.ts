@@ -28,8 +28,10 @@ export interface Condition {
  * This is a personal preference, but if we have a method that gives false negatives it can be confusing that some shortcuts immediately error when added because their conditions are simple, while others don't until triggered. The simpler, more consistent alternative is to only have them error on triggering. Aditionally conflicting conditions can be shown on the keyboard layout when then user picks contexts to check against.
  *
  * Why use the default implementation at all then? Well, shortcuts aren't the only ones that have conditions, commands can too, but unlike shortcuts, usually it's developers who are in charge of assigning a command's condition, and since they are usually simple, it's more possible to make sure the conditions are unique (e.g. tests could enforce they're unique by converting them all to CNF and pre-checking them for equality).
+ *
+ * This is why the manager now has the option `shortcutEqualityStrategy` which can be se to `ignoreCommandWithDifferentCondition`. You can implement a comparer that only checks when a command is being checked.
  */
-export type ConditionComparer = (conditionA?: Condition, conditionB?: Condition) => boolean
+export type ConditionComparer = (conditionA: Condition | undefined, conditionB: Condition | undefined, type: "shortcut" | "command") => boolean
 
 export type ConditionEvaluator<TContext extends Context<any>> = (condition: Condition, context: TContext) => boolean
 

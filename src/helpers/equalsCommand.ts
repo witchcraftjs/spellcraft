@@ -13,6 +13,6 @@ export function equalsCommand<TCommand extends Command>(
 	if (commandA === commandB) return true
 	return commandA.name === commandB.name
 		&& commandA.execute === commandB.execute
-		&& manager.options.conditionEquals(commandA.condition, commandB.condition)
+		&& manager.options.conditionEquals(commandA.condition, commandB.condition, "command")
 		&& commandA.description === commandB.description
 }

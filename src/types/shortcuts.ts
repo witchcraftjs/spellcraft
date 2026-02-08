@@ -178,7 +178,7 @@ export type OnHookShortcutsProps = SyntheticOnHookShortcutsProps
 
 type BaseShortcutsManager
 	= & Pick<Manager, "keys" | "commands" | "shortcuts">
-		& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier">
+		& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "shortcutEqualityStrategy">
 		& Record<any, any>
 
 export type ShortcutsSetEntries = {
@@ -187,7 +187,7 @@ export type ShortcutsSetEntries = {
 		val: Shortcut
 		hooks: GetShortcutHooks<`entries@add`>
 		manager: BaseShortcutsManager
-			& PickManager<"options", "sorter">
+			& PickManager<"options", "sorter" | "shortcutEqualityStrategy">
 
 		error:
 			| typeof SHORTCUT_ERROR.DUPLICATE_SHORTCUT

@@ -43,7 +43,7 @@ export function setShortcutsProp<
 
 				const shortcut = val as any as Shortcut
 				const existing = (shortcuts.entries).find(_ =>
-					equalsShortcut(shortcut, _, manager, { ignoreCommand: true })
+					equalsShortcut(shortcut, _, manager)
 					|| doesShortcutConflict(_, shortcut, manager)
 				)
 
@@ -67,7 +67,7 @@ export function setShortcutsProp<
 				const shortcut = val as any as Shortcut
 				// note we don't ignore the command here, we want to find an exact match
 				const existing = (shortcuts.entries).find(_ =>
-					_ === shortcut || equalsShortcut(shortcut, _, manager, { ignoreCommand: false })
+					_ === shortcut || equalsShortcut(shortcut, _, manager, { shortcutEqualityStrategy: "all" })
 				)
 				if (existing === undefined) {
 					return Err(new KnownError(
@@ -105,7 +105,7 @@ export function setShortcutsProp<
 		}
 		case "entries@remove": {
 			const shortcut = val
-			const i = shortcuts.entries.findIndex(_ => _ === shortcut || equalsShortcut(shortcut, _, manager, { ignoreCommand: false }))
+			const i = shortcuts.entries.findIndex(_ => _ === shortcut || equalsShortcut(shortcut, _, manager, { shortcutEqualityStrategy: "all" }))
 			if (i < 0) {
 				throw new Error("If used correctly, shortcut should exist at this point, but it does not.")
 			}

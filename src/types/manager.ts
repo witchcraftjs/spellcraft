@@ -212,9 +212,21 @@ export type Manager<
 		/**
 		 * Determines if two conditions are equal.
 		 *
-		 * This is actually not a good idea to implement if you use boolean conditions. See {@link ConditionComparer} for why.
+		 * This is actually not a good idea to implement for shortcuts if you use boolean conditions. See {@link ConditionComparer} for why.
+		 *
+		 * See also {@link Manager.options.shortcutEqualityStrategy}.
 		 */
 		conditionEquals: ConditionComparer
+		/**
+		 * Determines how shortcuts are compared.
+		 *
+		 * - `ignoreCommand` (default) will ignore both shortcuts' commands. If everything else is equal, they are considered equal.
+		 * - `ignoreCommandWithDifferentCondition` will ignore both commands' names and only compare their conditions. If everything else is equal, they are considered equal. Use it if you allow command conditions to equal eachother. See {@link ConditionComparer} for details.
+		 * - `all` will compare everything.
+		 *
+		 */
+		shortcutEqualityStrategy: "ignoreCommand" | "ignoreCommandWithDifferentCondition" | "all"
+
 		/** Determines how conditions are evaluated. */
 		evaluateCondition: ConditionEvaluator<TContext>
 		/** Enable/disable triggering of shortcuts. The manager otherwise works as normal. */
