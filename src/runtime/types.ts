@@ -1,3 +1,4 @@
+import type { OrToAnd } from "@alanscodelog/utils/types"
 // allows users to register multiple contexts
 // @eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Register {}
@@ -16,7 +17,7 @@ export type ExtendedShortcutManagerInfo = keyof Register extends `ShortcutManage
 	: {}
 
 
-export type ContextInfo = ExtendedShortcutManagerInfo & {
+export type ContextInfo = OrToAnd<ExtendedShortcutManagerInfo> & {
 	count: Record<string, number>
 	isActive: Record<string, boolean>
 }
