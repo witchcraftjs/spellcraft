@@ -1,0 +1,1 @@
+import{_ as a,x as t,y as r,A as s}from"./CW93qMzb.js";const n={tabindex:"0"},o=Object.assign({name:"Aria"},{__name:"WAria",props:{value:{type:String,required:!0}},setup(e){return(c,i)=>(t(),r("div",n,s(e.value),1))}}),p=a(o,[["__scopeId","data-v-f6aeaba6"]]);export{p as default};
