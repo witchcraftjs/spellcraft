@@ -4,8 +4,6 @@
 	:class="twMerge(`
 		dark:bg-neutral-900
 		dark:text-white
-		min-h-screen
-		min-h-100dvh
 		flex
 		flex-col
 		gap-2
@@ -53,7 +51,7 @@
 	</div>
 	<list-shortcuts
 		v-show="activeListTab === 'Shortcuts'"
-		class=""
+		class="flex-1"
 		:listeners="listeners"
 		:manager="manager"
 	/>

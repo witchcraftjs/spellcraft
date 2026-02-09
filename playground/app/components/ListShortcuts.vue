@@ -1,219 +1,215 @@
 <template>
-<div>
+<div class="flex flex-col">
 	<div
 		:class="`
-		rounded-tl-sm
-		rounded-tr-sm
-		border-x
-		border-t
-		border-neutral-600
-		px-2
-		py-1
-		flex
-		flex-wrap
-		justify-end
-		gap-2
-		[&>.filter:nth-child(4)]:after:content-['']
-		[&>.filter:nth-child(4)]:after:border-r-neutral-400
-		[&>.filter:nth-child(4)]:after:border-r-2
-		border-b-2
-	`"
+			border-neutral-600
+			px-2
+			py-1
+			flex
+			flex-wrap
+			justify-end
+			gap-2
+			[&>.filter:nth-child(4)]:after:content-['']
+			[&>.filter:nth-child(4)]:after:border-r-neutral-400
+			[&>.filter:nth-child(4)]:after:border-r-2
+		`"
 	>
 		<div>Filters:</div>
 		<div class="flex-1"/>
 		<!-- We draw a line after the second filter to delimit the exclusionary from the non-exclusionary filters. -->
 		<div
 			class="filter flex no-wrap gap-2"
-			v-for="action in ObjectKeys(filters).filter(_ => _ !=='showExactMatches')"
+			v-for="action in ObjectKeys(filters).filter(_ => _ !== 'showExactMatches')"
 			:key="action"
 		>
 			<WCheckbox
 				class="whitespace-nowrap"
 				:label="filterNames[action]"
 				:model-value="filters[action]"
-				@update:model-value="filters[action]=$event"
+				@update:model-value="filters[action] = $event"
 			/>
 		</div>
 	</div>
-	<div
-		:class="`
-			grid
-			grid-cols-[min-content_repeat(3,minmax(0,1fr))_min-content]
-			items-stretch
-			[&>div:nth-last-of-type(1)]:rounded-br-sm
-			[&>div:nth-last-of-type(5)]:rounded-bl-sm
-			[&>div]:border-neutral-400
-			dark:[&>div]:border-neutral-600
-			[&>div:nth-of-type(-n+5)]:bg-neutral-200
-			[&>div:nth-of-type(n+6):nth-of-type(-n+10)]:bg-neutral-100
-			[&>div:nth-of-type(n+6):nth-of-type(-n+10)]:border-b-2
-			dark:[&>div:nth-of-type(-n+5)]:bg-neutral-800
-			[&>div:nth-of-type(-n+5)]:border-t-neutral-600
-			dark:[&>div:nth-of-type(-n+5)]:border-t-neutral-800
-			[&>div:nth-last-of-type(-n+5)]:border-b-neutral-600
-			dark:[&>div:nth-last-of-type(-n+5)]:border-b-neutral-800
-			[&>div:nth-of-type(-n+5)]:border-t
-			[&>div]:border-b
-			[&>div:nth-of-type(5n+1)]:border-l
-			[&>div:nth-of-type(5n+1)]:border-l-neutral-600
-			dark:[&>div:nth-of-type(5n+1)]:border-l-neutral-800
-			[&>div:nth-of-type(5n+5)]:border-r-neutral-600
-			dark:[&>div:nth-of-type(5n+5)]:border-r-neutral-800
-			[&>div]:border-r
-			relative
-		`"
-		v-resizable-cols="{ selector: 'div', enable: true }"
+	<WTable
+		:values="tableData"
+		:cols="tableCols"
+		:col-config="colConfig"
+		:item-key="(item: any) => item.id"
+		:resizable="{}"
+		:border="true"
+		:cell-border="true"
+		:header="true"
+		wrapper-class="flex-1 basis-min-content"
+		class="
+				border-t-0
+				rounded-t-none
+				overflow-visible
+				[&_.cell]:overflow-visible!
+				[&:not(.resizable-cols-setup)]:block
+				[&:not(.resizable-cols-setup)_thead]:block
+				[&:not(.resizable-cols-setup)_thead_tr]:flex
+				[&:not(.resizable-cols-setup)_thead_tr]:flex-nowrap
+				[&:not(.resizable-cols-setup)_thead_th:not(.override-initial)]:flex-1
+			"
 	>
-		<!-- headers -->
-		<div
-			class=""
-			title="Enabled"
-			aria-label="Enabled"
-		/>
-		<div class="px-2">
-			Shortcut
-		</div>
-		<div class="px-2">
-			Command
-		</div>
-		<div class="px-2">
-			Condition
-		</div>
-		<div
-			class=""
-			title="Add/Remove"
-			aria-label="Add/Remove"
-		/>
-
-		<!-- add new -->
-		<div class="flex items-center px-2">
-			<WCheckbox
-				:model-value="newShortcut.enabled"
-				@update:model-value="updateShortcutEnabled(-1, $event)"
-			/>
-		</div>
-		<div class="">
-			<WRecorder
-				:border="false"
-				:binders="binders"
-				:recording-title="`(Hold escape to cancel, hold enter to accept.)`"
-				:recording-value="isRecordingKey === -1 ? recordingValue : undefined"
-				:recording="isRecording && isRecordingKey === -1"
-				:model-value="s.stringify(newShortcut.chain, manager)"
-				@update:recording="toggleRecording(-1, $event)"
-				@recorder:click="toggleRecording(-1, !isRecording)"
-				@recorder:blur="toggleRecording(-1, false, { reset: true })"
-			/>
-		</div>
-		<div class="">
-			<WInputDeprecated
-				:placeholder="'(None)'"
-				:border="false"
-				:suggestions="commandsSuggestions"
-				:model-value="newShortcut.command ??''"
-				@update:model-value="setReadOnly(newShortcut, 'command', isWhitespace($event) ?undefined : $event)"
-				@submit="createCommandIfMissing"
-			/>
-		</div>
-		<div class="">
-			<WInputDeprecated
-				:placeholder="activeContexts.length > 0 ? activeContexts.join(' && '): '(Global)'"
-				:border="false"
-				:valid="conditionValidity[0] === true"
-				:title="conditionValidity[0] === true ? '' : conditionValidity[0]?.message"
-				v-model="newShortcut.condition.text"
-			/>
-			<!-- todo :suggestions="conditionSuggestions" -->
-		</div>
-
-		<div class="items-center px-1">
-			<WButton
-				:border="false"
-				aria-label="Add Shortcut"
-				auto-title-from-aria
-				@click="addShortcut"
+		<template #header-enabled="slotProps">
+			<th
+				:style="slotProps.style"
+				:class="twMerge(
+					slotProps.class,
+					`
+							override-initial
+							[table:not(.resizable-cols-setup)_&]:w-[min-content]
+						`
+				)"
+				title="Enabled"
+				aria-label="Enabled"
 			>
-				<template #icon>
-					<WIcon> <i-fa-solid-plus/> </WIcon>
-				</template>
-			</WButton>
-		</div>
-		<!-- existing - todo move into a component -->
-		<template
-			v-for="item, i of filteredShortcuts"
-			:key="shortcutToId(item, manager)"
-		>
-			<div class="flex items-center px-2">
 				<WCheckbox
-					:model-value="item.enabled"
-					@update:model-value="updateShortcutEnabled(i, $event)"
+					:disabled="true"
+					class="opacity-0"
+					aria-hidden
 				/>
-			</div>
-			<div class="">
+			</th>
+		</template>
+		<template #header-actions="slotProps">
+			<th
+				:class="twMerge(
+					slotProps.class,
+					`
+							override-initial
+							[table:not(.resizable-cols-setup)_&]:w-[2rem]
+						`
+				)"
+				:style="slotProps.style"
+				title="Add/Remove"
+				aria-label="Add/Remove"
+			/>
+		</template>
+
+		<template #enabled="slotProps">
+			<td
+				:class="slotProps.class"
+				:style="slotProps.style"
+			>
+				<div class="flex items-center justify-center">
+					<WCheckbox
+						:model-value="slotProps.item.shortcut.enabled"
+						@update:model-value="updateShortcutEnabled(slotProps.item.index, $event)"
+					/>
+				</div>
+			</td>
+		</template>
+
+		<template #shortcut="slotProps">
+			<td
+				:class="slotProps.class"
+				:style="slotProps.style"
+			>
 				<WRecorder
 					:border="false"
 					:binders="binders"
 					:recording-title="`(Hold escape to cancel, hold enter to accept.)`"
-					:recording-value="isRecordingKey === i ? recordingValue : undefined"
-					:recording="isRecordingKey === i"
-					:model-value="s.stringify(item.chain, manager)"
-					@update:recording="toggleRecording(i, $event)"
-					@recorder:click="toggleRecording(i, !isRecording)"
-					@recorder:blur="toggleRecording(i, false, { reset: true })"
+					:recording-value="isRecordingKey === slotProps.item.index ? recordingValue : undefined"
+					:recording="isRecording && isRecordingKey === slotProps.item.index"
+					:model-value="s.stringify(slotProps.item.shortcut.chain, manager)"
+					@update:recording="toggleRecording(slotProps.item.index, $event)"
+					@recorder:click="toggleRecording(slotProps.item.index, !isRecording)"
+					@recorder:blur="toggleRecording(slotProps.item.index, false, { reset: true })"
 				/>
-			</div>
-			<div class="">
+			</td>
+		</template>
+
+		<template #command="slotProps">
+			<td
+				:class="slotProps.class"
+				:style="slotProps.style"
+			>
 				<WInputDeprecated
-					:placeholder="'(None)'"
+					:wrapper-class="`
+							[&_.suggestions]:z-[1000000]
+							[.dark_&_.suggestions]:bg-neutral-900!
+						`"
+					:placeholder="slotProps.item.isNew ? '(None)' : ''"
 					:border="false"
-					:model-value="item.command ?? editedCommand"
-					title="Press enter to add new cammand."
 					:suggestions="commandsSuggestions"
-					@update:model-value="editedCommand = $event"
-					@blur="blurMaybeEditedCommand(i)"
-					@submit="updateShortcutCommand(i, $event, true)"
+					:model-value="slotProps.item.isNew ? slotProps.item.shortcut.command ?? '' : slotProps.item.shortcut.command ?? editedCommand"
+					title="Press enter to add new command."
+					@update:model-value="slotProps.item.isNew ? setReadOnly(newShortcut, 'command', isWhitespace($event) ? undefined : $event) : (editedCommand = $event)"
+					@submit="slotProps.item.isNew ? createCommandIfMissing($event) : updateShortcutCommand(slotProps.item.index, $event, true)"
+					@blur="!slotProps.item.isNew && blurMaybeEditedCommand(slotProps.item.index)"
 				/>
-			</div>
-			<div class="">
+			</td>
+		</template>
+
+		<template #condition="slotProps">
+			<td
+				:class="slotProps.class"
+				:style="slotProps.style"
+			>
 				<!-- @vue-expect-error -->
 				<WInputDeprecated
-					:placeholder="'(Global)'"
+					:wrapper-class="`
+							[&_.suggestions]:z-[1000000]
+							[.dark_&_.suggestions]:bg-neutral-900!
+						`"
+					:placeholder="slotProps.item.isNew ? (activeContexts.length > 0 ? activeContexts.join(' && ') : '(Global)') : '(Global)'"
 					:border="false"
-					:model-value="item.condition.text"
-					:valid="conditionValidity[i+1] === true"
-					:title="conditionValidity[i+1] instanceof Error ? conditionValidity[i+1]?.message: ''"
-					@submit="updateShortcutCondition(i, $event)"
+					:valid="conditionValidity[slotProps.item.index + 1] === true"
+					:title="conditionValidity[slotProps.item.index + 1] === true ? '' : conditionValidity[slotProps.item.index + 1]?.message"
+					:model-value="slotProps.item.shortcut.condition.text"
+					@update:model-value="slotProps.item.isNew && (newShortcut.condition.text = $event)"
+					@submit="!slotProps.item.isNew && updateShortcutCondition(slowProps.item.index, $event)"
 				/>
-				<!-- todo :suggestions="conditionSuggestions" -->
-			</div>
-			<div class="items-center px-1">
-				<WButton
-					:border="false"
-					aria-label="Delete Shortcut"
-					auto-title-from-aria
-					@click="notifyIfError(managerRemoveShortcut(item, manager))"
-				>
-					<template #icon>
-						<WIcon> <i-fa-solid-trash/> </WIcon>
-					</template>
-				</WButton>
-			</div>
+			</td>
 		</template>
-	</div>
+
+		<template #actions="slotProps">
+			<td
+				:class="slotProps.class"
+				:style="slotProps.style"
+			>
+				<div class="flex items-center justify-center">
+					<WButton
+						v-if="slotProps.item.isNew"
+						:border="false"
+						aria-label="Add Shortcut"
+						auto-title-from-aria
+						@click="addShortcut"
+					>
+						<template #icon>
+							<WIcon> <i-fa-solid-plus/> </WIcon>
+						</template>
+					</WButton>
+					<WButton
+						v-else
+						:border="false"
+						aria-label="Delete Shortcut"
+						auto-title-from-aria
+						@click="notifyIfError(managerRemoveShortcut(slotProps.item.shortcut, manager))"
+					>
+						<template #icon>
+							<WIcon> <i-fa-solid-trash/> </WIcon>
+						</template>
+					</WButton>
+				</div>
+			</td>
+		</template>
+	</WTable>
 </div>
 </template>
 
 <script setup lang="ts">
 import { setReadOnly } from "@alanscodelog/utils"
 import { isWhitespace } from "@alanscodelog/utils/isWhitespace"
-import { keys, keys as ObjectKeys } from "@alanscodelog/utils/keys"
+import { keys as ObjectKeys } from "@alanscodelog/utils/keys"
 import { Ok, type Result } from "@alanscodelog/utils/Result"
 import type { createManagerEventListeners } from "@witchcraft/spellcraft"
 import { addCommand, addShortcut as managerAddShortcut, attach, createCommand, createShortcut, detach, removeShortcut as managerRemoveShortcut, setManagerProp, setShortcutProp } from "@witchcraft/spellcraft"
 import { equalsShortcut } from "@witchcraft/spellcraft/helpers/equalsShortcut"
 import type { Manager, Shortcut } from "@witchcraft/spellcraft/types"
 import { cloneChain } from "@witchcraft/spellcraft/utils"
-import { vResizableCols } from "@witchcraft/ui/directives/vResizableCols"
+import { twMerge } from "@witchcraft/ui/utils/twMerge"
 import { computed, ref, toRaw, toRef } from "vue"
 
 import IFaSolidPlus from "~icons/fa-solid/plus"
@@ -284,7 +280,7 @@ const filteredShortcuts = useFilterableShortcutsList(manager, filterChain, filte
 const editedCommand = ref("")
 
 // use capture to let the listeners stopPropagation to child listenrs
-const attachOptions = Object.fromEntries(keys(listenersOverlay.value).map(_ => [
+const attachOptions = Object.fromEntries(ObjectKeys(listenersOverlay.value).map(_ => [
 	_,
 	{ capture: true, passive: _ === "wheel" }
 ]))
@@ -327,7 +323,39 @@ function toggleRecording(i: number, val: boolean, { reset = false }: { reset?: b
 	}
 }
 
-const newShortcut = ref(createShortcut({ chain: [] }, props.manager).unwrap())
+// the spread is to remove the readonly type
+const newShortcut = ref({ ...createShortcut({ chain: [] }, props.manager).unwrap() })
+
+const tableData = computed(() => {
+	const newShortcutItem = {
+		id: "new-shortcut",
+		isNew: true,
+		index: -1,
+		shortcut: newShortcut.value
+	}
+
+	const shortcuts = filteredShortcuts.value.map((s, i) => ({
+		id: shortcutToId(s, props.manager),
+		isNew: false,
+		index: i,
+		shortcut: s
+	}))
+
+	return [
+		newShortcutItem,
+		...shortcuts
+	]
+})
+const tableCols = ["enabled", "shortcut", "command", "condition", "actions"]
+
+const colConfig = {
+	enabled: { name: "", resizable: false },
+	shortcut: { name: "Shortcut" },
+	command: { name: "Command" },
+	condition: { name: "Condition" },
+	actions: { name: "", resizable: false }
+}
+
 const conditionValidity = computed(() => {
 	const res = []
 	const r = isValidCondition(newShortcut.value)
@@ -403,6 +431,10 @@ function updateShortcutChain(i: number, value: string[][]): void {
 }
 
 function updateShortcutEnabled(i: number, val: boolean): void {
+	if (i === -1) {
+		newShortcut.value.enabled = val
+		return
+	}
 	notifyIfError(setShortcutProp(filteredShortcuts.value[i], "enabled", val, props.manager))
 }
 

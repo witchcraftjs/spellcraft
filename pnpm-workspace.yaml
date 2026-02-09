@@ -22,7 +22,7 @@ catalog:
   '@vitejs/plugin-vue': ^6.0.4
   '@vitest/coverage-c8': ^0.33.0
   '@witchcraft/expressit': ^0.4.2
-  '@witchcraft/ui': ^0.3.20
+  '@witchcraft/ui': ^0.3.24
   concurrently: ^9.2.1
   cross-env: ^10.1.0
   defu: ^6.1.4
@@ -33,6 +33,7 @@ catalog:
   madge: ^8.0.0
   nuxt: ^4.3.0
   onchange: ^7.1.0
+  reka-ui: ^2.8.0
   semantic-release: ^25.0.3
   tailwindcss: ^4.1.18
   typedoc: 0.28.16

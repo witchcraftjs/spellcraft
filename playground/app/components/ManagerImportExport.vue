@@ -15,7 +15,7 @@
 	<WFileInput
 		aria-label="Import"
 		title="Import"
-		wrapper-class="flex-1 px-2 pl-1 border-[1px] hover:text-accent-600 whitespace-nowrap"
+		wrapper-class="flex-1 px-2 pl-1 border-[1px] hover:text-accent-600 whitespace-nowrap min-w-[10ch]"
 		:formats="['.json']"
 		:compact="true"
 		@input="importManagers as any"
