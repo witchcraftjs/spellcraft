@@ -14,7 +14,7 @@ import type { Keys } from "../types/keys.js"
  */
 
 
-export function getKeyCodesFromKeyIds(keyIds: string[], keys: Keys, opts: Parameters<typeof getKeyCodesFromKeys>[1]): string[] {
+export function getKeyCodesFromKeyIds(keyIds: string[], keys: Keys, opts: Parameters<typeof getKeyCodesFromKeys>[1] = {}): string[] {
 	const keysList = keyIds.flatMap(id => getKeyFromIdOrVariant(id, keys).unwrap())
 	return getKeyCodesFromKeys(keysList, opts)
 }

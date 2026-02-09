@@ -10,7 +10,7 @@
 
 import type { Key } from "../types/keys.js"
 
-export function getKeyCodesFromKeys(keys: Key[], { skipIdIfHasVariants = true}: { skipIdIfHasVariants?: boolean } = {}): string[] {
+export function getKeyCodesFromKeys(keys: Key[], { skipIdIfHasVariants = true }: { skipIdIfHasVariants?: boolean } = {}): string[] {
 	const res = new Set<string>()
 	for (const key of keys) {
 		if (key.variants && key.variants.length > 0) {
