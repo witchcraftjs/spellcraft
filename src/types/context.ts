@@ -1,3 +1,5 @@
+import type { ContextInfo } from "../runtime/types.js"
+
 export interface RecursiveRecord {
 	[key: string]: any | RecursiveRecord
 }
@@ -11,7 +13,7 @@ export interface RecursiveRecord {
  * @template TValue **@internal** Captures the type of the context value.
  */
 
-export type Context<TValue extends object = any> = {
+export type Context<TValue extends ContextInfo = any> = {
 	type: "context"
 	/** Where the context object is stored. */
 	value: TValue
