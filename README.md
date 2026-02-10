@@ -119,7 +119,7 @@ The listeners listen to all the events, look up the keys in the manager's key en
 
 The manager checks if the chain should trigger a shortcut, and triggers the corresponding `command.execute` both on `keyup` and `keydown.`. On `keydown` said shortcut is saved to `state.untrigger` in case we need to untrigger it early.
 
-You can choose in your execute function what exactly to do at that point for both the `keyup` and the `keydown`. Usually you will want your logic to only run on keydown and you should clear the manager's chain with `safeSetManagerChain`.
+You can choose in your execute function what exactly to do at that point for both the `keyup` and the `keydown`. Usually you will want your logic to only run on keydown and you should clear the manager's chain with `safeSetManagerChain`. There is also `forceClear(manager, { ignoreNative: true })` which does a few more things.
 
 If non-modifier keys are still being held at this point, the manager will not allow triggering a shortcut until they are released (see `state.isAwaitingKeyup`). Modifiers are not affect by this. We usually want the user to be able to keep the modifier pressed and do, for example, `Ctrl+B` then `Ctrl+I` to bold and italicize text, without having to release `Ctrl`, only `B` and `I`.
 
@@ -631,6 +631,33 @@ function addToSelected(item) {
 }
 </script>
 ```
+</details>
+
+<details>
+
+<summary>How to add a global "Escape" key to clear the manager's chain?</summary>
+
+Setting a shortcut.chain to `[["Escape"]]` will not work because it will only match when the manager is not in the middle of the chord.
+
+The manager does not support matching on a shortcut like `* Esc` or `* * Esc`. We might implement some sort of wildcard key in the future. The problem is it's more like a wildcard chain (e.g. `*+ Esc`)
+
+For now you can just add a regular listener to the element the manager is attached to. It is the only key you will ever need a seperate listener for and this rarely needs to be made configurable.
+
+```ts
+el.addEventListener("keydown", e => {
+	if (e.key === "Escape" 
+		&& !e.ctrlKey
+		&& !e.shiftKey
+		&& !e.altKey
+		&& !e.metaKey
+		// important so that [["Escape"]] doesn't match and works normally
+		&& manager.state.chain.length > 1
+	) {
+		setManagerProp(manager, "state.chain", []);
+	}
+})
+```
+
 </details>
 
 <details>
