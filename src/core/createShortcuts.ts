@@ -16,7 +16,8 @@ export function createShortcuts<
 	TCheck extends boolean | "only" = true
 >(
 	shortcutsList: TRawShortcuts,
-	manager: Pick<Manager, "keys" | "commands" | "context">
+	manager: Pick<Manager, "keys" | "commands">
+		& { context?: Manager["context"] }
 		& PickManager<"options", | "evaluateCondition" | "conditionEquals" | "stringifier" | "sorter" | "shortcutEqualityStrategy">
 		& { hooks?: THooks },
 	opts?: Partial<Pick<Shortcuts, "ignoreModifierConflicts" | "ignoreChainConflicts">>,
