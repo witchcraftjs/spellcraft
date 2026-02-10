@@ -310,7 +310,7 @@ function createCondition(text: string) {
 const condition = createCondition("a || b")
 condition.ast // should exist
 
-// tell the manager how to evaluare the condition:
+// tell the manager how to evaluate the condition:
 const manager = createmanager({
 	context: createcontext<context<map<string, boolean>>>(new map()),
 	options: {

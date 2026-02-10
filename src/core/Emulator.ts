@@ -18,7 +18,7 @@ const wheelKeys = ["wheelUp", "wheelDown"]
  * // press and release a
  * emulator.fire("KeyA")
  * // in case the pressed keys need to be cleared you can use the manager to do so:
- * manager.clear()
+ * forceClear(manager, {ignoreNative: true})
  * ```
  */
 export class Emulator {

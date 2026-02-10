@@ -34,7 +34,7 @@ export function useMultipleManagers(
 	const managerManager = new ShortcutManagerManager(
 		raw => createDefaultManager(raw, { __version: VERSION }),
 		{
-			onError: notifyIfError,
+			onError: notifyIfError as any,
 			onParse: (parsed: any) => {
 				if (!("__version" in parsed) || !(parsed.__version as string).match(/^(\d+)\.(\d+)\.(\d+)$/)) {
 					// we should not actually return here as we can still import the manager

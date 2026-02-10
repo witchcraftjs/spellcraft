@@ -18,7 +18,9 @@ export type ExtendedShortcutManagerInfo = keyof Register extends `ShortcutManage
 
 
 export type ContextInfo = OrToAnd<ExtendedShortcutManagerInfo> & {
+	/** See {@link useShortcutManagerContextCount} */
 	count: Record<string, number>
+	/** See {@link useShortcutManagerContextCount} */
 	isActive: Record<string, boolean>
 }
 export {}
