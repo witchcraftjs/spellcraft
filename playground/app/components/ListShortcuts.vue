@@ -26,7 +26,7 @@
 				class="whitespace-nowrap"
 				:label="filterNames[action]"
 				:model-value="filters[action]"
-				@update:model-value="filters[action] = $event"
+				@update:model-value="(val: boolean | 'indeterminate') => (filters[action] = val as boolean)"
 			/>
 		</div>
 	</div>
@@ -35,11 +35,10 @@
 		:cols="tableCols"
 		:col-config="colConfig"
 		:item-key="(item: any) => item.id"
-		:resizable="{}"
 		:border="true"
 		:cell-border="true"
 		:header="true"
-		wrapper-class="flex-1 basis-min-content"
+		:wrapper-attrs="{ class: 'flex-1 basis-min-content' }"
 		class="
 				border-t-0
 				rounded-t-none
@@ -58,9 +57,9 @@
 				:class="twMerge(
 					slotProps.class,
 					`
-							override-initial
-							[table:not(.resizable-cols-setup)_&]:w-[min-content]
-						`
+						override-initial
+						[table:not(.resizable-cols-setup)_&]:w-[min-content]
+					`
 				)"
 				title="Enabled"
 				aria-label="Enabled"
@@ -94,8 +93,8 @@
 			>
 				<div class="flex items-center justify-center">
 					<WCheckbox
-						:model-value="slotProps.item.shortcut.enabled"
-						@update:model-value="updateShortcutEnabled(slotProps.item.index, $event)"
+						:model-value="slotProps.item?.shortcut.enabled"
+						@update:model-value="(val: boolean | 'indeterminate') => slotProps.item && updateShortcutEnabled(slotProps.item.index, val as boolean)"
 					/>
 				</div>
 			</td>
@@ -110,62 +109,68 @@
 					:border="false"
 					:binders="binders"
 					:recording-title="`(Hold escape to cancel, hold enter to accept.)`"
-					:recording-value="isRecordingKey === slotProps.item.index ? recordingValue : undefined"
-					:recording="isRecording && isRecordingKey === slotProps.item.index"
-					:model-value="s.stringify(slotProps.item.shortcut.chain, manager)"
-					@update:recording="toggleRecording(slotProps.item.index, $event)"
-					@recorder:click="toggleRecording(slotProps.item.index, !isRecording)"
-					@recorder:blur="toggleRecording(slotProps.item.index, false, { reset: true })"
+					:recording-value="isRecordingKey === slotProps.item?.index ? recordingValue : undefined"
+					:recording="isRecording && isRecordingKey === slotProps.item?.index"
+					:model-value="slotProps.item ? s.stringify(slotProps.item.shortcut.chain, manager) : ''"
+					@update:recording="slotProps.item && toggleRecording(slotProps.item.index, $event)"
+					@recorder:pointerdown="slotProps.item && toggleRecording(slotProps.item.index, !isRecording)"
+					@recorder:blur="slotProps.item && toggleRecording(slotProps.item.index, false, { reset: true })"
 				/>
 			</td>
 		</template>
 
 		<template #command="slotProps">
 			<td
+				v-if="slotProps.item"
 				:class="slotProps.class"
 				:style="slotProps.style"
 			>
-				<WInputDeprecated
-					:wrapper-class="`
-							[&_.suggestions]:z-[1000000]
-							[.dark_&_.suggestions]:bg-neutral-900!
-						`"
-					:placeholder="slotProps.item.isNew ? '(None)' : ''"
+				<WCombobox
+					:class="`
+					[&_.suggestions]:z-[1000000]
+					[.dark_&_.suggestions]:bg-neutral-900!
+				`"
+					:input-props="{
+						placeholder: slotProps.item.isNew ? '(None)' : '',
+						onBlur: () => !slotProps.item?.isNew && blurMaybeEditedCommand(slotProps.item!.index)
+					}"
 					:border="false"
 					:suggestions="commandsSuggestions"
 					:model-value="slotProps.item.isNew ? slotProps.item.shortcut.command ?? '' : slotProps.item.shortcut.command ?? editedCommand"
-					title="Press enter to add new command."
 					@update:model-value="slotProps.item.isNew ? setReadOnly(newShortcut, 'command', isWhitespace($event) ? undefined : $event) : (editedCommand = $event)"
-					@submit="slotProps.item.isNew ? createCommandIfMissing($event) : updateShortcutCommand(slotProps.item.index, $event, true)"
-					@blur="!slotProps.item.isNew && blurMaybeEditedCommand(slotProps.item.index)"
-				/>
+					@save="slotProps.item.isNew ? createCommandIfMissing($event) : updateShortcutCommand(slotProps.item.index, $event, true)"
+				>
+					<template #header>
+						Press enter to add new command.
+					</template>
+				</WCombobox>
 			</td>
 		</template>
 
 		<template #condition="slotProps">
 			<td
+				v-if="slotProps.item"
 				:class="slotProps.class"
 				:style="slotProps.style"
 			>
 				<!-- @vue-expect-error -->
-				<WInputDeprecated
+				<WSimpleInput
 					:wrapper-class="`
-							[&_.suggestions]:z-[1000000]
-							[.dark_&_.suggestions]:bg-neutral-900!
-						`"
+					`"
 					:placeholder="slotProps.item.isNew ? (activeContexts.length > 0 ? activeContexts.join(' && ') : '(Global)') : '(Global)'"
 					:border="false"
 					:valid="conditionValidity[slotProps.item.index + 1] === true"
 					:title="conditionValidity[slotProps.item.index + 1] === true ? '' : conditionValidity[slotProps.item.index + 1]?.message"
 					:model-value="slotProps.item.shortcut.condition.text"
 					@update:model-value="slotProps.item.isNew && (newShortcut.condition.text = $event)"
-					@submit="!slotProps.item.isNew && updateShortcutCondition(slowProps.item.index, $event)"
+					@submit="!slotProps.item.isNew && updateShortcutCondition(slotProps.item.index, $event)"
 				/>
 			</td>
 		</template>
 
 		<template #actions="slotProps">
 			<td
+				v-if="slotProps.item"
 				:class="slotProps.class"
 				:style="slotProps.style"
 			>
@@ -174,22 +179,20 @@
 						v-if="slotProps.item.isNew"
 						:border="false"
 						aria-label="Add Shortcut"
-						auto-title-from-aria
 						@click="addShortcut"
 					>
 						<template #icon>
-							<WIcon> <i-fa-solid-plus/> </WIcon>
+							<WIcon> <IconPlus/> </WIcon>
 						</template>
 					</WButton>
 					<WButton
 						v-else
 						:border="false"
 						aria-label="Delete Shortcut"
-						auto-title-from-aria
 						@click="notifyIfError(managerRemoveShortcut(slotProps.item.shortcut, manager))"
 					>
 						<template #icon>
-							<WIcon> <i-fa-solid-trash/> </WIcon>
+							<WIcon> <IconTrash/> </WIcon>
 						</template>
 					</WButton>
 				</div>
@@ -208,12 +211,19 @@ import type { createManagerEventListeners } from "@witchcraft/spellcraft"
 import { addCommand, addShortcut as managerAddShortcut, attach, createCommand, createShortcut, detach, removeShortcut as managerRemoveShortcut, setManagerProp, setShortcutProp } from "@witchcraft/spellcraft"
 import { equalsShortcut } from "@witchcraft/spellcraft/helpers/equalsShortcut"
 import type { Manager, Shortcut } from "@witchcraft/spellcraft/types"
-import { cloneChain } from "@witchcraft/spellcraft/utils"
+import { cloneChain, shortcutToId } from "@witchcraft/spellcraft/utils"
+import WButton from "@witchcraft/ui/components/WButton"
+import WCheckbox from "@witchcraft/ui/components/WCheckbox"
+import WCombobox from "@witchcraft/ui/components/WCombobox"
+import WIcon from "@witchcraft/ui/components/WIcon"
+import WRecorder from "@witchcraft/ui/components/WRecorder"
+import WSimpleInput from "@witchcraft/ui/components/WSimpleInput"
+import WTable from "@witchcraft/ui/components/WTable"
 import { twMerge } from "@witchcraft/ui/utils/twMerge"
 import { computed, ref, toRaw, toRef } from "vue"
 
-import IFaSolidPlus from "~icons/fa-solid/plus"
-import IFaSolidTrash from "~icons/fa-solid/trash"
+import IconPlus from "~icons/lucide/plus"
+import IconTrash from "~icons/lucide/trash"
 
 import { notifyIfError } from "../common/notifyIfError.js"
 import { overlayHoldListeners } from "../common/overlayAccessibilityListeners.js"
@@ -331,14 +341,22 @@ const tableData = computed(() => {
 		id: "new-shortcut",
 		isNew: true,
 		index: -1,
-		shortcut: newShortcut.value
+		shortcut: newShortcut.value,
+		enabled: newShortcut.value.enabled,
+		command: newShortcut.value.command,
+		condition: newShortcut.value.condition,
+		actions: undefined
 	}
 
 	const shortcuts = filteredShortcuts.value.map((s, i) => ({
 		id: shortcutToId(s, props.manager),
 		isNew: false,
 		index: i,
-		shortcut: s
+		shortcut: s,
+		enabled: s.enabled,
+		command: s.command,
+		condition: s.condition,
+		actions: undefined
 	}))
 
 	return [
@@ -346,15 +364,18 @@ const tableData = computed(() => {
 		...shortcuts
 	]
 })
-const tableCols = ["enabled", "shortcut", "command", "condition", "actions"]
+const tableCols = ["enabled", "shortcut", "command", "condition", "actions"] as const as (keyof typeof tableData.value[number])[]
 
 const colConfig = {
+	id: { name: "" },
 	enabled: { name: "", resizable: false },
+	isNew: { name: "" },
+	index: { name: "" },
 	shortcut: { name: "Shortcut" },
 	command: { name: "Command" },
 	condition: { name: "Condition" },
 	actions: { name: "", resizable: false }
-}
+} as const
 
 const conditionValidity = computed(() => {
 	const res = []

@@ -16,5 +16,13 @@ export default defineNuxtConfig({
 	},
 	compatibilityDate: "2024-09-23",
 	witchcraftSpellcraft: {
-	}
+	},
+	// workaround for hmr issue
+	vite: {
+		server: {
+			watch: {
+				usePolling: true
+			}
+		}
+	},
 })

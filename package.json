@@ -56,7 +56,7 @@
 		"doc:dev": "concurrently \"pnpm doc:watch\" \"pnpm doc:serve\"",
 		"doc:check-invalid": "typedoc --listInvalidSymbolLinks",
 		"lint:eslint": "eslint \"{src,test,playground/app}/**/*.{js,ts,vue,cjs}\" \"*.{js,ts}\" --max-warnings=0 --report-unused-disable-directives",
-		"lint:types": "vue-tsc --noEmit && echo 'todo cd playground && vue-tsc --noEmit'",
+		"lint:types": "vue-tsc --noEmit &&  cd playground && vue-tsc --noEmit",
 		"lint:commits": "commitlint --from-last-tag --to HEAD --verbose",
 		"lint:imports": "madge --circular --extensions ts ./src",
 		"lint": "pnpm lint:types && pnpm lint:eslint && pnpm lint:commits && pnpm lint:imports",

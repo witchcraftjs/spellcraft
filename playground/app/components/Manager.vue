@@ -85,6 +85,7 @@ import {
 import { getKeyFromIdOrVariant } from "@witchcraft/spellcraft/helpers/getKeyFromIdOrVariant"
 import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain"
 import type { ContextInfo } from "@witchcraft/spellcraft/types"
+import WButton from "@witchcraft/ui/components/WButton"
 // import { overlayHoldListeners } from "../common/overlayAccessibilityListeners.js"
 import { onMounted, onUnmounted, type Ref, ref, toRefs, watch } from "vue"
 

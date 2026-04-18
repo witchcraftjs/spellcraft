@@ -1,3 +1,9 @@
 <template>
-<App/>
+<NuxtLayout>
+	<NuxtPage/>
+</NuxtLayout>
 </template>
+
+<script setup>
+
+</script>

@@ -118,7 +118,7 @@ All css variables are set here for maximum flexibility.
 				top:${key.y * keyW}px;
 				left:${key.x * keyW}px;
 			`"
-				:key-id="key.id"
+				:data-key-id="key.id"
 				tabindex="0"
 				v-for="key of displayedKeys"
 				:key="key.id"
@@ -273,7 +273,7 @@ All css variables are set here for maximum flexibility.
 							:data-is-pressable="isPressable"
 							:data-is-pressable-chain="isPressableChain"
 							:title="getTitle(keyShortcutMap[key.id]?.pressableEntries, i)"
-							:shortcut-index="i"
+							:data-shortcut-index="i"
 							v-for="{ shortcut, isPressed, isPressable, isPressableChain }, i in keyShortcutMap[key.id]?.pressableEntries"
 							:key="manager.options.stringifier.stringify(shortcut, manager)"
 						>
@@ -285,7 +285,7 @@ All css variables are set here for maximum flexibility.
 								v-else
 								class="pointer-events-none"
 							>
-								<i-fa-solid-link/>
+								<IconLink/>
 							</WIcon>
 						</div>
 					</div>
@@ -343,7 +343,7 @@ All css variables are set here for maximum flexibility.
 					v-else
 					class="pointer-events-none"
 				>
-					<i-fa-solid-link/>
+					<IconLink/>
 				</WIcon>
 			</div>
 		</div>
@@ -378,13 +378,14 @@ import {
 	equalsKey
 } from "@witchcraft/spellcraft/utils"
 import { equalsKeys } from "@witchcraft/spellcraft/utils/equalsKeys"
+import WIcon from "@witchcraft/ui/components/WIcon"
 import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler"
 import { useScrollNearContainerEdges } from "@witchcraft/ui/composables/useScrollNearContainerEdges"
 import { computed, onBeforeUnmount, onMounted, type Ref, ref, shallowRef, toRefs } from "vue"
 
 import { usePointerCoords } from "#witchcraft-spellcraft/composables/usePointerCoords.js"
 import { useShortcutManagerKeysLayout } from "#witchcraft-spellcraft/composables/useShortcutManagerKeysLayout.js"
-import IFaSolidLink from "~icons/fa-solid/link"
+import IconLink from "~icons/lucide/link"
 
 import { clearVirtuallyPressed } from "../common/clearVirtuallyPressed.js"
 import { createDropChain } from "../common/createDropChain.js"
@@ -442,7 +443,7 @@ const getShortcutEl = (e: PointerEvent): HTMLElement | undefined => (e?.target a
 
 const getKeyByElIdProp = (el?: HTMLElement): { key: Key, id: string } | undefined => {
 	if (!el) return
-	const id = el.getAttribute("key-id")
+	const id = el.getAttribute("data-key-id")
 	if (!id) return undefined
 	const res = getKeyFromIdOrVariant(id, manager.value.keys)
 	if (res.isError) return undefined
@@ -454,7 +455,7 @@ const getShortcutByElIndexProp = (
 	keyId?: string
 ): ShortcutInfo | undefined => {
 	if (!el || !keyId) return
-	let i: string | number | null = el.getAttribute("shortcut-index")
+	let i: string | number | null = el.getAttribute("data-shortcut-index")
 	i = typeof i === "string" ? Number.parseInt(i, 10) : i
 	return i !== null && i > -1 ? keyShortcutMap.value[keyId].pressableEntries[i] : undefined
 }

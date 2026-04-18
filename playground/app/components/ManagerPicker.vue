@@ -9,152 +9,160 @@
 		gap-2
 	"
 >
-	<WInputDeprecated
-		:label="`Switch/Add Manager Set (Currently Active: ${activeManager})`"
-		class="min-w-[0] w-[20ch]"
-		placeholder="Select/Add Manager"
-		wrapper-class="pr-0"
-		:suggestions="managers"
-		:suggestions-filter="(_:any, items:any[]) => items"
-		:restrict-to-suggestions="false"
-		v-model="tempValue"
-		v-extract-root-el="(_:any) => el = _"
-		@submit="handleSubmit"
-		@unfocus="onUnfocus"
-	>
-		<template #suggestion-item="slotProps">
-			<div
-				class="flex gap-6 justify-between"
-			>
+	<label class="flex flex-col gap-1">
+		<div class="text-sm">
+			<span class="font-bold">Active Manager:</span> {{ activeManager }}
+		</div>
+
+		<WCombobox
+			:input-props="{
+				placeholder: 'Select/Add Manager',
+				['aria-label']: `Switch/Add Manager Set (Currently Active: ${activeManager})`,
+				onBlur: onUnfocus,
+				class: 'min-w-[0] w-[20ch]'
+			}"
+			:suggestions="managers"
+			:restrict-to-suggestions="false"
+			v-model="tempValue"
+			@save="handleSubmit"
+		>
+			<template #suggestion="slotProps">
 				<div
-					class="flex-1"
-					aria-label="Activate"
-					title="Activate"
-					@mousedown.prevent
-					@click.prevent="emit('activate', slotProps.item); blurInputComp()"
+					class="flex gap-2 justify-between w-full mr-5"
 				>
-					{{ slotProps.item }}
+					<div
+						class="flex-1"
+						aria-label="Activate"
+						title="Activate"
+						@mousedown.prevent
+						@click.prevent="emit('activate', slotProps.suggestion); blurInputComp()"
+					>
+						{{ slotProps.suggestionText }}
+					</div>
+					<WButton
+						aria-label="Export"
+						title="Export"
+						class="whitespace-nowrap p-0 text-neutral-800"
+						:border="false"
+						@mousedown.prevent
+						@click.prevent="$event.stopPropagation();exportItem(slotProps.suggestion)"
+					>
+						<template #icon>
+							<WIcon> <IconExport/> </WIcon>
+						</template>
+					</WButton>
+					<WButton
+						aria-label="Duplicate"
+						title="Duplicate"
+						class="whitespace-nowrap p-0 text-neutral-800"
+						:border="false"
+						@mousedown.prevent
+						@click.prevent="duplicateManager(slotProps.suggestion)"
+					>
+						<template #icon>
+							<WIcon> <IconClone/> </WIcon>
+						</template>
+					</WButton>
+					<WButton
+						aria-label="Remove"
+						title="Remove"
+						class="whitespace-nowrap p-0 text-neutral-800"
+						:border="false"
+						@mousedown.prevent
+						@click.prevent="$event.stopPropagation();emit('remove', slotProps.suggestion)"
+					>
+						<template #icon>
+							<WIcon> <IconTrash/> </WIcon>
+						</template>
+					</WButton>
 				</div>
+			</template>
+			<template #right>
+				<div
+					v-if="tempValue === activeManager"
+					class="flex gap-2 justify-between ml-4"
+				>
+					<WButton
+						aria-label="Export"
+						title="Export"
+						class="whitespace-nowrap p-0 text-neutral-800"
+						:border="false"
+						@mouseup="emit('export', activeManager); blurInputComp()"
+					>
+						<template #icon>
+							<WIcon> <IconExport/> </WIcon>
+						</template>
+					</WButton>
+					<WButton
+						aria-label="Duplicate"
+						title="Duplicate"
+						class="whitespace-nowrap p-0 text-neutral-800"
+						:border="false"
+						@mouseup="duplicateManager(activeManager)"
+					>
+						<template #icon>
+							<WIcon> <IconClone/> </WIcon>
+						</template>
+					</WButton>
+					<WButton
+						aria-label="Remove"
+						title="Remove"
+						class="whitespace-nowrap p-0 text-neutral-800"
+						:border="false"
+						@mouseup="emit('remove', activeManager)"
+					>
+						<template #icon>
+							<WIcon> <IconTrash/> </WIcon>
+						</template>
+					</WButton>
+				</div>
+				<!-- Can't get auto-title-from-aria working in slot, weird. -->
 				<WButton
-					aria-label="Export"
-					title="Export"
-					class="whitespace-nowrap p-0 text-neutral-800"
+					v-if="canRename"
+					aria-label="Rename"
+					title="Rename"
+					class="whitespace-nowrap p-0"
 					:border="false"
-					@mousedown.prevent
-					@click.prevent="$event.stopPropagation();exportItem(slotProps.item)"
+					:disabled="!canRename"
+					@click="emit('rename', tempValue)"
 				>
 					<template #icon>
-						<WIcon> <i-fa-solid-file-export/> </WIcon>
+						<WIcon> <IconCheck/> </WIcon>
 					</template>
+					Rename
 				</WButton>
 				<WButton
-					aria-label="Duplicate"
-					title="Duplicate"
-					class="whitespace-nowrap p-0 text-neutral-800"
+					v-if="canAdd"
+					aria-label="Add New Manager"
+					title="Add New Manager"
 					:border="false"
-					@mousedown.prevent
-					@click.prevent="duplicateManager(slotProps.item)"
+					class="whitespace-nowrap p-0"
+					@click="addManager(tempValue)"
 				>
 					<template #icon>
-						<WIcon> <i-fa-solid-clone/> </WIcon>
+						<WIcon> <IconAdd/> </WIcon>
 					</template>
+					Add New
 				</WButton>
-				<WButton
-					aria-label="Remove"
-					title="Remove"
-					class="whitespace-nowrap p-0 text-neutral-800"
-					:border="false"
-					@mousedown.prevent
-					@click.prevent="$event.stopPropagation();emit('remove', slotProps.item)"
-				>
-					<template #icon>
-						<WIcon> <i-fa-solid-trash/> </WIcon>
-					</template>
-				</WButton>
-			</div>
-		</template>
-		<template #right>
-			<div
-				v-if="tempValue === activeManager"
-				class="flex gap-6 justify-between ml-4"
-			>
-				<WButton
-					aria-label="Export"
-					title="Export"
-					class="whitespace-nowrap p-0 text-neutral-800"
-					:border="false"
-					@mouseup="emit('export', activeManager); blurInputComp()"
-				>
-					<template #icon>
-						<WIcon> <i-fa-solid-file-export/> </WIcon>
-					</template>
-				</WButton>
-				<WButton
-					aria-label="Duplicate"
-					title="Duplicate"
-					class="whitespace-nowrap p-0 text-neutral-800"
-					:border="false"
-					@mouseup="duplicateManager(activeManager)"
-				>
-					<template #icon>
-						<WIcon> <i-fa-solid-clone/> </WIcon>
-					</template>
-				</WButton>
-				<WButton
-					aria-label="Remove"
-					title="Remove"
-					class="whitespace-nowrap p-0 text-neutral-800"
-					:border="false"
-					@mouseup="emit('remove', activeManager)"
-				>
-					<template #icon>
-						<WIcon> <i-fa-solid-trash/> </WIcon>
-					</template>
-				</WButton>
-			</div>
-			<!-- Can't get auto-title-from-aria working in slot, weird. -->
-			<WButton
-				v-if="canRename"
-				aria-label="Rename"
-				title="Rename"
-				class="whitespace-nowrap p-0"
-				:border="false"
-				:disabled="!canRename"
-				@click="emit('rename', tempValue)"
-			>
-				<template #icon>
-					<WIcon> <i-fa-solid-check/> </WIcon>
-				</template>
-				Rename
-			</WButton>
-			<WButton
-				v-if="canAdd"
-				aria-label="Add New Manager"
-				title="Add New Manager"
-				:border="false"
-				class="whitespace-nowrap p-0"
-				@click="addManager(tempValue)"
-			>
-				<template #icon>
-					<WIcon> <i-fa-solid-plus/> </WIcon>
-				</template>
-				Add New
-			</WButton>
-		</template>
-	</WInputDeprecated>
+			</template>
+		</WCombobox>
+	</label>
 </div>
 </template>
 
 <script setup lang="ts">
 import { isBlank } from "@alanscodelog/utils/isBlank"
+import WButton from "@witchcraft/ui/components/WButton"
+import WCombobox from "@witchcraft/ui/components/WCombobox"
+import WIcon from "@witchcraft/ui/components/WIcon"
 import { useNotificationHandler } from "@witchcraft/ui/composables/useNotificationHandler"
-import { vExtractRootEl } from "@witchcraft/ui/directives/vExtractRootEl"
 import { computed, ref, toRef, watch } from "vue"
 
-import IFaSolidClone from "~icons/fa-solid/clone"
-import IFaSolidFileExport from "~icons/fa-solid/file-export"
-import IFaSolidPlus from "~icons/fa-solid/plus"
-import IFaSolidTrash from "~icons/fa-solid/trash"
+import IconCheck from "~icons/lucide/check"
+import IconClone from "~icons/lucide/copy"
+import IconAdd from "~icons/lucide/plus"
+import IconExport from "~icons/lucide/square-arrow-right-exit"
+import IconTrash from "~icons/lucide/trash"
 
 const props = defineProps<{
 	managers: string[]

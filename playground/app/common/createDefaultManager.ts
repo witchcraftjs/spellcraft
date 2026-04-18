@@ -75,7 +75,7 @@ export function createDefaultManager(
 				labelFilter: (_e, keyId) => {
 				// it's fine, the listener will not be triggerd
 				// eslint-disable-next-line @typescript-eslint/no-use-before-define
-					if (labeledByKeyboardLayoutMap.value.includes(keyId)) return false
+					if (labeledByKeyboardLayoutMap.value?.includes(keyId)) return false
 					if (event && "key" in event) {
 						if (event.key.length === 1) {
 							setKeyProp(manager.keys.entries[keyId], "label", event.key.toUpperCase(), manager)

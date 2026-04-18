@@ -42,6 +42,8 @@
 </template>
 
 <script setup lang="ts">
+import WIcon from "@witchcraft/ui/components/WIcon"
+
 import IFaBrandsGithub from "~icons/fa-brands/github"
 </script>
 

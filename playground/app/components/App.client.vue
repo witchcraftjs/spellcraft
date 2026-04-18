@@ -1,6 +1,5 @@
 <template>
 <WRoot
-	id="spellcraft-app"
 	class="dark:bg-neutral-900 dark:text-white gap-2 p-4"
 	:is-client-side="isClientSide"
 >
@@ -29,7 +28,6 @@
 			/>
 			<WDarkModeSwitcher
 				class="mr-8"
-				:auto-label="false"
 			/>
 		</div>
 	</div>
@@ -70,6 +68,8 @@ import {
 	// setManagerProp,
 } from "@witchcraft/spellcraft"
 import { safeSetManagerChain } from "@witchcraft/spellcraft/helpers/safeSetManagerChain"
+import WDarkModeSwitcher from "@witchcraft/ui/components/WDarkModeSwitcher"
+import WRoot from "@witchcraft/ui/components/WRoot"
 import { ref } from "vue"
 
 import GithubCorner from "./GithubCorner.vue"

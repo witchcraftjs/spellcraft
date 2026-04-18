@@ -5,6 +5,7 @@ export default defineBuildConfig({
 	[
 		"src/module.ts",
 		...[
+			"src/runtime",
 			"defaults",
 			"helpers",
 			"internal",

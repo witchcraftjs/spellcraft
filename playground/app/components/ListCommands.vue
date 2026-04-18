@@ -2,21 +2,21 @@
 <div>
 	<div
 		:class="`
-		rounded-sm
-		border
-		border-neutral-600
-		grid
-		grid-cols-[repeat(1,minmax(0,1fr)),min-content]
-		items-center
+			rounded-sm
+			border
+			border-neutral-600
+			grid
+			grid-cols-[repeat(1,minmax(0,1fr)),min-content]
+			items-center
 
-		[&>div]:border-neutral-400
+			[&>div]:border-neutral-400
 
-		[&>div:nth-of-type(2n+1)]:border-r
-		[&>div:nth-last-of-type(n+3)]:border-b
-	`"
+			[&>div:nth-of-type(2n+1)]:border-r
+			[&>div:nth-last-of-type(n+3)]:border-b
+		`"
 	>
 		<!-- new command -->
-		<WInputDeprecated
+		<WSimpleInput
 			:border="false"
 			:model-value="newCommand.name"
 			@update:model-value="notifyIfError(setCommandProp(newCommand, 'name', $event, manager))"
@@ -26,11 +26,10 @@
 			<WButton
 				:border="false"
 				aria-label="Add Command"
-				auto-title-from-aria
 				@click="addCommand(newCommand)"
 			>
 				<template #icon>
-					<WIcon> <i-fa-solid-plus/> </WIcon>
+					<WIcon> <IconPlus/> </WIcon>
 				</template>
 			</WButton>
 		</div>
@@ -41,8 +40,7 @@
 			:key="command.name"
 		>
 			<div class="grid grid-cols-[minmax(0,1fr),min-content]">
-				<!-- @vue-expect-error todo -->
-				<WInputDeprecated
+				<WSimpleInput
 					:border="false"
 					:model-value="temporaryCommand.command === command ? temporaryCommand.name : command.name"
 
@@ -55,14 +53,13 @@
 					v-if="temporaryCommand.command === command && temporaryCommand.name !== command.name"
 					:border="false"
 					aria-label="Save Command"
-					auto-title-from-aria
 					@mousedown="saveOnBlur = true"
 					@mouseup="saveOnBlur = false"
 
 					@click="saveCommandName(command)"
 				>
 					<template #icon>
-						<WIcon> <i-fa-solid-save/> </WIcon>
+						<WIcon> <IconSave/> </WIcon>
 					</template>
 				</WButton>
 			</div>
@@ -70,11 +67,10 @@
 				<WButton
 					:border="false"
 					aria-label="Delete Command"
-					auto-title-from-aria
 					@click="notifyIfError(managerRemoveCommand(command, manager))"
 				>
 					<template #icon>
-						<WIcon> <i-fa-solid-trash/> </WIcon>
+						<WIcon> <IconTrash/> </WIcon>
 					</template>
 				</WButton>
 			</div>
@@ -86,11 +82,14 @@
 <script setup lang="ts">
 import { addCommand as managerAddCommand, createCommand, removeCommand as managerRemoveCommand, setCommandProp } from "@witchcraft/spellcraft"
 import type { Command, Manager } from "@witchcraft/spellcraft/types"
+import WButton from "@witchcraft/ui/components/WButton"
+import WIcon from "@witchcraft/ui/components/WIcon"
+import WSimpleInput from "@witchcraft/ui/components/WSimpleInput"
 import { computed, ref } from "vue"
 
-import IFaSolidPlus from "~icons/fa-solid/plus"
-import IFaSolidSave from "~icons/fa-solid/save"
-import IFaSolidTrash from "~icons/fa-solid/trash"
+import IconPlus from "~icons/lucide/plus"
+import IconSave from "~icons/lucide/save"
+import IconTrash from "~icons/lucide/trash"
 
 import { notifyIfError } from "../common/notifyIfError.js"
 
@@ -147,4 +146,3 @@ function handleBlur(command: Command) {
 	clearTemporary()
 }
 </script>
-

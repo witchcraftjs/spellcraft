@@ -22,7 +22,7 @@ catalog:
   '@vitejs/plugin-vue': ^6.0.5
   '@vitest/coverage-c8': ^0.33.0
   '@witchcraft/expressit': ^0.4.2
-  '@witchcraft/ui': ^0.3.25
+  '@witchcraft/ui': 0.4.0-beta.11
   concurrently: ^9.2.1
   cross-env: ^10.1.0
   defu: ^6.1.6
