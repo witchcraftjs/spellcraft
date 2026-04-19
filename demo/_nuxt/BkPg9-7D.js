@@ -1,0 +1,1 @@
+import{s as e}from"./C7vdP-Nq.js";import{a9 as s,I as a,i as r}from"./D-J5zQKJ.js";const p={__name:"WDevOnly",props:{show:{type:Boolean,required:!1,default:!1}},setup(t){return s(),a(e,r(!1)),(o,n)=>null}};export{p as default};
