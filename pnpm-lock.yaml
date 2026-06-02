@@ -58,8 +58,8 @@ catalogs:
       specifier: ^0.4.2
       version: 0.4.2
     '@witchcraft/ui':
-      specifier: 0.4.0-beta.11
-      version: 0.4.0-beta.11
+      specifier: ^0.5.0
+      version: 0.5.0
     concurrently:
       specifier: ^9.2.1
       version: 9.2.1
@@ -141,7 +141,7 @@ importers:
         version: 0.4.2
       '@witchcraft/ui':
         specifier: 'catalog:'
-        version: 0.4.0-beta.11(@babel/parser@7.29.2)(magicast@0.5.2)(tailwindcss@4.2.2)(unplugin-icons@23.0.1(@vue/compiler-sfc@3.5.32))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue@3.5.32(typescript@6.0.3))
+        version: 0.5.0(@babel/parser@7.29.2)(magicast@0.5.2)(tailwindcss@4.2.2)(unplugin-icons@23.0.1(@vue/compiler-sfc@3.5.32))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue@3.5.32(typescript@6.0.3))
       reka-ui:
         specifier: 'catalog:'
         version: 2.9.6(vue@3.5.32(typescript@6.0.3))
@@ -265,7 +265,7 @@ importers:
         version: link:..
       '@witchcraft/ui':
         specifier: 'catalog:'
-        version: 0.4.0-beta.11(@babel/parser@7.29.2)(magicast@0.5.2)(tailwindcss@4.2.2)(unplugin-icons@23.0.1(@vue/compiler-sfc@3.5.32))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue@3.5.32(typescript@6.0.3))
+        version: 0.5.0(@babel/parser@7.29.2)(magicast@0.5.2)(tailwindcss@4.2.2)(unplugin-icons@23.0.1(@vue/compiler-sfc@3.5.32))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue@3.5.32(typescript@6.0.3))
       nuxt:
         specifier: 'catalog:'
         version: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@parcel/watcher@2.5.6)(@types/node@25.6.0)(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.4(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(rollup-plugin-visualizer@7.0.1(rollup@4.60.2))(rollup@4.60.2)(srvx@0.11.15)(terser@5.46.1)(typescript@6.0.3)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue-tsc@3.2.6(typescript@6.0.3))(yaml@2.8.3)
@@ -2679,8 +2679,8 @@ packages:
     resolution: {integrity: sha512-+TrBV1r7/4XSjihwVy6NzLS8PBNTxkQhMDLGP5Y2NXq7bU6PW4crSHD2k/2sqU64EKtEwNGCmO1oN9DIQLLn7A==}
     engines: {node: '>=20.0.0'}
 
-  '@witchcraft/ui@0.4.0-beta.11':
-    resolution: {integrity: sha512-mYYhc11eTjrN+EtJHZBkUUu/k1hD43KaCLKqxgayDdEjSlrH/PVfTdKg3WEO46H/uOSpvZoVCybkt6y2iU5V3g==}
+  '@witchcraft/ui@0.5.0':
+    resolution: {integrity: sha512-HYyd+MRQ/b2avqOO+C+JO2GguShBTuWhZLgKulXkE3GPJoWL2vEp/GKSfAtaNTi5pP276WIadeb6v5rGjXkj+g==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       tailwindcss: ^4.2.1
@@ -9906,7 +9906,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@witchcraft/ui@0.4.0-beta.11(@babel/parser@7.29.2)(magicast@0.5.2)(tailwindcss@4.2.2)(unplugin-icons@23.0.1(@vue/compiler-sfc@3.5.32))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue@3.5.32(typescript@6.0.3))':
+  '@witchcraft/ui@0.5.0(@babel/parser@7.29.2)(magicast@0.5.2)(tailwindcss@4.2.2)(unplugin-icons@23.0.1(@vue/compiler-sfc@3.5.32))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue@3.5.32(typescript@6.0.3))':
     dependencies:
       '@alanscodelog/utils': 6.2.0
       '@iconify/json': 2.2.463
