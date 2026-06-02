@@ -1,7 +1,7 @@
-[![NPM Version (with latest tag)](https://img.shields.io/npm/v/%40witchcraft%2Fspellcraft/latest)](https://www.npmjs.com/package/@witchcraft/spellcraft/v/latest)
-<!-- [![NPM Version (with beta tag)](https://img.shields.io/npm/v/%40witchcraft%2Fspellcraft/beta)](https://www.npmjs.com/package/@witchcraft/spellcraft/v/beta) -->
-[![Docs](https://github.com/witchcraftjs/spellcraft/workflows/Docs/badge.svg)](https://github.com/witchcraftjs/spellcraft/actions/workflows/docs.yml)
-[![Release](https://github.com/witchcraftjs/spellcraft/actions/workflows/release.yml/badge.svg)](https://github.com/witchcraftjs/spellcraft/actions/workflows/release.yml)
+[![Docs][docs-src]][docs-href]
+[![Release][release-src]][release-href]
+[![npm version][npm-version-src]][npm-version-href]
+[![License][license-src]][license-href]
 
 # Spellcraft 🪄
 
@@ -703,3 +703,12 @@ declare module "@witchcraft/spellcraft/types" {
 ```
 </details>
 
+<!-- Badges -->
+[docs-src]: https://github.com/witchcraftjs/spellcraft/actions/workflows/docs.yml/badge.svg
+[docs-href]: https://github.com/witchcraftjs/spellcraft/actions/workflows/docs.yml
+[release-src]: https://github.com/witchcraftjs/spellcraft/actions/workflows/release.yml/badge.svg
+[release-href]: https://github.com/witchcraftjs/spellcraft/actions/workflows/release.yml
+[npm-version-src]: https://img.shields.io/npm/v/@witchcraft/spellcraft/latest
+[npm-version-href]: https://www.npmjs.com/package/@witchcraft/spellcraft/v/latest
+[license-src]: https://img.shields.io/npm/l/@witchcraft/spellcraft.svg?style=flat&colorA=020420&colorB=00DC82
+[license-href]: https://npmjs.com/package/@witchcraft/spellcraft
