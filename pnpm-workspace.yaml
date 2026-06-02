@@ -51,3 +51,16 @@ patchedDependencies:
 settings:
   catalogMode: strict
   cleanupUnusedCatalogs: false
+
+minimumReleaseAgeExclude:
+  - "@alanscodelog/*"
+  - "@witchcraft/*"
+
+allowBuilds:
+  '@alanscodelog/eslint-config': false
+  '@alanscodelog/tsconfigs': false
+  '@parcel/watcher': false
+  core-js: false
+  esbuild: true
+  unrs-resolver: false
+  vue-demi: false
