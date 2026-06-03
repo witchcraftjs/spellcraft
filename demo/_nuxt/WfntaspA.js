@@ -1,0 +1,1 @@
+import{u as n}from"./D8Eww6YR.js";import{g as m,a2 as r}from"./CIkOm3BO.js";function o(){const e=r(),t=m(()=>["#text","#comment"].includes(e.value?.$el.nodeName)?e.value?.$el.nextElementSibling:n(e));return{primitiveElement:e,currentElement:t}}export{o as u};
