@@ -80,8 +80,7 @@
 		"@alanscodelog/utils": "catalog:",
 		"@witchcraft/expressit": "catalog:",
 		"@witchcraft/ui": "catalog:",
-		"reka-ui": "catalog:",
-		"vue": "catalog:"
+		"reka-ui": "catalog:"
 	},
 	"devDependencies": {
 		"@alanscodelog/commitlint-config": "catalog:",
@@ -117,6 +116,7 @@
 		"unplugin-icons": "catalog:",
 		"vite-tsconfig-paths": "catalog:",
 		"vitest": "catalog:",
+		"vue": "catalog:",
 		"vue-tsc": "catalog:"
 	},
 	"author": "Alan <alanscodelog@gmail.com>",

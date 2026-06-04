@@ -143,9 +143,6 @@ importers:
       reka-ui:
         specifier: 'catalog:'
         version: 2.9.7(vue@3.5.34(typescript@6.0.3))
-      vue:
-        specifier: 'catalog:'
-        version: 3.5.34(typescript@6.0.3)
     devDependencies:
       '@alanscodelog/commitlint-config':
         specifier: 'catalog:'
@@ -246,6 +243,9 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 4.1.6(@types/node@25.9.1)(vite@7.3.3(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.47.1)(yaml@2.9.0))
+      vue:
+        specifier: 'catalog:'
+        version: 3.5.34(typescript@6.0.3)
       vue-tsc:
         specifier: 'catalog:'
         version: 3.3.1(typescript@6.0.3)
