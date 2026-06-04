@@ -13,7 +13,7 @@ export default {
 		"src/index.ts",
 		"src/**/*.ts"
 	],
-	out: "docs",
+	out: "docs-types",
 	excludePrivate: true,
 	excludeExternals: true,
 	// // temporarily turn off plugins (just setting plugin: [] will not work)
