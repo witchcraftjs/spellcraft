@@ -15,7 +15,7 @@ catalog:
   '@iconify/json': ^2.2.458
   '@nuxt/eslint-config': ^1.15.2
   '@nuxt/kit': ^4.4.2
-  '@nuxt/module-builder': ^1.0.2
+  '@nuxt/module-builder': ^1.0.3
   '@nuxt/schema': ^4.4.2
   '@nuxt/types': ^2.18.1
   '@types/node': ^25.5.2
