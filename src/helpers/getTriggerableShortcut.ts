@@ -23,6 +23,11 @@ export function getTriggerableShortcut(
 
 	if (shortcuts.length === 0) return Ok(false)
 	if (shortcuts.length > 1) {
+		// the same command can be matched by multiple shortcuts on purpose
+		const command = shortcuts[0]!.command
+		if (shortcuts.every(shortcut => shortcut.command === command)) {
+			return Ok(shortcuts[0] as TriggerableShortcut)
+		}
 		return Err(new KnownError(SHORTCUT_ERROR.MULTIPLE_MATCHING_SHORTCUTS,
 			crop`
 				Multiple commands are assigned to the key combination ${s.stringify(manager.state.chain, manager)}:
