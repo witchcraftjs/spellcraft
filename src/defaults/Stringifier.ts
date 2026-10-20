@@ -105,10 +105,8 @@ export class Stringifier implements IStringifier {
 	}
 
 	stringifyPropertyValue(entry: any): string {
-		let res = ""
 		try {
-			res = this.stringify(entry)
-			return res
+			return this.stringify(entry)
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (e) {
 			// ignore
