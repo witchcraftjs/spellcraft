@@ -82,3 +82,9 @@ minimumReleaseAgeExclude:
   - normalize-url@9.0.1
   - semver@7.8.1
   - ts-deepmerge@8.0.0
+  # exempt @visulima/* from the age check so the override below can install the fixed versions immediately, safe to remove after 2026-10-28
+  - '@visulima/*'
+
+overrides:
+  # force the @visulima/package version that declares the missing @visulima/yaml dep (visulima/visulima#931), safe to remove after 2026-10-28
+  "@visulima/package": "5.0.43"
