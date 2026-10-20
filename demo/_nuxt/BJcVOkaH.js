@@ -1,0 +1,1 @@
+import{g as e,vn as t}from"./B8D2lM98.js";import{t as n}from"./DQdlG7G9.js";function r(r){let i=n({locale:t(`en`)});return e(()=>r?.value||i.locale?.value||`en`)}export{r as t};

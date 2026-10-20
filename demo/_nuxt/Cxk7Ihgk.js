@@ -1,0 +1,1 @@
+import{Pt as e}from"./B8D2lM98.js";function t(t){return t.id??e()}export{t};

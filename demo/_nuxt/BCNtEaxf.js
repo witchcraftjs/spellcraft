@@ -1,0 +1,45 @@
+import{n as e,r as t,t as n}from"./DiNi8asB.js";import{$ as r,D as i,E as a,Ft as o,Ht as s,L as c,Nt as l,On as u,_ as d,b as f,ct as p,et as m,ft as h,g,it as _,k as v,mt as y,o as b,qt as x,tr as S,tt as C,v as w,wt as T,xn as E,xt as D,y as O}from"./B8D2lM98.js";import{C as k,w as A}from"./BC7yJqS7.js";import{t as j}from"./BwZvZm7q.js";import{t as M}from"./ClJo4eSk.js";import{t as N}from"./BSCU0cTt.js";import{t as P}from"./Cxk7Ihgk.js";import{t as F}from"./DhcSzXJH.js";import{d as ee,i as I,l as L,t as R}from"./DFsjrv8q.js";import{i as z,n as B,r as V,t as H}from"./CWY9QQg-.js";import{t as U}from"./DHihWhf5.js";import{n as W,t as G}from"./DM1wLtFb.js";import{t as K}from"./BmL0Fpnx.js";import{t as q}from"./CtSxF-Qa.js";import{t as te}from"./CROezUOW.js";function J(e,t){return U(e)?!1:Array.isArray(e)?e.some(e=>z(e,t)):z(e,t)}function ne(){let e=c()?.vnode?.scopeId;return e?{[e]:``}:{}}var[Y,X]=I(`RovingFocusGroup`),re=v({__name:`RovingFocusItem`,props:{tabStopId:{type:String,required:!1},focusable:{type:Boolean,required:!1,default:!0},active:{type:Boolean,required:!1},allowShiftKey:{type:Boolean,required:!1},asChild:{type:Boolean,required:!1},as:{type:null,required:!1,default:`span`}},setup(t){let n=t,r=Y(),a=e(),o=g(()=>n.tabStopId||a),c=g(()=>r.currentTabStopId.value===o.value),{getItems:l,CollectionItem:d}=q();p(()=>{n.focusable&&r.onFocusableItemAdd()}),h(()=>{n.focusable&&r.onFocusableItemRemove()}),s(()=>n.focusable,(e,t)=>{e!==t&&(e?r.onFocusableItemAdd():r.onFocusableItemRemove())});function f(e){if(e.defaultPrevented)return;if(e.key===`Tab`&&e.shiftKey){r.onItemShiftTab();return}if(e.target!==e.currentTarget)return;let t=B(e,r.orientation.value,r.dir.value);if(t!==void 0){if(e.metaKey||e.ctrlKey||e.altKey||!n.allowShiftKey&&e.shiftKey)return;e.preventDefault();let i=[...l().map(e=>e.ref).filter(e=>e.dataset.disabled!==``)];if(t===`last`)i.reverse();else if(t===`prev`||t===`next`){t===`prev`&&i.reverse();let n=i.indexOf(e.currentTarget);i=r.loop.value?V(i,n+1):i.slice(n+1)}C(()=>H(i))}}let{forwardRef:m,currentElement:_}=K(),v=E();s(_,e=>{v.value=e},{immediate:!0,flush:`post`}),L(v,`keydown`,f);function b(e){v.value=e.currentTarget}return(e,n)=>(y(),w(u(d),null,{default:x(()=>[i(u(R),{ref:u(m),tabindex:c.value?0:-1,"data-orientation":u(r).orientation.value,"data-active":t.active?``:void 0,"data-disabled":t.focusable?void 0:``,as:t.as,"as-child":t.asChild,onMousedown:n[0]||=e=>{t.focusable?u(r).onItemFocus(o.value):e.preventDefault()},onFocus:n[1]||=e=>u(r).onItemFocus(o.value),onFocusin:b},{default:x(()=>[D(e.$slots,`default`)]),_:3},8,[`tabindex`,`data-orientation`,`data-active`,`data-disabled`,`as`,`as-child`])]),_:3}))}}),[ie,ae]=I(`CheckboxGroupRoot`);function Z(e){return e===`indeterminate`}function Q(e){return Z(e)?`indeterminate`:e?`checked`:`unchecked`}var[oe,se]=I(`CheckboxRoot`),ce=v({inheritAttrs:!1,__name:`CheckboxRoot`,props:{defaultValue:{type:null,required:!1},modelValue:{type:null,required:!1,default:void 0},disabled:{type:Boolean,required:!1},value:{type:null,required:!1,default:`on`},id:{type:String,required:!1},trueValue:{type:null,required:!1,default:()=>!0},falseValue:{type:null,required:!1,default:()=>!1},asChild:{type:Boolean,required:!1},as:{type:null,required:!1,default:`button`},name:{type:String,required:!1},required:{type:Boolean,required:!1}},emits:[`update:modelValue`],setup(e,{emit:t}){let n=e,r=t,{forwardRef:i,currentElement:a}=K(),o=ie(null),c=te(null),d=ee(n,`modelValue`,r,{defaultValue:n.defaultValue??n.falseValue,passive:n.modelValue===void 0}),h=g(()=>{let e=o?.max.value;if(U(e))return!1;let t=o.modelValue.value??[];return!J(t,n.value)&&t.length>=e}),v=g(()=>!!(o?.disabled.value||n.disabled||c?.disabled.value)),S=g(()=>v.value||h.value),C=g(()=>!!c&&!o),E=g(()=>n.id??(C.value?c?.fieldId.value:void 0)),j=g(()=>n.name??c?.name.value),M=g(()=>c?n.required||c.required.value:n.required),N=g(()=>z(d.value,n.trueValue)),P=g(()=>U(o?.modelValue.value)?d.value===`indeterminate`?`indeterminate`:N.value:J(o.modelValue.value,n.value));function F(){if(S.value)return;let e=P.value!==!0;if(U(o?.modelValue.value))d.value===`indeterminate`?d.value=n.trueValue:d.value=N.value?n.falseValue:n.trueValue;else{let e=[...o.modelValue.value||[]];if(J(e,n.value)){let t=e.findIndex(e=>z(e,n.value));e.splice(t,1)}else e.push(n.value);o.modelValue.value=e}C.value&&c?.handleControlInput({value:e})}s(P,e=>{C.value&&c?.reportControlState({filled:e===!0})});let I=W(a),L=ne(),B=l(),V=g(()=>{if(!B[`aria-label`])return E.value&&a.value?document.querySelector(`[for="${E.value}"]`)?.innerText:void 0});function H(){let e=(e,t)=>[e,t].filter(Boolean).join(` `)||void 0;return{"aria-labelledby":e(B[`aria-labelledby`],C.value?c?.labelId.value:void 0),"aria-describedby":e(B[`aria-describedby`],c?.describedBy.value),"aria-invalid":B[`aria-invalid`]??(c?.invalid.value||void 0)}}function q(){c?.handleControlFocus()}function Y(){C.value?c?.handleControlBlur():c?.reportControlState({focused:!1,touched:!0})}let X;return p(()=>{C.value&&(X=c?.registerControl({id:()=>E.value,element:()=>a.value,getValue:()=>P.value,required:()=>n.required,isFilled:e=>e===!0}))}),_(()=>X?.()),se({disabled:v,state:P}),(t,n)=>(y(),f(b,null,[(y(),w(T(u(o)?.rovingFocus.value?u(re):u(R)),m({...u(c)?.dataAttributes.value,...t.$attrs,...u(L),...H()},{id:E.value,ref:u(i),role:`checkbox`,"as-child":e.asChild,as:e.as,type:e.as===`button`?`button`:void 0,"aria-checked":u(Z)(P.value)?`mixed`:P.value,"aria-required":M.value,"aria-label":t.$attrs[`aria-label`]||V.value,"data-state":u(Q)(P.value),"aria-disabled":S.value?`true`:void 0,"data-disabled":v.value?``:void 0,disabled:v.value,focusable:u(o)?.rovingFocus.value?!v.value:void 0,onKeydown:k(A(()=>{},[`prevent`]),[`enter`]),onClick:F,onFocus:q,onBlur:Y}),{default:x(()=>[D(t.$slots,`default`,{modelValue:u(d),state:P.value})]),_:3},16,[`id`,`as-child`,`as`,`type`,`aria-checked`,`aria-required`,`aria-label`,`data-state`,`aria-disabled`,`data-disabled`,`disabled`,`focusable`,`onKeydown`])),u(I)&&j.value&&!u(o)?(y(),w(u(G),m({key:0,type:`checkbox`,checked:!!P.value,name:j.value,value:e.value,disabled:v.value,required:M.value},u(L)),null,16,[`checked`,`name`,`value`,`disabled`,`required`])):O(`v-if`,!0)],64))}}),le=v({__name:`CheckboxIndicator`,props:{forceMount:{type:Boolean,required:!1},asChild:{type:Boolean,required:!1},as:{type:null,required:!1,default:`span`}},setup(e){let{forwardRef:t}=K(),r=oe();return(a,o)=>(y(),w(u(n),{present:e.forceMount||u(Z)(u(r).state.value)||u(r).state.value===!0},{default:x(()=>[i(u(R),m({ref:u(t),"data-state":u(Q)(u(r).state.value),"data-disabled":u(r).disabled.value?``:void 0,style:{pointerEvents:`none`},"as-child":e.asChild,as:e.as},a.$attrs),{default:x(()=>[D(a.$slots,`default`)]),_:3},16,[`data-state`,`data-disabled`,`as-child`,`as`])]),_:3},8,[`present`]))}}),ue=t({default:()=>$}),$=Object.assign({name:`WCheckbox`,inheritAttrs:!1},{__name:`WCheckbox`,props:r({disabled:{type:Boolean,required:!1},readonly:{type:Boolean,required:!1},border:{type:Boolean,required:!1,default:!0},unstyle:{type:Boolean,required:!1},id:{type:String,required:!1},label:{type:String,required:!1},labelAttrs:{type:Object,required:!1},wrapperAttrs:{type:Object,required:!1}},{modelValue:{type:null,default:!1},modelModifiers:{}}),emits:[`update:modelValue`],setup(e){let t=l(),n=e,r=o(e,`modelValue`,{type:null,default:!1}),s=P(n);return F(s,r),(n,o)=>(y(),f(`div`,m({class:u(j)(`
+		checkbox--wrapper
+		flex
+		items-center
+		gap-1
+	`,(e.disabled||e.readonly)&&`
+			cursor-not-allowed
+			text-neutral-500
+		`,e.wrapperAttrs?.class)},{...e.wrapperAttrs,class:void 0},{ref:`el`}),[D(n.$slots,`left`),d(`label`,m({class:u(j)(`
+			checkbox--label
+			flex
+			items-center
+			gap-1
+		`,e.labelAttrs?.class)},{...e.labelAttrs,class:void 0}),[i(u(ce),m({id:u(s),disabled:e.disabled||e.readonly,class:!e.unstyle&&u(j)(`
+				checkbox
+				flex
+				items-center
+				justify-center
+				focus-outline-no-offset
+				m-0
+				h-[1.2em]
+				w-[1.2em]
+				aspect-square
+				bg-neutral-500/10
+				text-white
+				dark:text-white
+				border
+				border-neutral-500
+				data-[state=checked]:border-accent-800/50
+				data-[state=checked]:bg-accent-500
+				data-[state=checked]:shadow-2xs
+				data-[state=checked]:shadow-black/20
+				data-[state=unchecked]:inset-shadow-2xs
+				data-[state=unchecked]:inset-shadow-black/20
+				focus:border-accent-600
+				rounded-sm
+				relative
+				transition-colors
+				dark:disabled:bg-neutral-800
+				cursor-pointer
+				disabled:text-neutral-500
+				disabled:bg-neutral-500/50
+				disabled:cursor-not-allowed
+				disabled:data-[state=checked]:border-neutral-500
+			`,u(t)?.class)},{...u(t),class:void 0},{modelValue:r.value,"onUpdate:modelValue":o[0]||=e=>r.value=e}),{default:x(()=>[i(u(le),{class:`checkbox--indicator`},{default:x(()=>[i(M,{class:`scale-110 mt-[2px] ml-[0.5px] [&_path]:stroke-3`},{default:x(()=>[i(u(N))]),_:1})]),_:1})]),_:1},16,[`id`,`disabled`,`class`,`modelValue`]),D(n.$slots,`default`),a(` `+S(e.label),1)],16)],16))}});export{$ as n,ue as t};
